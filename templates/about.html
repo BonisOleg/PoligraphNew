@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - PolygraphNew{% endblock %}
+
+{% block component_css %}
+<link rel="stylesheet" href="{% static 'css/components/accordion.css' %}">
+{% endblock %}
+
+{% block content %}
+<main id="main">
+    {% include 'partials/about_content.html' %}
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/accordion.js' %}" defer></script>
+{% endblock %}

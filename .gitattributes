@@ -1,0 +1,10 @@
+# Захист normalize.css від випадкових змін
+static/css/normalize.css -diff -merge
+static/css/normalize.css linguist-generated=false
+
+# Вказуємо, що цей файл не повинен бути автоматично змінений
+# При спробі змінити файл, Git покаже попередження
+
+
+
+

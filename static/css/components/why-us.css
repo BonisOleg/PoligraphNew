@@ -1,0 +1,307 @@
+/* Why-us секція з різною поведінкою на різних пристроях
+ * Desktop: Pure CSS hover
+ * Tablet: Tap to expand (через JS)
+ * Mobile: Sticky background + scroll-snap
+ * BEM методологія: .why-us, .why-us__container, .why-us__slider, тощо
+ * 
+ * ПРАВИЛА:
+ * - НЕ використовувати !important
+ * - НЕ дублювати правила з normalize.css
+ * - Використовувати CSS variables з base.css
+ */
+
+/* ============================================================================ */
+/* БАЗОВІ СТИЛІ (всі пристрої)                                                 */
+/* ============================================================================ */
+
+.why-us {
+  position: relative;
+  background-color: var(--color-bg-light);
+}
+
+.why-us__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.why-us__title {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  text-align: center;
+  color: var(--color-text);
+}
+
+/* ============================================================================ */
+/* СПІЛЬНІ СТИЛІ КАРТОК                                                        */
+/* ============================================================================ */
+
+.why-us__slide {
+  background-color: var(--color-bg);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.why-us__slide-image-container {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  position: relative;
+}
+
+.why-us__slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.why-us__slide:hover .why-us__slide-image {
+  transform: scale(1.05);
+}
+
+.why-us__slide-content {
+  padding: var(--spacing-lg);
+}
+
+.why-us__slide-title {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.why-us__slide-description {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.why-us__slide-button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: inherit;
+}
+
+.why-us__slide-button:hover {
+  background-color: var(--color-info);
+}
+
+.why-us__slide-button:active {
+  transform: scale(0.98);
+}
+
+/* ============================================================================ */
+/* DESKTOP (>1024px): Pure CSS Hover - 70% / 15% / 15%                        */
+/* ============================================================================ */
+
+@media (min-width: 1025px) {
+  .why-us {
+    padding: var(--spacing-xxl) var(--spacing-xl);
+  }
+
+  .why-us__title {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .why-us__slider {
+    display: flex;
+    gap: var(--spacing-lg);
+  }
+
+  .why-us__slide {
+    flex: 1;
+    min-width: 0;
+    transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s ease,
+                transform 0.2s ease;
+    cursor: pointer;
+  }
+
+  /* При hover на slider - звужуємо всі картки */
+  .why-us__slider:hover .why-us__slide {
+    flex: 0.43; /* ~15% кожна (0.43 + 0.43 + 2.14 = 3) */
+  }
+
+  /* При hover на конкретну - розширюємо до 70% */
+  .why-us__slide:hover {
+    flex: 2.14; /* ~70% (2.14 / 3 = 0.713) */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .why-us__slide-image-container {
+    height: 300px;
+  }
+}
+
+/* ============================================================================ */
+/* TABLET (768px-1024px): Tap to expand                                       */
+/* ============================================================================ */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .why-us {
+    padding: var(--spacing-xxl) var(--spacing-lg);
+  }
+
+  .why-us__title {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .why-us__slider {
+    display: flex;
+    gap: var(--spacing-md);
+  }
+
+  .why-us__slide {
+    flex: 1;
+    min-width: 0;
+    transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s ease;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  /* Коли є активна картка - звужуємо всі */
+  .why-us__slider.has-active .why-us__slide {
+    flex: 0.43;
+  }
+
+  /* Активна картка розширюється */
+  .why-us__slide.is-active {
+    flex: 2.14;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .why-us__slide-image-container {
+    height: 280px;
+  }
+}
+
+/* ============================================================================ */
+/* MOBILE (<768px): Sticky Background + Vertical Scroll-snap                  */
+/* ============================================================================ */
+
+@media (max-width: 767px) {
+  /* Зовнішній контейнер - висота для скролу */
+  .why-us {
+    position: relative;
+    min-height: 350vh; /* 100vh заголовок + 250vh * 3 картки */
+    padding: 0;
+  }
+
+  /* STICKY BACKGROUND LAYER - залишається на місці при скролі */
+  .why-us::before {
+    content: '';
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, 
+      var(--color-bg-light) 0%, 
+      #e9ecef 100%
+    );
+    display: block;
+    z-index: 0;
+  }
+
+  /* Контейнер для контенту поверх фону */
+  .why-us__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    z-index: 1;
+    padding: var(--spacing-xl) 0;
+  }
+
+  /* Заголовок фіксований зверху */
+  .why-us__title {
+    position: sticky;
+    top: var(--spacing-lg);
+    margin: 0 var(--spacing-md) var(--spacing-xl);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* Слайдер з вертикальним скролом */
+  .why-us__slider {
+    display: flex;
+    flex-direction: column;
+    gap: 80vh; /* Великий gap між картками для ефекту */
+    padding: 0 var(--spacing-md);
+    padding-bottom: 50vh;
+  }
+
+  /* Картки з fade-in анімацією */
+  .why-us__slide {
+    min-height: 70vh;
+    opacity: 0.4;
+    transform: translateY(30px) scale(0.95);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    will-change: opacity, transform; /* Оптимізація для GPU */
+  }
+
+  /* Коли картка у viewport (через JS) */
+  .why-us__slide.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .why-us__slide-image-container {
+    height: 40vh;
+    max-height: 300px;
+  }
+
+  .why-us__slide-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+  }
+}
+
+/* ============================================================================ */
+/* ACCESSIBILITY                                                               */
+/* ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .why-us__slide {
+    transition: none;
+  }
+
+  .why-us__slide-image {
+    transition: none;
+  }
+
+  @media (max-width: 767px) {
+    .why-us__slide {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* Focus styles для accessibility */
+.why-us__slide:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+.why-us__slide-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

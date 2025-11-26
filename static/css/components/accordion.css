@@ -1,0 +1,411 @@
+/* Accordion компонент та дочірні компоненти
+ * BEM методологія: .accordion, .accordion__header, .accordion__content, тощо
+ * 
+ * ПРАВИЛА:
+ * - НЕ використовувати !important
+ * - НЕ дублювати правила з normalize.css
+ * - Використовувати CSS variables з base.css
+ */
+
+.about-accordions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.accordion {
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background-color: var(--color-bg);
+}
+
+.accordion__header {
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-light);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.accordion__header:hover {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.accordion__title {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+  margin: 0;
+  color: inherit;
+}
+
+.accordion__subtitle {
+  font-size: var(--font-size-base);
+  margin: 0;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.accordion__content {
+  padding: var(--spacing-xl);
+  display: none;
+}
+
+[aria-expanded="true"] ~ .accordion__content,
+.accordion[aria-expanded="true"] .accordion__content {
+  display: block;
+}
+
+.accordion__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.accordion__stat-item {
+  text-align: center;
+  padding: var(--spacing-md);
+  background-color: var(--color-bg-light);
+  border-radius: var(--border-radius);
+}
+
+.accordion__stat-number {
+  display: block;
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.accordion__stat-label {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.accordion__section-title {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.accordion__section-description {
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text-muted);
+}
+
+.accordion__services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.service-card {
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-light);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-secondary);
+}
+
+.service-card__icon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.service-card__title {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.service-card__price {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.service-card__discount {
+  font-size: var(--font-size-sm);
+  color: var(--color-success);
+  margin-bottom: var(--spacing-md);
+}
+
+.service-card__features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.service-card__features li {
+  padding: var(--spacing-xs) 0;
+  padding-left: var(--spacing-lg);
+  position: relative;
+}
+
+.service-card__features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--color-success);
+}
+
+.service-card__button {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  text-decoration: none;
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition-speed);
+}
+
+.service-card__button:hover {
+  background-color: var(--color-info);
+}
+
+.accordion__advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.advantage-card {
+  padding: var(--spacing-md);
+  text-align: center;
+  background-color: var(--color-bg-light);
+  border-radius: var(--border-radius);
+}
+
+.advantage-card__icon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.advantage-card__title {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+.advantage-card__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.accordion__hero {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-light);
+  border-radius: var(--border-radius);
+}
+
+.accordion__hero-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.accordion__hero-name {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-primary);
+}
+
+.accordion__hero-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-sm);
+}
+
+.accordion__hero-description {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  margin: 0;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.accordion__hero-badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.accordion__education-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.education-item {
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-light);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--color-primary);
+}
+
+.education-item__year {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-xs);
+}
+
+.education-item__institution {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+.education-item__program {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-xs);
+}
+
+.education-item__degree {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.accordion__process-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.process-step {
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-light);
+  border-radius: var(--border-radius);
+  position: relative;
+}
+
+.process-step__number {
+  display: block;
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  opacity: 0.3;
+  margin-bottom: var(--spacing-sm);
+}
+
+.process-step__title {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.process-step__description {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.accordion__principles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.principle-card {
+  padding: var(--spacing-lg);
+  text-align: center;
+  background-color: var(--color-bg-light);
+  border-radius: var(--border-radius);
+}
+
+.principle-card__icon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.principle-card__title {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+.principle-card__description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--spacing-xl);
+}
+
+.comparison-table thead {
+  background-color: var(--color-bg-light);
+}
+
+.comparison-table th {
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: bold;
+  color: var(--color-text);
+  border-bottom: 2px solid var(--color-secondary);
+}
+
+.comparison-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-secondary);
+  color: var(--color-text);
+}
+
+.comparison-table__highlight {
+  background-color: var(--color-success);
+  color: var(--color-bg);
+  font-weight: bold;
+}
+
+.accordion__certification-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.certification-card {
+  padding: var(--spacing-lg);
+  text-align: center;
+  background-color: var(--color-bg-light);
+  border-radius: var(--border-radius);
+}
+
+.certification-card__icon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.certification-card__title {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+.certification-card__description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+

@@ -1,0 +1,159 @@
+/* Header компонент
+ * BEM методологія: .header, .header__menu-toggle, .header__toggle-button, тощо
+ * 
+ * ПРАВИЛА:
+ * - НЕ використовувати !important
+ * - НЕ дублювати правила з normalize.css
+ * - Використовувати CSS variables з base.css
+ */
+
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--color-bg);
+  padding: var(--spacing-md);
+}
+
+.header__menu-toggle {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--color-bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.header__menu-toggle:hover {
+  background-color: var(--color-primary);
+}
+
+.header__toggle-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.header__toggle-icon {
+  position: absolute;
+  width: 1.5rem;
+  height: 0.125rem;
+  background-color: var(--color-text);
+  transition: opacity var(--transition-speed), transform var(--transition-speed);
+}
+
+.header__toggle-icon--burger::before,
+.header__toggle-icon--burger::after {
+  content: '';
+  position: absolute;
+  width: 1.5rem;
+  height: 0.125rem;
+  background-color: var(--color-text);
+  transition: transform var(--transition-speed);
+}
+
+.header__toggle-icon--burger::before {
+  top: -0.5rem;
+}
+
+.header__toggle-icon--burger::after {
+  top: 0.5rem;
+}
+
+.header__toggle-icon--close {
+  opacity: 0;
+  transform: rotate(45deg);
+}
+
+[data-menu-open="true"] .header__toggle-icon--burger {
+  opacity: 0;
+}
+
+[data-menu-open="true"] .header__toggle-icon--close {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+[data-menu-open="true"] .header__toggle-icon--burger::before {
+  transform: rotate(45deg) translate(0.35rem, 0.35rem);
+}
+
+[data-menu-open="true"] .header__toggle-icon--burger::after {
+  transform: rotate(-45deg) translate(0.35rem, -0.35rem);
+}
+
+.header__menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 20rem;
+  height: 100vh;
+  background-color: var(--color-bg);
+  transform: translateX(-100%);
+  transition: transform var(--transition-speed);
+  padding: var(--spacing-xl);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-menu-open="true"] ~ .header__menu,
+.header__menu[aria-expanded="true"] {
+  transform: translateX(0);
+}
+
+.header__menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.header__menu-item {
+  margin: 0;
+}
+
+.header__menu-link {
+  color: var(--color-text);
+  text-decoration: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  display: block;
+}
+
+.header__menu-link:hover {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
+@media (min-width: 768px) {
+  .header__menu {
+    position: static;
+    transform: none;
+    width: auto;
+    height: auto;
+    max-width: none;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .header__menu-list {
+    flex-direction: row;
+  }
+}
+
+

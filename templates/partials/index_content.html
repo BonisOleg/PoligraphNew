@@ -1,0 +1,143 @@
+{% load static %}
+<section class="hero" data-hero-section>
+    <div class="hero__video-wrapper">
+        <video class="hero__video" 
+               autoplay 
+               muted 
+               playsinline
+               webkit-playsinline
+               preload="metadata"
+               disablePictureInPicture
+               x-webkit-airplay="deny"
+               aria-hidden="true">
+            <source src="{% static 'video/95934818-94b0-4a8f-878c-f8c6b45af65a.mp4' %}" type="video/mp4">
+            Ваш браузер не підтримує відео.
+        </video>
+    </div>
+    <div class="hero__text-container">
+        <p class="hero__text hero__text--top-right" aria-hidden="true">
+            не бійся подивитися
+        </p>
+        <p class="hero__text hero__text--bottom-left" aria-hidden="true">
+            правді у вічі
+        </p>
+    </div>
+</section>
+
+<section class="why-us">
+    <div class="why-us__container">
+        <h2 class="why-us__title">Чому ми</h2>
+        <div class="why-us__slider">
+            <article class="why-us__slide" data-slide-index="0">
+                <div class="why-us__slide-image-container">
+                    <img class="why-us__slide-image" 
+                         src="" 
+                         alt="Перевага 1"
+                         loading="lazy">
+                </div>
+                <div class="why-us__slide-content">
+                    <h3 class="why-us__slide-title">Перевага 1</h3>
+                    <p class="why-us__slide-description">Опис переваги 1</p>
+                    <button class="why-us__slide-button" type="button" aria-label="Дізнатися більше про перевагу 1">
+                        Дізнатися більше
+                    </button>
+                </div>
+            </article>
+            <article class="why-us__slide" data-slide-index="1">
+                <div class="why-us__slide-image-container">
+                    <img class="why-us__slide-image" 
+                         src="" 
+                         alt="Перевага 2"
+                         loading="lazy">
+                </div>
+                <div class="why-us__slide-content">
+                    <h3 class="why-us__slide-title">Перевага 2</h3>
+                    <p class="why-us__slide-description">Опис переваги 2</p>
+                    <button class="why-us__slide-button" type="button" aria-label="Дізнатися більше про перевагу 2">
+                        Дізнатися більше
+                    </button>
+                </div>
+            </article>
+            <article class="why-us__slide" data-slide-index="2">
+                <div class="why-us__slide-image-container">
+                    <img class="why-us__slide-image" 
+                         src="" 
+                         alt="Перевага 3"
+                         loading="lazy">
+                </div>
+                <div class="why-us__slide-content">
+                    <h3 class="why-us__slide-title">Перевага 3</h3>
+                    <p class="why-us__slide-description">Опис переваги 3</p>
+                    <button class="why-us__slide-button" type="button" aria-label="Дізнатися більше про перевагу 3">
+                        Дізнатися більше
+                    </button>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="cta__container">
+        <h2 class="cta__title">Залишити заявку</h2>
+        <form class="cta__form" 
+              method="post" 
+              action="{% url 'pages:index' %}"
+              hx-post="{% url 'pages:index' %}"
+              hx-target="#cta-form-result"
+              hx-swap="innerHTML">
+            {% csrf_token %}
+            <div class="cta__form-group">
+                <label class="cta__form-label" for="cta-name">
+                    Ім'я
+                </label>
+                <input class="cta__form-input" 
+                       type="text" 
+                       id="cta-name" 
+                       name="name" 
+                       required
+                       aria-required="true"
+                       aria-label="Введіть ваше ім'я">
+            </div>
+            <div class="cta__form-group">
+                <label class="cta__form-label" for="cta-phone">
+                    Телефон
+                </label>
+                <input class="cta__form-input" 
+                       type="tel" 
+                       id="cta-phone" 
+                       name="phone" 
+                       required
+                       aria-required="true"
+                       aria-label="Введіть ваш телефон">
+            </div>
+            <div class="cta__form-group">
+                <label class="cta__form-label" for="cta-email">
+                    Email
+                </label>
+                <input class="cta__form-input" 
+                       type="email" 
+                       id="cta-email" 
+                       name="email" 
+                       required
+                       aria-required="true"
+                       aria-label="Введіть ваш email">
+            </div>
+            <div class="cta__form-group">
+                <label class="cta__form-label" for="cta-message">
+                    Повідомлення
+                </label>
+                <textarea class="cta__form-textarea" 
+                          id="cta-message" 
+                          name="message" 
+                          rows="4"
+                          aria-label="Введіть ваше повідомлення"></textarea>
+            </div>
+            <button class="cta__form-submit" type="submit" aria-label="Відправити заявку">
+                Відправити
+            </button>
+            <div class="cta__form-result" id="cta-form-result" aria-live="polite"></div>
+        </form>
+    </div>
+</section>
+

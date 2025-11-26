@@ -1,0 +1,192 @@
+<section class="about-accordions">
+    
+    <!-- БЛОК 1: Ціни на послуги -->
+    <article class="accordion" data-accordion="services" aria-expanded="false">
+        <div class="accordion__header" role="button" tabindex="0" aria-label="Розгорнути секцію послуг">
+            <h1 class="accordion__title">ЦІНИ НА ПОСЛУГИ</h1>
+            <p class="accordion__subtitle">Професійні перевірки у Львові</p>
+        </div>
+        
+        <div class="accordion__content">
+            <!-- Статистика -->
+            <div class="accordion__stats">
+                {% for stat in services_stats %}
+                <div class="accordion__stat-item">
+                    <span class="accordion__stat-number">{{ stat.number }}</span>
+                    <span class="accordion__stat-label">{{ stat.label }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Послуги -->
+            <div class="accordion__services">
+                <h2 class="accordion__section-title">Наші послуги</h2>
+                <p class="accordion__section-description">Спеціалізуємося на перевірках у Львові: професійний поліграфолог, перевірка на детекторі брехні та корпоративні послуги для бізнесу.</p>
+                <div class="accordion__services-grid">
+                    {% for service in services_list %}
+                    <article class="service-card">
+                        <h3 class="service-card__title">{{ service.title }}</h3>
+                        <p class="service-card__price">{{ service.price }}</p>
+                        {% if service.discount %}
+                        <p class="service-card__discount">{{ service.discount }}</p>
+                        {% endif %}
+                        <ul class="service-card__features">
+                            {% for feature in service.features %}
+                            <li>{{ feature }}</li>
+                            {% endfor %}
+                        </ul>
+                        <a href="{% url 'pages:contacts' %}" class="service-card__button">Замовити послугу →</a>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Переваги -->
+            <div class="accordion__advantages">
+                <h2 class="accordion__section-title">Чому обирають нас?</h2>
+                <div class="accordion__advantages-grid">
+                    {% for advantage in services_advantages %}
+                    <div class="advantage-card">
+                        <h3 class="advantage-card__title">{{ advantage.title }}</h3>
+                        <p class="advantage-card__text">{{ advantage.text }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- БЛОК 2: Досвідчений член НАП України -->
+    <article class="accordion" data-accordion="about" aria-expanded="false">
+        <div class="accordion__header" role="button" tabindex="0" aria-label="Розгорнути секцію про поліграфолога">
+            <h1 class="accordion__title">ДОСВІДЧЕНИЙ ЧЛЕН НАП УКРАЇНИ</h1>
+            <p class="accordion__subtitle">{{ polygraphologist.name }}</p>
+        </div>
+        
+        <div class="accordion__content">
+            <!-- Hero -->
+            <div class="accordion__hero">
+                <p class="accordion__hero-label">Знайомтесь</p>
+                <h2 class="accordion__hero-name">{{ polygraphologist.name }}</h2>
+                <p class="accordion__hero-description">{{ polygraphologist.description }}</p>
+            </div>
+            
+            <!-- Статистика -->
+            <div class="accordion__stats">
+                {% for stat in about_stats %}
+                <div class="accordion__stat-item">
+                    <span class="accordion__stat-number">{{ stat.number }}</span>
+                    <span class="accordion__stat-label">{{ stat.label }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Освіта -->
+            <div class="accordion__education">
+                <h2 class="accordion__section-title">Освіта та сертифікати</h2>
+                <div class="accordion__education-list">
+                    {% for edu in education %}
+                    <article class="education-item">
+                        <span class="education-item__year">{{ edu.year }}</span>
+                        <h3 class="education-item__institution">{{ edu.institution }}</h3>
+                        <p class="education-item__program">{{ edu.program }}</p>
+                        <p class="education-item__degree">{{ edu.degree }}</p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Процес -->
+            <div class="accordion__process">
+                <h2 class="accordion__section-title">Як проходить перевірка</h2>
+                <div class="accordion__process-list">
+                    {% for step in process_steps %}
+                    <article class="process-step">
+                        <span class="process-step__number">{{ step.number }}</span>
+                        <h3 class="process-step__title">{{ step.title }}</h3>
+                        <p class="process-step__description">{{ step.description }}</p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Принципи -->
+            <div class="accordion__principles">
+                <h2 class="accordion__section-title">Принципи роботи</h2>
+                <div class="accordion__principles-grid">
+                    {% for principle in principles %}
+                    <div class="principle-card">
+                        <h3 class="principle-card__title">{{ principle.title }}</h3>
+                        <p class="principle-card__description">{{ principle.description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- БЛОК 3: Професійне обладнання -->
+    <article class="accordion" data-accordion="equipment" aria-expanded="false">
+        <div class="accordion__header" role="button" tabindex="0" aria-label="Розгорнути секцію про обладнання">
+            <h1 class="accordion__title">ПРОФЕСІЙНЕ ОБЛАДНАННЯ</h1>
+            <p class="accordion__subtitle">{{ equipment_hero.title }}</p>
+        </div>
+        
+        <div class="accordion__content">
+            <!-- Hero -->
+            <div class="accordion__hero">
+                <span class="accordion__hero-badge">{{ equipment_hero.badge }}</span>
+                <h2 class="accordion__hero-name">{{ equipment_hero.title }}</h2>
+                <p class="accordion__hero-subtitle">{{ equipment_hero.subtitle }}</p>
+                <p class="accordion__hero-description">{{ equipment_hero.description }}</p>
+            </div>
+            
+            <!-- Статистика -->
+            <div class="accordion__stats">
+                {% for stat in equipment_stats %}
+                <div class="accordion__stat-item">
+                    <span class="accordion__stat-number">{{ stat.number }}</span>
+                    <span class="accordion__stat-label">{{ stat.label }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Порівняння -->
+            <div class="accordion__comparison">
+                <h2 class="accordion__section-title">РУБІКОН vs Інші поліграфи</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Характеристика</th>
+                            <th scope="col">РУБІКОН</th>
+                            <th scope="col">Інші</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in equipment_comparison %}
+                        <tr>
+                            <td>{{ item.characteristic }}</td>
+                            <td class="comparison-table__highlight">{{ item.rubicon }}</td>
+                            <td>{{ item.others }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Сертифікація -->
+            <div class="accordion__certification">
+                <h2 class="accordion__section-title">Сертифікація та стандарти</h2>
+                <div class="accordion__certification-grid">
+                    {% for cert in equipment_certification %}
+                    <div class="certification-card">
+                        <h3 class="certification-card__title">{{ cert.title }}</h3>
+                        <p class="certification-card__description">{{ cert.description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </article>
+
+</section>

@@ -1,0 +1,185 @@
+/* Hero секція з JS parallax
+ * BEM методологія
+ * Position: absolute (не fixed) для iOS сумісності
+ * Parallax через JS
+ */
+
+/* ============================================================================ */
+/* HERO КОНТЕЙНЕР                                                               */
+/* ============================================================================ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: -webkit-fill-available;
+  height: 100dvh;
+  background: var(--color-bg-dark);
+  overflow: hidden;
+}
+
+/* ============================================================================ */
+/* ВІДЕО WRAPPER (absolute для iOS)                                            */
+/* ============================================================================ */
+
+.hero__video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  /* JS буде додавати parallax через transform */
+}
+
+/* Desktop: 50% ширини */
+@media (min-width: 768px) {
+  .hero__video-wrapper {
+    max-width: 50%;
+  }
+}
+
+.hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+/* Приховати Safari controls */
+.hero__video::-webkit-media-controls {
+  display: none;
+}
+
+.hero__video::-webkit-media-controls-enclosure {
+  display: none;
+}
+
+.hero__video::-webkit-media-controls-panel {
+  display: none;
+}
+
+.hero__video::-webkit-media-controls-play-button {
+  display: none;
+}
+
+.hero__video::-webkit-media-controls-start-playback-button {
+  display: none;
+}
+
+/* Заборонити взаємодію після ended */
+.hero__video--ended {
+  pointer-events: none;
+}
+
+/* Відео в статичному режимі (вже було відтворено) */
+.hero__video--static {
+  pointer-events: none;
+}
+
+.hero__video--loaded {
+  opacity: 1;
+}
+
+/* ============================================================================ */
+/* ТЕКСТОВИЙ КОНТЕЙНЕР                                                          */
+/* ============================================================================ */
+
+.hero__text-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ============================================================================ */
+/* ТЕКСТ З АНІМАЦІЄЮ (через JS)                                                */
+/* ============================================================================ */
+
+.hero__text {
+  position: absolute;
+  color: var(--color-text-light);
+  font-size: clamp(1.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  backface-visibility: hidden;
+  transition: opacity 5s ease-out, transform 5s ease-out;
+}
+
+.hero__text--top-right {
+  top: calc(2rem + var(--safe-area-top));
+  right: calc(2rem + var(--safe-area-right));
+  text-align: right;
+}
+
+.hero__text--bottom-left {
+  bottom: calc(2rem + var(--safe-area-bottom));
+  left: calc(2rem + var(--safe-area-left));
+  text-align: left;
+}
+
+/* JS додає цей клас на 5 секунді відео */
+.hero__text--visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Текст одразу видимий для статичного режиму */
+.hero__text--static {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: none;
+}
+
+/* Текст для error fallback */
+.hero__text--error {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: none;
+}
+
+/* ============================================================================ */
+/* ACCESSIBILITY                                                                */
+/* ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__text {
+    transition: none;
+  }
+  
+  .hero__text--visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================================ */
+/* МОБІЛЬНА АДАПТАЦІЯ                                                           */
+/* ============================================================================ */
+
+@media (max-width: 767px) {
+  .hero__text {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+  }
+  
+  .hero__text--top-right {
+    top: calc(1rem + var(--safe-area-top));
+    right: calc(1rem + var(--safe-area-right));
+  }
+  
+  .hero__text--bottom-left {
+    bottom: calc(1rem + var(--safe-area-bottom));
+    left: calc(1rem + var(--safe-area-left));
+  }
+}

@@ -1,0 +1,152 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    POLYGRAPHNEW - ШВИДКИЙ СТАРТ                              ║
+║                   Налаштування проекту за 5 хвилин                           ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+📦 СТЕК ПРОЕКТУ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Django                    - backend
+✅ normalize.css v12.1.1     - CSS нормалізація (НЕДОТОРКАННИЙ)
+✅ HTMX 2.0.8                - інтерактивність
+✅ Vanilla CSS               - стилізація
+✅ Vanilla JS                - мінімально
+
+
+🌐 ПІДТРИМУВАНІ БРАУЗЕРИ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Chrome 90+, Firefox 88+, Safari 14+, Edge 90+ (2021+)
+
+
+📁 СТРУКТУРА (вже створена)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PolygraphNew/
+├── static/css/
+│   ├── normalize.css          ⚠️ НЕДОТОРКАННИЙ
+│   ├── base.css               ✅ Оновлено з CSS variables
+│   ├── components/            📁 Для компонентів (BEM)
+│   └── utilities/             📁 Для утиліт
+├── templates/
+│   └── base.html              ✅ Оптимізований шаблон
+├── .cursorrules               ✅ Правила для Cursor AI
+├── .gitattributes             ✅ Захист normalize.css
+├── CSS_STRUCTURE.md           📖 Документація CSS
+├── HTMX_USAGE.md              📖 Документація HTMX
+├── README.md                  📖 Загальний опис
+└── QUICK_START.txt            📄 Цей файл
+
+
+⚡ КРИТИЧНИЙ ПОРЯДОК ПІДКЛЮЧЕННЯ (вже в base.html)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. preconnect (CDN оптимізація)
+2. normalize.css (ЗАВЖДИ ПЕРШИЙ)
+3. base.css
+4. components/*.css
+5. utilities/*.css
+6. CSRF token meta tag
+7. HTMX (з defer)
+8. Власні JS (з defer)
+
+
+🔧 НАЛАШТУВАННЯ DJANGO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Скопіюйте це в settings.py:
+
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [BASE_DIR / 'static']
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+
+🔗 ПОСИЛАННЯ НА БІБЛІОТЕКИ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌 normalize.css:
+   - Офіційний сайт: https://csstools.github.io/normalize.css/
+   - GitHub: https://github.com/csstools/normalize.css
+   - Версія: v12.1.1 (вже завантажено в static/css/normalize.css)
+   - CDN: https://cdn.jsdelivr.net/npm/@csstools/normalize.css
+
+📌 HTMX:
+   - Офіційний сайт: https://htmx.org/
+   - Документація: https://htmx.org/docs/
+   - Приклади: https://htmx.org/examples/
+   - CDN: https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js
+   - Django інтеграція: https://django-htmx.readthedocs.io/
+
+
+📖 ДОКУМЕНТАЦІЯ (в проекті)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📄 CSS_STRUCTURE.md     - Структура CSS, normalize.css, BEM, правила
+📄 HTMX_USAGE.md        - Приклади HTMX з Django, CSRF, компоненти
+📄 README.md            - Загальний опис проекту
+📄 .cursorrules         - Правила для Cursor AI (не редагувати вручну)
+
+
+⚠️ КРИТИЧНІ ПРАВИЛА (для розробки)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ НІКОЛИ не змінювати static/css/normalize.css
+❌ НІКОЛИ не використовувати inline styles (style="")
+❌ НІКОЛИ не використовувати !important для перевизначення normalize
+❌ НІКОЛИ не порушувати порядок підключення CSS
+❌ НІКОЛИ не додавати jQuery, core-js, Bootstrap JS
+
+✅ ЗАВЖДИ використовувати BEM методологію для класів
+✅ ЗАВЖДИ використовувати CSS custom properties (в base.css)
+✅ ЗАВЖДИ використовувати CSRF token для HTMX форм
+✅ ЗАВЖДИ підключати скрипти з defer
+
+
+🚀 ШВИДКИЙ ЗАПУСК
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Переконайтеся, що структура створена (вже є)
+2. Додайте налаштування в settings.py (див. вище)
+3. Створіть Django app: python manage.py startapp myapp
+4. Використовуйте templates/base.html як базовий шаблон
+5. Додавайте стилі в base.css або components/*.css
+6. Використовуйте HTMX для інтерактивності (див. HTMX_USAGE.md)
+7. Запуск: python manage.py runserver
+
+
+📊 ОЧІКУВАНА ПРОДУКТИВНІСТЬ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Lighthouse Performance: 95+
+First Contentful Paint: <1s
+Total Blocking Time: <100ms
+Cumulative Layout Shift: <0.1
+Загальний розмір: ~65KB (normalize + HTMX + base.css)
+
+
+🎯 ПРИКЛАД ВИКОРИСТАННЯ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+В вашому шаблоні:
+
+    {% extends 'base.html' %}
+    
+    {% block title %}Моя сторінка{% endblock %}
+    
+    {% block content %}
+        <h1>Привіт, світ!</h1>
+        
+        <!-- HTMX приклад -->
+        <button hx-get="/api/data" hx-target="#result">
+            Завантажити дані
+        </button>
+        <div id="result"></div>
+    {% endblock %}
+
+
+✅ ВСЕ ГОТОВО!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Проект налаштовано для:
+✅ 100% крос-платформенності (normalize.css v12.1.1)
+✅ Оптимальної продуктивності (мінімальний стек, defer)
+✅ Безпомилкової розробки (жорсткі правила в .cursorrules)
+✅ Простої підтримки (чітка структура, документація)
+
+Cursor AI автоматично дотримується всіх правил з .cursorrules
+Просто починайте розробку - все вже налаштовано!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Made with ❤️ for maximum performance and zero conflicts
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

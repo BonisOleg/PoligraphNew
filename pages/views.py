@@ -1,0 +1,306 @@
+"""
+Views для сторінок сайту.
+Кожен view перевіряє HX-Request header для підтримки HTMX навігації.
+"""
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from .forms import ConsultationForm
+
+
+def index_view(request):
+    """Ознайомча сторінка"""
+    context = {
+        'title': 'Головна',
+        'hero_title': 'Поліграф - Професійна перевірка на детекторі брехні',
+        'hero_description': 'Сертифікований поліграфолог з багаторічним досвідом. Сучасне обладнання та науковий підхід.',
+        'features': [
+            {
+                'title': 'Професіоналізм',
+                'description': 'Досвід роботи понад 10 років',
+            },
+            {
+                'title': 'Сучасне обладнання',
+                'description': 'Новітні поліграфи світового стандарту',
+            },
+            {
+                'title': 'Конфіденційність',
+                'description': 'Повна анонімність та захист даних',
+            },
+        ],
+    }
+    
+    # Перевірка HTMX запиту
+    if request.headers.get('HX-Request'):
+        return render(request, 'partials/index_content.html', context)
+    
+    return render(request, 'index.html', context)
+
+
+def about_view(request):
+    """Сторінка про нас з 3 акордеон-блоками: Послуги, Поліграфолог, Обладнання"""
+    context = {
+        'title': 'Про нас',
+        
+        # БЛОК 1: Послуги
+        'services_stats': [
+            {'number': '150+', 'label': 'успішних перевірок'},
+            {'number': '98%', 'label': 'точність результатів'},
+            {'number': '100%', 'label': 'конфіденційність'},
+        ],
+        'services_list': [
+            {
+                'title': 'Перевірка подружжя на зраду',
+                'price': '5000 грн',
+                'discount': 'Знижка 50% на другого',
+                'features': ['Конфіденційність 100%', 'Детальний звіт', 'Психологічна підтримка'],
+            },
+            {
+                'title': 'Скринінг при працевлаштуванні',
+                'price': '2500/4000 грн',
+                'discount': '',
+                'features': ['Базова - 2500 грн', 'Розширений - 4000 грн', 'Перевірка резюме'],
+            },
+            {
+                'title': 'Перевірка діючого персоналу',
+                'price': '2500/4000 грн',
+                'discount': '',
+                'features': ['Планові перевірки', 'Розслідування порушень', 'Захист від шахрайства'],
+            },
+            {
+                'title': 'Приватні питання',
+                'price': '5000 грн',
+                'discount': '',
+                'features': ['Повна конфіденційність', 'Індивідуальний підхід', 'Підтримка експерта'],
+            },
+            {
+                'title': 'Розслідування крадіжок',
+                'price': '5000 грн',
+                'discount': '',
+                'features': ['Швидке розслідування', 'Збір доказів', 'Співпраця з правоохоронцями'],
+            },
+            {
+                'title': 'Пошуки матеріальних доказів',
+                'price': '5000 грн',
+                'discount': 'Знижка військовим 10%',
+                'features': ['Юридична цінність', 'Експертні висновки', 'Підготовка до суду'],
+            },
+        ],
+        'services_advantages': [
+            {'title': 'Сертифікація', 'text': 'Офіційний член НАП України'},
+            {'title': 'Сучасне обладнання', 'text': 'Поліграфи Rubicon з максимальною точністю'},
+            {'title': 'Конфіденційність', 'text': 'Повна анонімність та захист даних'},
+            {'title': 'Швидкий результат', 'text': 'Детальний звіт протягом 24 годин'},
+            {'title': 'Висока точність', 'text': '98% точність результатів'},
+            {'title': 'Виїзд до клієнта', 'text': 'Перевірки в зручному для вас місці'},
+        ],
+        
+        # БЛОК 2: Поліграфолог
+        'polygraphologist': {
+            'name': 'Керезвас Юліана Георгіївна',
+            'description': 'Керівниця представництва Національної асоціації поліграфологів України у Львівській області. Юрист-магістр з відзнакою, магістр з публічного управління.',
+        },
+        'about_stats': [
+            {'number': '150+', 'label': 'проведених перевірок'},
+            {'number': '98%', 'label': 'точність результатів'},
+            {'number': '100%', 'label': 'конфіденційність'},
+            {'number': '2', 'label': 'дипломи магістра'},
+        ],
+        'education': [
+            {
+                'year': '2014',
+                'institution': 'Національний юридичний університет імені Ярослава Мудрого',
+                'program': 'Правознавство',
+                'degree': 'Диплом магістра з відзнакою',
+            },
+            {
+                'year': '2020',
+                'institution': 'Національна академія державного управління при Президентові України',
+                'program': 'Публічне управління та адміністрування',
+                'degree': 'Диплом магістра',
+            },
+            {
+                'year': '2025',
+                'institution': 'ДНП Державний університет «Київський авіаційний інститут»',
+                'program': 'Проведення досліджень та експертиз із використанням поліграфа',
+                'degree': 'Курси підвищення кваліфікації',
+            },
+            {
+                'year': '2025',
+                'institution': 'Національна асоціація поліграфологів України',
+                'program': 'Керівниця представництва НАПУ у Львівській області',
+                'degree': 'Офіційне представництво в регіоні',
+            },
+        ],
+        'process_steps': [
+            {
+                'number': '01',
+                'title': 'Попередня консультація',
+                'description': 'Безкоштовно обговорюємо вашу ситуацію, пояснюю процедуру, відповідаю на всі питання.',
+            },
+            {
+                'number': '02',
+                'title': 'Підготовка до тестування',
+                'description': 'Складаємо перелік питань, пояснюю принципи роботи поліграфа, створюю комфортні умови.',
+            },
+            {
+                'number': '03',
+                'title': 'Проведення тестування',
+                'description': 'Використовую сучасне обладнання Rubicon. Тривалість 1-2 години. Можливість відеофіксації.',
+            },
+            {
+                'number': '04',
+                'title': 'Аналіз та звіт',
+                'description': 'Детальний аналіз результатів, підготовка письмового висновку з рекомендаціями.',
+            },
+        ],
+        'principles': [
+            {
+                'title': 'Незалежність',
+                'description': 'Об\'єктивність та неупередженість у будь-якій справі.',
+            },
+            {
+                'title': 'Етичність',
+                'description': 'Дотримуюся найвищих етичних стандартів професії.',
+            },
+            {
+                'title': 'Науковий підхід',
+                'description': 'Використовую лише перевірені методики та сучасне обладнання.',
+            },
+        ],
+        
+        # БЛОК 3: Обладнання
+        'equipment_hero': {
+            'badge': 'Офіційний дилер в Україні',
+            'title': 'Поліграф РУБІКОН',
+            'subtitle': 'Професійний поліграф',
+            'description': 'Сучасний український поліграф від офіційного дилера з надійними комплектуючими. Перевірені технології детекції брехні з точністю 95-98% та повною сертифікацією в Україні.',
+        },
+        'equipment_stats': [
+            {'number': '95-98%', 'label': 'точність'},
+            {'number': '7', 'label': 'каналів'},
+            {'number': '3', 'label': 'роки гарантії'},
+        ],
+        'equipment_comparison': [
+            {'characteristic': 'Точність', 'rubicon': '95-98%', 'others': '85-92%'},
+            {'characteristic': 'Кількість каналів', 'rubicon': '7', 'others': '4-5'},
+            {'characteristic': 'Швидкість обробки', 'rubicon': 'Реальний час', 'others': '2-5 хв'},
+            {'characteristic': 'Гарантія', 'rubicon': 'До 3 років', 'others': '1 рік'},
+        ],
+        'equipment_certification': [
+            {
+                'title': 'APA Standards',
+                'description': 'Відповідає стандартам Американської Асоціації Поліграфологів',
+            },
+            {
+                'title': 'Сертифікат України',
+                'description': 'Офіційно дозволено для використання в Україні',
+            },
+            {
+                'title': 'ISO 9001',
+                'description': 'Міжнародний стандарт якості виробництва',
+            },
+            {
+                'title': 'Сертифікований дилер',
+                'description': 'Офіційне дилерство та технічна підтримка в Україні',
+            },
+        ],
+    }
+    
+    # Перевірка HTMX запиту
+    if request.headers.get('HX-Request'):
+        return render(request, 'partials/about_content.html', context)
+    
+    return render(request, 'about.html', context)
+
+
+def contacts_view(request):
+    """Сторінка контактів з контактною інформацією та Google картою (sticky overlay)"""
+    context = {
+        'title': 'Контакти',
+        
+        # Контактна інформація
+        'contacts': {
+            'phone': '+38 (067) 524-33-54',
+            'whatsapp': '+38 (067) 524-33-54',
+            'email': 'ulianakerezvas@gmail.com',
+            'address': 'Львів, Україна',
+            'travel': 'Виїзд до клієнта по всій Україні',
+            'working_hours': 'Пн-Пт: 9:00-18:00, Сб: 10:00-15:00',
+        },
+        
+        # Google карта
+        'map': {
+            'address': 'Львів, Україна',
+            'lat': 49.8397,
+            'lng': 24.0297,
+        },
+        
+        # Сертифікати
+        'certificates': [
+            'Сертифікат поліграфолога міжнародного зразка (APA)',
+            'Ліцензія на проведення поліграфних досліджень',
+            'Сертифікат Lafayette Instrument Company',
+            'Сертифікат підвищення кваліфікації (2024)',
+        ],
+    }
+    
+    # Перевірка HTMX запиту
+    if request.headers.get('HX-Request'):
+        return render(request, 'partials/contacts_content.html', context)
+    
+    return render(request, 'contacts.html', context)
+
+
+def consultation_view(request):
+    """Обробка форми консультації з footer"""
+    if request.method != 'POST':
+        return HttpResponse('Method not allowed', status=405)
+    
+    form = ConsultationForm(request.POST)
+    
+    if form.is_valid():
+        # Тут можна додати логіку збереження в БД або відправки email
+        # Поки що просто повертаємо успішне повідомлення
+        success_html = '''
+        <div class="footer__form-success">
+            <strong>Дякуємо!</strong> Ваша заявка прийнята. Ми зв'яжемося з вами найближчим часом.
+        </div>
+        '''
+        return HttpResponse(success_html, status=200)
+    else:
+        # Повертаємо помилки валідації
+        errors_html = '<div class="footer__form-errors">'
+        for field, errors in form.errors.items():
+            for error in errors:
+                errors_html += f'<p>{error}</p>'
+        errors_html += '</div>'
+        return HttpResponse(errors_html, status=422)
+
+
+def legal_document_view(request, slug):
+    """Універсальний view для правових документів (заглушки)"""
+    # Мапінг slug → назва документа
+    documents = {
+        'public-offer': 'Публічна оферта',
+        'privacy-policy': 'Політика конфіденційності',
+        'cookie-policy': 'Політика використання cookies',
+        'consent-pd': 'Згода на обробку персональних даних',
+        'disclaimer': 'Відмова від відповідальності',
+    }
+    
+    document_title = documents.get(slug, 'Правовий документ')
+    
+    context = {
+        'title': document_title,
+        'document_title': document_title,
+        'slug': slug,
+    }
+    
+    # Перевірка HTMX запиту
+    if request.headers.get('HX-Request'):
+        return render(request, 'partials/legal_document.html', context)
+    
+    return render(request, 'legal_document.html', context)
+
+

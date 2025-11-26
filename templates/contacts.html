@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - PolygraphNew{% endblock %}
+
+{% block component_css %}
+<link rel="stylesheet" href="{% static 'css/components/contacts.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="contacts" id="main">
+    {% include 'partials/contacts_content.html' %}
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/contacts.js' %}" defer></script>
+{% endblock %}
+
+
+
