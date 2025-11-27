@@ -3,19 +3,8 @@
 
 {% block title %}{{ title }} - PolygraphNew{% endblock %}
 
-{% block component_css %}
-<link rel="stylesheet" href="{% static 'css/components/hero.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/why-us.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/cta.css' %}">
-{% endblock %}
-
 {% block content %}
-<main class="main" id="main">
+<main class="main main--index" id="main">
     {% include 'partials/index_content.html' %}
 </main>
 {% endblock %}
-
-{% block scripts %}
-<script src="{% static 'js/why-us.js' %}" defer></script>
-{% endblock %}
-

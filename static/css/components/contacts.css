@@ -11,9 +11,9 @@
 /* ВЕРХНІЙ БЛОК - КОНТАКТНА ІНФОРМАЦІЯ                                          */
 /* ============================================================================ */
 
-.contacts {
+.main--contacts {
   position: relative;
-  min-height: 100vh;
+  /* Дозволяє sticky overlay працювати правильно */
 }
 
 .contacts__top {
@@ -22,6 +22,9 @@
   padding: var(--spacing-xxl) var(--spacing-lg);
   background-color: var(--color-bg);
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .contacts__container {
@@ -37,12 +40,26 @@
   text-align: center;
 }
 
+.contacts__content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xxl);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.contacts__info-column {
+  /* Ліва колонка: Контактна інформація */
+}
+
+.contacts__certs-column {
+  /* Права колонка: Сертифікати */
+}
+
 .contacts__info {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
-  max-width: 800px;
-  margin: 0 auto var(--spacing-xxl);
 }
 
 .contacts__info-item {
@@ -64,16 +81,15 @@
   color: var(--color-text);
   font-size: var(--font-size-lg);
   text-decoration: none;
-  transition: color var(--transition-speed) ease;
 }
 
-.contacts__info-value:hover {
-  color: var(--color-primary);
+.contacts__info-value:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--border-radius);
 }
 
 .contacts__certificates {
-  max-width: 800px;
-  margin: 0 auto;
   padding: var(--spacing-xl);
   background-color: var(--color-bg-light);
   border-radius: var(--border-radius);
@@ -115,12 +131,13 @@
 /* ============================================================================ */
 
 .contacts__bottom {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 2;
-  min-height: 100vh;
   background-color: var(--color-bg);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .contacts__map-wrapper {
@@ -145,7 +162,8 @@
 .contacts__map {
   width: 100%;
   height: 100%;
-  border: none;
+  border: 0;
+  display: block;
 }
 
 .contacts__map-info {
@@ -189,11 +207,50 @@
 
 .contacts__map-link {
   text-decoration: none;
-  transition: color var(--transition-speed) ease;
 }
 
-.contacts__map-link:hover {
-  color: var(--color-primary);
+.contacts__map-link:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--border-radius);
+}
+
+.contacts__map-open {
+  display: inline-block;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  text-decoration: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+}
+
+.contacts__map-open:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ============================================================================ */
+/* STICKY SCROLL - ТІЛЬКИ DESKTOP                                              */
+/* ============================================================================ */
+
+/* DESKTOP: sticky scroll ефект - кожна секція прилипає і наступна перекриває */
+@media (min-width: 1025px) {
+  .main--contacts .contacts__top {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .main--contacts .contacts__bottom {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
 }
 
 /* ============================================================================ */
@@ -201,22 +258,41 @@
 /* ============================================================================ */
 
 @media (max-width: 1024px) {
+  /* Вимкнути sticky на планшетах */
+  .main--contacts .contacts__top,
+  .main--contacts .contacts__bottom {
+    position: relative;
+    height: auto;
+  }
+  .contacts__content-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
   .contacts__map-wrapper {
     grid-template-columns: 1fr;
+    min-height: auto;
+    align-items: start;
   }
 
   .contacts__map-container {
     height: 400px;
+    min-height: 300px;
   }
 }
 
 @media (max-width: 768px) {
   .contacts__top {
+    min-height: auto;
     padding: var(--spacing-xl) var(--spacing-md);
   }
 
   .contacts__title {
     font-size: 2rem;
+  }
+
+  .contacts__content-grid {
+    gap: var(--spacing-lg);
   }
 
   .contacts__map-wrapper {
@@ -229,5 +305,23 @@
 
   .contacts__map-title {
     font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contacts__title {
+    font-size: 1.5rem;
+  }
+
+  .contacts__info-item {
+    padding: var(--spacing-sm);
+  }
+
+  .contacts__map-container {
+    height: 250px;
+  }
+
+  .contacts__map-title {
+    font-size: 1.25rem;
   }
 }

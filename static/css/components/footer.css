@@ -285,6 +285,12 @@
   outline-offset: 2px;
 }
 
+/* Desktop: вимкнути pointer events через клас */
+.footer__accordion--desktop .footer__accordion-header {
+  pointer-events: none;
+  cursor: default;
+}
+
 .footer__accordion-content {
   padding: 0;
   max-height: 0;

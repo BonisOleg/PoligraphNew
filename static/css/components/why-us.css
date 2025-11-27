@@ -20,8 +20,7 @@
 }
 
 .why-us__container {
-  max-width: 1200px;
-  margin: 0 auto;
+  min-height: 100vh;
 }
 
 .why-us__title {
@@ -101,9 +100,6 @@
 /* ============================================================================ */
 
 @media (min-width: 1025px) {
-  .why-us {
-    padding: var(--spacing-xxl) var(--spacing-xl);
-  }
 
   .why-us__title {
     margin-bottom: var(--spacing-xl);
@@ -111,7 +107,7 @@
 
   .why-us__slider {
     display: flex;
-    gap: var(--spacing-lg);
+    min-height: 90vh;
   }
 
   .why-us__slide {
@@ -128,8 +124,8 @@
     flex: 0.43; /* ~15% кожна (0.43 + 0.43 + 2.14 = 3) */
   }
 
-  /* При hover на конкретну - розширюємо до 70% */
-  .why-us__slide:hover {
+  /* При hover на конкретну - розширюємо до 70% (більша специфічність) */
+  .why-us__slider:hover .why-us__slide:hover {
     flex: 2.14; /* ~70% (2.14 / 3 = 0.713) */
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   }
@@ -144,9 +140,7 @@
 /* ============================================================================ */
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .why-us {
-    padding: var(--spacing-xxl) var(--spacing-lg);
-  }
+
 
   .why-us__title {
     margin-bottom: var(--spacing-xl);

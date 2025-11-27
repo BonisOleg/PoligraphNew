@@ -1,91 +1,172 @@
 /**
  * Логіка акордеонів для сторінки "Про нас"
- * Vanilla JS без залежностей
- * 
- * Функціональність:
- * - Тільки один акордеон може бути відкритим одночасно
- * - Клік на згорнутий акордеон - відкриває його та закриває інші
- * - Клік на відкритий акордеон - закриває його
- * - Клік поза акордеонами - закриває всі
- * - Підтримка клавіатури (Enter, Space, Escape)
+ * HTMX-ready версія з підтримкою реініціалізації
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-  const accordions = document.querySelectorAll('.accordion');
-  
-  if (!accordions.length) {
-    return;
-  }
-  
-  // Функція для закриття всіх акордеонів
-  const closeAllAccordions = () => {
-    accordions.forEach(accordion => {
+window.AccordionModule = (function() {
+  'use strict';
+
+  // Приватні змінні (доступні тільки всередині модуля)
+  let accordions = [];
+  let listeners = [];
+
+  /**
+   * Закриває всі акордеони
+   */
+  function closeAllAccordions() {
+    accordions.forEach(function(accordion) {
       accordion.classList.remove('accordion--expanded');
       accordion.setAttribute('aria-expanded', 'false');
     });
-  };
-  
-  // Функція для відкриття акордеона
-  const openAccordion = (accordion) => {
+  }
+
+  /**
+   * Відкриває конкретний акордеон
+   */
+  function openAccordion(accordion) {
     accordion.classList.add('accordion--expanded');
     accordion.setAttribute('aria-expanded', 'true');
     
     // Плавний скрол до відкритого акордеона
-    setTimeout(() => {
+    setTimeout(function() {
       accordion.scrollIntoView({ 
         behavior: 'smooth', 
         block: 'start' 
       });
     }, 100);
-  };
-  
-  // Обробник кліку на акордеон
-  accordions.forEach(accordion => {
-    const header = accordion.querySelector('.accordion__header');
-    
-    if (!header) {
-      return;
-    }
-    
-    header.addEventListener('click', (e) => {
+  }
+
+  /**
+   * Обробник кліку на header акордеона
+   */
+  function createHeaderClickHandler(accordion) {
+    return function(e) {
       e.stopPropagation();
       
       const isExpanded = accordion.classList.contains('accordion--expanded');
       
       if (isExpanded) {
-        // Якщо вже відкритий - закрити
         closeAllAccordions();
       } else {
-        // Закрити всі інші та відкрити поточний
         closeAllAccordions();
         openAccordion(accordion);
       }
-    });
-    
-    // Підтримка клавіатури (Enter/Space)
-    header.addEventListener('keydown', (e) => {
+    };
+  }
+
+  /**
+   * Обробник клавіатури (Enter/Space)
+   */
+  function createHeaderKeydownHandler(header) {
+    return function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         header.click();
       }
-    });
-  });
-  
-  // Клік поза акордеонами - закрити всі
-  document.addEventListener('click', (e) => {
-    const clickedInsideAccordion = e.target.closest('.accordion');
+    };
+  }
+
+  /**
+   * Обробник кліку поза акордеонами
+   */
+  function createDocumentClickHandler() {
+    return function(e) {
+      const clickedInsideAccordion = e.target.closest('.accordion');
+      
+      if (!clickedInsideAccordion) {
+        closeAllAccordions();
+      }
+    };
+  }
+
+  /**
+   * Обробник Escape
+   */
+  function createDocumentKeydownHandler() {
+    return function(e) {
+      if (e.key === 'Escape') {
+        closeAllAccordions();
+      }
+    };
+  }
+
+  /**
+   * Ініціалізація модуля
+   * Повертає об'єкт з методом destroy()
+   */
+  function init() {
+    // Знаходимо всі акордеони на сторінці
+    accordions = Array.from(document.querySelectorAll('.accordion'));
     
-    if (!clickedInsideAccordion) {
-      closeAllAccordions();
+    if (accordions.length === 0) {
+      console.log('[Accordion] No accordions found on page');
+      return null;
     }
-  });
-  
-  // Закриття при Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeAllAccordions();
-    }
-  });
-});
 
+    console.log('[Accordion] Found', accordions.length, 'accordions');
 
+    // Очищуємо старі listeners якщо є
+    listeners = [];
+
+    // Налаштовуємо обробники для кожного акордеона
+    accordions.forEach(function(accordion) {
+      const header = accordion.querySelector('.accordion__header');
+      
+      if (!header) {
+        return;
+      }
+
+      const clickHandler = createHeaderClickHandler(accordion);
+      const keydownHandler = createHeaderKeydownHandler(header);
+
+      header.addEventListener('click', clickHandler);
+      header.addEventListener('keydown', keydownHandler);
+
+      // Зберігаємо посилання для cleanup
+      listeners.push(
+        { el: header, event: 'click', fn: clickHandler },
+        { el: header, event: 'keydown', fn: keydownHandler }
+      );
+    });
+
+    // Глобальні обробники
+    const docClickHandler = createDocumentClickHandler();
+    const docKeydownHandler = createDocumentKeydownHandler();
+
+    document.addEventListener('click', docClickHandler);
+    document.addEventListener('keydown', docKeydownHandler);
+
+    listeners.push(
+      { el: document, event: 'click', fn: docClickHandler },
+      { el: document, event: 'keydown', fn: docKeydownHandler }
+    );
+
+    // Повертаємо об'єкт з методом destroy
+    return {
+      destroy: destroy
+    };
+  }
+
+  /**
+   * Очищення модуля
+   * Видаляє всі event listeners
+   */
+  function destroy() {
+    console.log('[Accordion] Destroying module, removing', listeners.length, 'listeners');
+
+    // Видаляємо всі event listeners
+    listeners.forEach(function(listener) {
+      listener.el.removeEventListener(listener.event, listener.fn);
+    });
+
+    // Очищуємо масиви
+    listeners = [];
+    accordions = [];
+  }
+
+  // Публічний API модуля
+  return {
+    init: init
+  };
+
+})();

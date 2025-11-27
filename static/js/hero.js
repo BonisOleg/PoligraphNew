@@ -76,9 +76,10 @@
       setupStaticMode: function() {
         const self = this;
         
-        // Вимкнути autoplay
+        // КРИТИЧНО: Видалити autoplay ПЕРЕД будь-якими діями
         this.video.autoplay = false;
         this.video.removeAttribute('autoplay');
+        this.video.pause();
         
         // Додати класи
         this.video.classList.add('hero__video--static', 'hero__video--ended', 'hero__video--loaded');
@@ -242,8 +243,8 @@
 
         if (scrolled < heroHeight) {
           const parallaxValue = scrolled * 0.5;
-          this.videoWrapper.style.transform = 
-            'translateX(-50%) translateY(' + parallaxValue + 'px)';
+          // Використовуємо CSS змінну замість inline transform
+          this.videoWrapper.style.setProperty('--parallax-offset', parallaxValue + 'px');
         }
       },
 

@@ -1,136 +1,259 @@
 /**
  * Why-us interaction controller
- * Desktop: Pure CSS (немає JS)
+ * HTMX-ready версія
+ * 
+ * Desktop: Pure CSS hover
  * Tablet: Tap to expand
- * Mobile: Intersection Observer для fade-in ефекту
+ * Mobile: Intersection Observer для fade-in
+ * Кнопки: Перехід на /about/ з якорем
  */
 
-(function() {
+window.WhyUsModule = (function() {
   'use strict';
+
+  // ============================================================================
+  // ПРИВАТНІ ЗМІННІ
+  // ============================================================================
+
+  let listeners = [];
+  let observer = null;
 
   // ============================================================================
   // UTILITY FUNCTIONS
   // ============================================================================
 
-  const debounce = (fn, delay) => {
+  function debounce(fn, delay) {
     let timeoutId;
-    return (...args) => {
+    return function() {
+      const args = arguments;
+      const context = this;
       clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => fn(...args), delay);
+      timeoutId = setTimeout(function() {
+        fn.apply(context, args);
+      }, delay);
     };
-  };
+  }
 
-  const isTablet = () => {
+  function isTablet() {
     return window.matchMedia('(min-width: 768px) and (max-width: 1024px)').matches;
-  };
+  }
 
-  const isMobile = () => {
+  function isMobile() {
     return window.matchMedia('(max-width: 767px)').matches;
-  };
+  }
+
+  // ============================================================================
+  // КНОПКИ "ДІЗНАТИСЯ БІЛЬШЕ"
+  // ============================================================================
+
+  /**
+   * Налаштовує кнопки для переходу на сторінку "Про нас"
+   */
+  function setupButtonHandlers() {
+    const buttons = document.querySelectorAll('.why-us__slide-button');
+    
+    if (buttons.length === 0) {
+      return;
+    }
+
+    buttons.forEach(function(button, index) {
+      const slide = button.closest('.why-us__slide');
+      if (!slide) return;
+
+      // Визначаємо індекс картки (0, 1, 2)
+      const slideIndex = slide.getAttribute('data-slide-index') || index;
+
+      function handleButtonClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // HTMX навігація на сторінку "Про нас"
+        // Після завантаження - скрол до відповідного акордеона
+        const targetUrl = '/about/';
+        const anchorId = '#service-' + slideIndex;
+
+        // Використовуємо HTMX для переходу
+        if (typeof htmx !== 'undefined') {
+          const mainElement = document.getElementById('main');
+          if (mainElement) {
+            htmx.ajax('GET', targetUrl, {
+              target: '#main',
+              swap: 'innerHTML',
+              pushUrl: targetUrl
+            }).then(function() {
+              // Після swap - скролимо до потрібного акордеона
+              setTimeout(function() {
+                const targetElement = document.querySelector(anchorId);
+                if (targetElement) {
+                  targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  
+                  // Відкриваємо акордеон якщо є
+                  if (targetElement.classList.contains('accordion')) {
+                    const header = targetElement.querySelector('.accordion__header');
+                    if (header) {
+                      header.click();
+                    }
+                  }
+                }
+              }, 300);
+            });
+          }
+        } else {
+          // Fallback: звичайний перехід з якорем
+          window.location.href = targetUrl + anchorId;
+        }
+      }
+
+      button.addEventListener('click', handleButtonClick);
+      listeners.push({ el: button, event: 'click', fn: handleButtonClick });
+    });
+
+    console.log('[WhyUs] Button handlers set up for', buttons.length, 'buttons');
+  }
 
   // ============================================================================
   // TABLET: TAP TO EXPAND
   // ============================================================================
 
-  const initTabletExpand = () => {
+  function initTabletExpand() {
     const slider = document.querySelector('.why-us__slider');
     const slides = document.querySelectorAll('.why-us__slide');
     
-    if (!slider || slides.length === 0) return;
+    if (!slider || slides.length === 0) {
+      return;
+    }
 
-    const handleSlideClick = (event) => {
+    function handleSlideClick(event) {
       if (!isTablet()) return;
+
+      // Ігноруємо клік на кнопку (вона має свій обробник)
+      if (event.target.closest('.why-us__slide-button')) {
+        return;
+      }
 
       const clickedSlide = event.currentTarget;
       const isActive = clickedSlide.classList.contains('is-active');
 
       if (isActive) {
-        // Деактивувати якщо клікнули на активну
         slider.classList.remove('has-active');
         clickedSlide.classList.remove('is-active');
       } else {
-        // Активувати цю, деактивувати інші
         slider.classList.add('has-active');
-        slides.forEach(slide => slide.classList.remove('is-active'));
+        slides.forEach(function(slide) {
+          slide.classList.remove('is-active');
+        });
         clickedSlide.classList.add('is-active');
       }
-    };
+    }
 
-    const resetOnResize = debounce(() => {
+    const resetOnResize = debounce(function() {
       if (!isTablet()) {
         slider.classList.remove('has-active');
-        slides.forEach(slide => slide.classList.remove('is-active'));
+        slides.forEach(function(slide) {
+          slide.classList.remove('is-active');
+        });
       }
     }, 150);
 
-    slides.forEach(slide => {
+    slides.forEach(function(slide) {
       slide.addEventListener('click', handleSlideClick);
+      listeners.push({ el: slide, event: 'click', fn: handleSlideClick });
     });
 
     window.addEventListener('resize', resetOnResize);
-  };
+    listeners.push({ el: window, event: 'resize', fn: resetOnResize });
+  }
 
   // ============================================================================
-  // MOBILE: INTERSECTION OBSERVER для fade-in
+  // MOBILE: INTERSECTION OBSERVER
   // ============================================================================
 
-  const initMobileFadeIn = () => {
-    if (!isMobile()) return;
+  function initMobileFadeIn() {
+    if (!isMobile()) {
+      return;
+    }
 
     const slides = document.querySelectorAll('.why-us__slide');
-    if (slides.length === 0) return;
+    if (slides.length === 0) {
+      return;
+    }
 
-    // Intersection Observer з оптимальними налаштуваннями
     const observerOptions = {
       root: null,
-      rootMargin: '-10% 0px', /* Trigger трохи пізніше для кращого ефекту */
-      threshold: [0, 0.3, 0.6, 1] /* Множинні пороги для плавності */
+      rootMargin: '-10% 0px',
+      threshold: [0, 0.3, 0.6, 1]
     };
 
-    const observerCallback = (entries) => {
-      entries.forEach(entry => {
-        /* Додаємо клас коли картка >30% видима */
+    const observerCallback = function(entries) {
+      entries.forEach(function(entry) {
         if (entry.intersectionRatio > 0.3) {
           entry.target.classList.add('is-visible');
-        } else {
-          /* Опціонально: можна прибрати клас при виході */
-          /* entry.target.classList.remove('is-visible'); */
         }
       });
     };
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    slides.forEach(slide => {
+    slides.forEach(function(slide) {
       observer.observe(slide);
     });
 
-    /* Cleanup при resize (якщо більше не mobile) */
-    const cleanupOnResize = debounce(() => {
-      if (!isMobile()) {
+    const cleanupOnResize = debounce(function() {
+      if (!isMobile() && observer) {
         observer.disconnect();
-        slides.forEach(slide => slide.classList.remove('is-visible'));
+        observer = null;
+        slides.forEach(function(slide) {
+          slide.classList.remove('is-visible');
+        });
       }
     }, 150);
 
     window.addEventListener('resize', cleanupOnResize);
-  };
-
-  // ============================================================================
-  // INITIALIZATION
-  // ============================================================================
-
-  const init = () => {
-    initTabletExpand();
-    initMobileFadeIn();
-  };
-
-  /* Запуск після завантаження DOM */
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+    listeners.push({ el: window, event: 'resize', fn: cleanupOnResize });
   }
 
-})();
+  // ============================================================================
+  // PUBLIC API
+  // ============================================================================
 
+  function init() {
+    const whyUsSection = document.querySelector('.why-us');
+    
+    if (!whyUsSection) {
+      console.log('[WhyUs] Section not found on page');
+      return null;
+    }
+
+    console.log('[WhyUs] Initializing');
+
+    listeners = [];
+    
+    setupButtonHandlers();
+    initTabletExpand();
+    initMobileFadeIn();
+
+    return {
+      destroy: destroy
+    };
+  }
+
+  function destroy() {
+    console.log('[WhyUs] Destroying module, removing', listeners.length, 'listeners');
+
+    listeners.forEach(function(listener) {
+      listener.el.removeEventListener(listener.event, listener.fn);
+    });
+
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+
+    listeners = [];
+  }
+
+  return {
+    init: init
+  };
+
+})();

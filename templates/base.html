@@ -22,11 +22,16 @@
     <!-- 1.2 base.css - базові стилі проекту -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     
-    <!-- 1.3 components/*.css - компоненти (додавайте свої компоненти тут) -->
-    <!-- Header та Footer завжди присутні на всіх сторінках -->
+    <!-- 1.3 components/*.css - компоненти -->
+    <!-- ВСІ CSS завантажуються одразу для роботи HTMX навігації -->
     <link rel="stylesheet" href="{% static 'css/components/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/footer.css' %}">
-    {% block component_css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/components/hero.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/why-us.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/cta.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/accordion.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/contacts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/page.css' %}">
     
     <!-- 1.4 utilities/*.css - утиліти (додавайте свої утиліти тут) -->
     {% block utility_css %}{% endblock %}
@@ -96,9 +101,13 @@
     </footer>
     
     <!-- 4. ВЛАСНІ JS ФАЙЛИ (ПІСЛЯ HTMX, З DEFER) -->
+    <!-- Порядок КРИТИЧНО ВАЖЛИВИЙ: модулі → app-init → hero -->
+    <script src="{% static 'js/header.js' %}" defer></script>
+    <script src="{% static 'js/accordion.js' %}" defer></script>
+    <script src="{% static 'js/why-us.js' %}" defer></script>
     <script src="{% static 'js/footer-accordion.js' %}" defer></script>
+    <script src="{% static 'js/app-init.js' %}" defer></script>
     <script src="{% static 'js/hero.js' %}" defer></script>
-    {% block scripts %}{% endblock %}
 </body>
 </html>
 

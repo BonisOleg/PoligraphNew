@@ -1,67 +1,28 @@
 /**
  * Логіка акордеонів для footer
- * Vanilla JS без залежностей
- * 
- * Функціональність:
- * - На мобільних пристроях кілька акордеонів можуть бути відкритими одночасно
- * - Клік на згорнутий акордеон - відкриває його
- * - Клік на відкритий акордеон - закриває його
- * - Підтримка клавіатури (Enter, Space, Escape)
- * - На десктопі акордеони неактивні (контент завжди видимий)
+ * HTMX-ready версія
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-  const footerAccordions = document.querySelectorAll('.footer__accordion');
-  
-  if (!footerAccordions.length) {
-    return;
+window.FooterAccordionModule = (function() {
+  'use strict';
+
+  let footerAccordions = [];
+  let listeners = [];
+
+  function isMobile() {
+    return window.matchMedia('(max-width: 767px)').matches;
   }
 
-  // Перевірка чи ми на мобільному пристрої
-  const isMobile = () => {
-    return window.matchMedia('(max-width: 767px)').matches;
-  };
-
-  // Функція для закриття акордеона
-  const closeAccordion = (accordion) => {
+  function closeAccordion(accordion) {
     accordion.setAttribute('aria-expanded', 'false');
-  };
+  }
 
-  // Функція для відкриття акордеона
-  const openAccordion = (accordion) => {
+  function openAccordion(accordion) {
     accordion.setAttribute('aria-expanded', 'true');
-  };
+  }
 
-  // Обробник кліку на акордеон
-  footerAccordions.forEach(accordion => {
-    const header = accordion.querySelector('.footer__accordion-header');
-    
-    if (!header) {
-      return;
-    }
-
-    // Перевірка чи акордеон має бути активним (тільки на мобільних)
-    const updateAccordionState = () => {
-      if (!isMobile()) {
-        // На десктопі завжди відкритий
-        openAccordion(accordion);
-        header.style.pointerEvents = 'none';
-        header.style.cursor = 'default';
-      } else {
-        // На мобільних активний
-        header.style.pointerEvents = 'auto';
-        header.style.cursor = 'pointer';
-      }
-    };
-
-    // Ініціалізація стану
-    updateAccordionState();
-
-    // Оновлення при зміні розміру вікна
-    window.addEventListener('resize', updateAccordionState);
-
-    header.addEventListener('click', (e) => {
-      // На десктопі не обробляємо кліки
+  function createClickHandler(accordion, header) {
+    return function(e) {
       if (!isMobile()) {
         return;
       }
@@ -71,16 +32,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const isExpanded = accordion.getAttribute('aria-expanded') === 'true';
       
       if (isExpanded) {
-        // Якщо вже відкритий - закрити
         closeAccordion(accordion);
       } else {
-        // Відкрити
         openAccordion(accordion);
       }
-    });
-    
-    // Підтримка клавіатури (Enter/Space)
-    header.addEventListener('keydown', (e) => {
+    };
+  }
+
+  function createKeydownHandler(header) {
+    return function(e) {
       if (!isMobile()) {
         return;
       }
@@ -89,16 +49,90 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         header.click();
       }
-    });
-  });
+    };
+  }
 
-  // Закриття при Escape (тільки на мобільних)
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isMobile()) {
-      footerAccordions.forEach(accordion => {
-        closeAccordion(accordion);
-      });
+  function createEscapeHandler() {
+    return function(e) {
+      if (e.key === 'Escape' && isMobile()) {
+        footerAccordions.forEach(function(accordion) {
+          closeAccordion(accordion);
+        });
+      }
+    };
+  }
+
+  function updateAccordionState(accordion) {
+    if (!isMobile()) {
+      // Desktop: акордеон завжди відкритий, додаємо клас
+      accordion.classList.add('footer__accordion--desktop');
+      openAccordion(accordion);
+    } else {
+      // Mobile: акордеон керується JS
+      accordion.classList.remove('footer__accordion--desktop');
     }
-  });
-});
+  }
 
+  function init() {
+    footerAccordions = Array.from(document.querySelectorAll('.footer__accordion'));
+    
+    if (footerAccordions.length === 0) {
+      console.log('[FooterAccordion] No accordions found');
+      return null;
+    }
+
+    console.log('[FooterAccordion] Found', footerAccordions.length, 'accordions');
+
+    listeners = [];
+
+    footerAccordions.forEach(function(accordion) {
+      const header = accordion.querySelector('.footer__accordion-header');
+      
+      if (!header) {
+        return;
+      }
+
+      updateAccordionState(accordion);
+
+      const clickHandler = createClickHandler(accordion, header);
+      const keydownHandler = createKeydownHandler(header);
+      const resizeHandler = function() {
+        updateAccordionState(accordion);
+      };
+
+      header.addEventListener('click', clickHandler);
+      header.addEventListener('keydown', keydownHandler);
+      window.addEventListener('resize', resizeHandler);
+
+      listeners.push(
+        { el: header, event: 'click', fn: clickHandler },
+        { el: header, event: 'keydown', fn: keydownHandler },
+        { el: window, event: 'resize', fn: resizeHandler }
+      );
+    });
+
+    const escapeHandler = createEscapeHandler();
+    document.addEventListener('keydown', escapeHandler);
+    listeners.push({ el: document, event: 'keydown', fn: escapeHandler });
+
+    return {
+      destroy: destroy
+    };
+  }
+
+  function destroy() {
+    console.log('[FooterAccordion] Destroying module, removing', listeners.length, 'listeners');
+
+    listeners.forEach(function(listener) {
+      listener.el.removeEventListener(listener.event, listener.fn);
+    });
+
+    listeners = [];
+    footerAccordions = [];
+  }
+
+  return {
+    init: init
+  };
+
+})();
