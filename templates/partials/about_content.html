@@ -154,24 +154,15 @@
             <!-- Порівняння -->
             <div class="accordion__comparison">
                 <h2 class="accordion__section-title">РУБІКОН vs Інші поліграфи</h2>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Характеристика</th>
-                            <th scope="col">РУБІКОН</th>
-                            <th scope="col">Інші</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in equipment_comparison %}
-                        <tr>
-                            <td>{{ item.characteristic }}</td>
-                            <td class="comparison-table__highlight">{{ item.rubicon }}</td>
-                            <td>{{ item.others }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <div class="accordion__comparison-grid">
+                    {% for item in equipment_comparison %}
+                    <article class="comparison-card{% if forloop.counter0|divisibleby:2 %} comparison-card--dark{% endif %}">
+                        <h3 class="comparison-card__characteristic">{{ item.characteristic }}</h3>
+                        <p class="comparison-card__rubicon">{{ item.rubicon }}</p>
+                        <p class="comparison-card__others">{{ item.others }}</p>
+                    </article>
+                    {% endfor %}
+                </div>
             </div>
             
             <!-- Сертифікація -->
