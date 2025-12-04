@@ -7,10 +7,51 @@
  * - Використовувати CSS variables з base.css
  */
 
+/* ============================================================================ */
+/* СТОРІНКА "ПРО НАС" - ЧОРНИЙ ФОН ТА ВІДСТУПИ                                  */
+/* ============================================================================ */
+
+/* Чорний фон для main контейнера */
+.main--about {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: 100dvh;
+}
+
+/* Відступи для акордеонів: відступ від верху = відступ від кнопки меню */
+/* Розрахунок: 5vh (відступ до кнопки) + 120px (висота кнопки) + 5vh (відступ від кнопки) */
 .about-accordions {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
+  padding-top: calc(10vh + 120px);
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  padding-bottom: var(--spacing-xxl);
+}
+
+/* Для дуже маленьких екранів - адаптивні відступи */
+@media (max-height: 600px) {
+  .about-accordions {
+    padding-top: calc(5vh + 120px + 2rem);
+  }
+}
+
+/* Мобільні пристрої - зменшені відступи */
+@media (max-width: 767px) {
+  .about-accordions {
+    padding-top: calc(10vh + 120px);
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+  
+  @media (max-height: 600px) {
+    .about-accordions {
+      padding-top: calc(5vh + 120px + 1.5rem);
+    }
+  }
 }
 
 .accordion {
@@ -18,6 +59,12 @@
   border-radius: var(--border-radius);
   overflow: hidden;
   background-color: var(--color-bg);
+}
+
+/* На сторінці "Про нас" з чорним фоном - темний фон для акордеонів */
+.main--about .accordion {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .accordion__header {
@@ -30,9 +77,21 @@
   gap: var(--spacing-sm);
 }
 
+/* На сторінці "Про нас" з чорним фоном - темний фон для заголовка */
+.main--about .accordion__header {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: var(--color-text-light);
+}
+
 .accordion__header:hover {
   background-color: var(--color-primary);
   color: var(--color-bg);
+}
+
+/* На сторінці "Про нас" з чорним фоном - інший hover ефект */
+.main--about .accordion__header:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-light);
 }
 
 .accordion__title {
@@ -42,11 +101,22 @@
   color: inherit;
 }
 
+/* На сторінці "Про нас" з чорним фоном - білий текст для заголовків */
+.main--about .accordion__title {
+  color: var(--color-text-light);
+}
+
 .accordion__subtitle {
   font-size: var(--font-size-base);
   margin: 0;
   color: inherit;
   opacity: 0.8;
+}
+
+/* На сторінці "Про нас" з чорним фоном - білий текст для підзаголовків */
+.main--about .accordion__subtitle {
+  color: var(--color-text-light);
+  opacity: 0.9;
 }
 
 .accordion__content {
@@ -73,6 +143,11 @@
   border-radius: var(--border-radius);
 }
 
+/* На сторінці "Про нас" з чорним фоном - темний фон для статистики */
+.main--about .accordion__stat-item {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .accordion__stat-number {
   display: block;
   font-size: var(--font-size-xl);
@@ -87,15 +162,30 @@
   color: var(--color-text-muted);
 }
 
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .accordion__stat-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .accordion__section-title {
   font-size: var(--font-size-xl);
   margin-bottom: var(--spacing-md);
   color: var(--color-text);
 }
 
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .accordion__section-title {
+  color: var(--color-text-light);
+}
+
 .accordion__section-description {
   margin-bottom: var(--spacing-lg);
   color: var(--color-text-muted);
+}
+
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .accordion__section-description {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .accordion__services-grid {
@@ -112,6 +202,12 @@
   border: 1px solid var(--color-secondary);
 }
 
+/* На сторінці "Про нас" з чорним фоном - темний фон для карток послуг */
+.main--about .service-card {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
 .service-card__icon {
   font-size: 2rem;
   margin-bottom: var(--spacing-md);
@@ -121,6 +217,11 @@
   font-size: var(--font-size-lg);
   margin-bottom: var(--spacing-sm);
   color: var(--color-text);
+}
+
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .service-card__title {
+  color: var(--color-text-light);
 }
 
 .service-card__price {
@@ -182,6 +283,11 @@
   border-radius: var(--border-radius);
 }
 
+/* На сторінці "Про нас" з чорним фоном - темний фон для карток переваг */
+.main--about .advantage-card {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .advantage-card__icon {
   font-size: 2rem;
   margin-bottom: var(--spacing-sm);
@@ -193,10 +299,20 @@
   color: var(--color-text);
 }
 
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .advantage-card__title {
+  color: var(--color-text-light);
+}
+
 .advantage-card__text {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   margin: 0;
+}
+
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .advantage-card__text {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .accordion__hero {
@@ -207,12 +323,22 @@
   border-radius: var(--border-radius);
 }
 
+/* На сторінці "Про нас" з чорним фоном - темний фон для hero секцій */
+.main--about .accordion__hero {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .accordion__hero-label {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   margin-bottom: var(--spacing-xs);
   text-transform: uppercase;
   letter-spacing: 0.1em;
+}
+
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .accordion__hero-label {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .accordion__hero-name {
@@ -227,6 +353,11 @@
   margin-bottom: var(--spacing-sm);
 }
 
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .accordion__hero-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .accordion__hero-description {
   font-size: var(--font-size-base);
   color: var(--color-text);
@@ -234,6 +365,11 @@
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .accordion__hero-description {
+  color: var(--color-text-light);
 }
 
 .accordion__hero-badge {
@@ -259,11 +395,21 @@
   border-left: 4px solid var(--color-primary);
 }
 
+/* На сторінці "Про нас" з чорним фоном - темний фон для елементів освіти */
+.main--about .education-item {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .education-item__year {
   display: block;
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   margin-bottom: var(--spacing-xs);
+}
+
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .education-item__year {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .education-item__institution {
@@ -272,10 +418,20 @@
   color: var(--color-text);
 }
 
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .education-item__institution {
+  color: var(--color-text-light);
+}
+
 .education-item__program {
   font-size: var(--font-size-base);
   color: var(--color-text-muted);
   margin-bottom: var(--spacing-xs);
+}
+
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .education-item__program {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .education-item__degree {
@@ -297,6 +453,11 @@
   position: relative;
 }
 
+/* На сторінці "Про нас" з чорним фоном - темний фон для кроків процесу */
+.main--about .process-step {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .process-step__number {
   display: block;
   font-size: 3rem;
@@ -312,10 +473,20 @@
   color: var(--color-text);
 }
 
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .process-step__title {
+  color: var(--color-text-light);
+}
+
 .process-step__description {
   font-size: var(--font-size-base);
   color: var(--color-text-muted);
   margin: 0;
+}
+
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .process-step__description {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .accordion__principles-grid {
@@ -331,6 +502,11 @@
   border-radius: var(--border-radius);
 }
 
+/* На сторінці "Про нас" з чорним фоном - темний фон для карток принципів */
+.main--about .principle-card {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .principle-card__icon {
   font-size: 2rem;
   margin-bottom: var(--spacing-sm);
@@ -342,10 +518,20 @@
   color: var(--color-text);
 }
 
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .principle-card__title {
+  color: var(--color-text-light);
+}
+
 .principle-card__description {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   margin: 0;
+}
+
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .principle-card__description {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .comparison-table {
@@ -358,6 +544,11 @@
   background-color: var(--color-bg-light);
 }
 
+/* На сторінці "Про нас" з чорним фоном - темний фон для заголовка таблиці */
+.main--about .comparison-table thead {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .comparison-table th {
   padding: var(--spacing-md);
   text-align: left;
@@ -366,10 +557,22 @@
   border-bottom: 2px solid var(--color-secondary);
 }
 
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .comparison-table th {
+  color: var(--color-text-light);
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
 .comparison-table td {
   padding: var(--spacing-md);
   border-bottom: 1px solid var(--color-secondary);
   color: var(--color-text);
+}
+
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .comparison-table td {
+  color: var(--color-text-light);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 .comparison-table__highlight {
@@ -391,6 +594,11 @@
   border-radius: var(--border-radius);
 }
 
+/* На сторінці "Про нас" з чорним фоном - темний фон для карток сертифікатів */
+.main--about .certification-card {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .certification-card__icon {
   font-size: 2rem;
   margin-bottom: var(--spacing-sm);
@@ -402,10 +610,20 @@
   color: var(--color-text);
 }
 
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .certification-card__title {
+  color: var(--color-text-light);
+}
+
 .certification-card__description {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   margin: 0;
+}
+
+/* На сторінці "Про нас" з чорним фоном - світлий текст */
+.main--about .certification-card__description {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 
