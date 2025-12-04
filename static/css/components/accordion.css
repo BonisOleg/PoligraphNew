@@ -132,6 +132,7 @@
 /* Базові стилі контенту */
 .accordion__content {
   display: block;
+  height: 0;
   max-height: 0;
   padding: 0 var(--spacing-xl);
   overflow: hidden;
@@ -148,27 +149,29 @@
   transition: none;
 }
 
-/* Анімація відкриття (desktop: 550ms) */
+/* Анімація відкриття (desktop: 450ms - швидше) */
 .accordion--opening .accordion__content {
+  height: var(--content-height);
   max-height: var(--content-height);
   padding: var(--spacing-xl);
   opacity: 1;
   transform: scaleY(1);
   
-  /* Elastic ефект - легкий bounce */
+  /* Оптимізована анімація - використовуємо height замість max-height для кращої продуктивності */
   transition:
-    max-height 550ms cubic-bezier(0.34, 1.2, 0.64, 1),
-    padding 550ms cubic-bezier(0.34, 1.2, 0.64, 1),
-    opacity 350ms ease-out 100ms,
-    transform 550ms cubic-bezier(0.34, 1.2, 0.64, 1);
+    height 450ms cubic-bezier(0.34, 1.1, 0.64, 1),
+    padding 450ms cubic-bezier(0.34, 1.1, 0.64, 1),
+    opacity 300ms ease-out 50ms,
+    transform 450ms cubic-bezier(0.34, 1.1, 0.64, 1);
   
-  /* Підказка браузеру для GPU */
-  will-change: max-height, opacity, transform;
+  /* Підказка браузеру для GPU - тільки під час анімації */
+  will-change: height, padding, opacity, transform;
 }
 
 /* Розгорнутий стан */
 .accordion[aria-expanded="true"] .accordion__content {
-  max-height: var(--content-height);
+  height: auto;
+  max-height: none;
   padding: var(--spacing-xl);
   opacity: 1;
   transform: scaleY(1);
@@ -176,19 +179,20 @@
 
 /* Анімація закриття (швидша за відкриття) */
 .accordion--closing .accordion__content {
+  height: 0;
   max-height: 0;
   padding: 0 var(--spacing-xl);
   opacity: 0;
   transform: scaleY(0.95);
   
-  /* Без bounce при закритті - плавніше */
+  /* Оптимізована анімація - використовуємо height */
   transition:
-    max-height 400ms cubic-bezier(0.4, 0, 0.6, 1),
-    padding 400ms cubic-bezier(0.4, 0, 0.6, 1),
-    opacity 250ms ease-in,
-    transform 400ms cubic-bezier(0.4, 0, 0.6, 1);
+    height 350ms cubic-bezier(0.4, 0, 0.6, 1),
+    padding 350ms cubic-bezier(0.4, 0, 0.6, 1),
+    opacity 200ms ease-in,
+    transform 350ms cubic-bezier(0.4, 0, 0.6, 1);
   
-  will-change: max-height, opacity, transform;
+  will-change: height, padding, opacity, transform;
 }
 
 /* Fade-in для внутрішнього контенту */
@@ -213,6 +217,8 @@
   margin-left: auto;
   margin-right: auto;
   max-width: 900px;
+  contain: layout style paint;
+  content-visibility: auto;
 }
 
 .accordion__stat-item {
@@ -222,13 +228,7 @@
   border: 2px solid #FFFFFF;
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.15);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.accordion__stat-item:hover {
-  transform: translateY(-12px);
-  box-shadow: 0 16px 48px rgba(255, 255, 255, 0.25), 0 0 30px rgba(255, 255, 255, 0.2);
-  border-color: #FFFFFF;
+  contain: layout style paint;
 }
 
 .accordion__stat-number {
@@ -276,8 +276,8 @@
   margin-right: auto;
   max-width: 1200px;
   padding: 0;
-  contain: layout style;
-  min-height: 1100px;
+  contain: layout style paint;
+  content-visibility: auto;
 }
 
 .service-card {
@@ -288,18 +288,23 @@
   border: 3px solid #000000;
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-width 0.3s ease;
   min-height: 450px;
   position: relative;
+  contain: layout style paint;
 }
 
 .service-card:hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
-  border-color: #000000;
+  transform: translateY(-12px) scale(1.01);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.25), 0 6px 20px rgba(0, 0, 0, 0.12);
   border-width: 4px;
-  will-change: transform, box-shadow;
   z-index: 10;
+}
+
+.service-card:not(:hover) {
+  will-change: auto;
 }
 
 /* Чорна картка - акцентна */
@@ -313,13 +318,11 @@
 }
 
 .service-card--dark:hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(255, 255, 255, 0.4),
-              inset 0 0 80px rgba(255, 255, 255, 0.1),
-              0 8px 32px rgba(255, 255, 255, 0.2);
-  border-color: #FFFFFF;
+  transform: translateY(-12px) scale(1.01);
+  box-shadow: 0 20px 48px rgba(255, 255, 255, 0.35),
+              inset 0 0 70px rgba(255, 255, 255, 0.08),
+              0 6px 24px rgba(255, 255, 255, 0.15);
   border-width: 4px;
-  will-change: transform, box-shadow;
   z-index: 10;
 }
 
@@ -449,7 +452,6 @@
   flex-direction: column;
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
 }
 
@@ -458,14 +460,6 @@
   background: #FFFFFF;
   border: 3px solid #000000;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-white:hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
 }
 
 /* Чорні картки */
@@ -477,16 +471,6 @@
               0 0 20px rgba(255, 255, 255, 0.1);
 }
 
-.card-dark:hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(255, 255, 255, 0.4),
-              inset 0 0 80px rgba(255, 255, 255, 0.1),
-              0 8px 32px rgba(255, 255, 255, 0.2);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
-}
-
 /* Переваги - адаптивна сітка (3×2 або 2×3 залежно від контенту) */
 .accordion__advantages-grid {
   display: grid;
@@ -494,7 +478,8 @@
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  contain: layout style;
+  contain: layout style paint;
+  content-visibility: auto;
 }
 
 /* Чергування білих/чорних карток */
@@ -507,18 +492,10 @@
   align-items: center;
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   min-height: 240px;
   text-align: center;
-}
-
-.advantage-card:nth-child(odd):hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
+  contain: layout style paint;
 }
 
 .advantage-card:nth-child(even) {
@@ -532,20 +509,10 @@
   align-items: center;
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   min-height: 240px;
   text-align: center;
-}
-
-.advantage-card:nth-child(even):hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(255, 255, 255, 0.4),
-              inset 0 0 80px rgba(255, 255, 255, 0.1),
-              0 8px 32px rgba(255, 255, 255, 0.2);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
+  contain: layout style paint;
 }
 
 .advantage-card__icon {
@@ -596,14 +563,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.accordion__hero:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 48px rgba(255, 255, 255, 0.3),
-              inset 0 0 80px rgba(255, 255, 255, 0.08),
-              0 4px 24px rgba(255, 255, 255, 0.15);
 }
 
 .accordion__hero-badge {
@@ -660,7 +619,8 @@
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto var(--spacing-xl);
-  contain: layout style;
+  contain: layout style paint;
+  content-visibility: auto;
 }
 
 .education-item {
@@ -676,16 +636,8 @@
   flex-direction: column;
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
-}
-
-.education-item:nth-child(odd):hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
+  contain: layout style paint;
 }
 
 .education-item:nth-child(even) {
@@ -698,18 +650,8 @@
   flex-direction: column;
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
-}
-
-.education-item:nth-child(even):hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(255, 255, 255, 0.4),
-              inset 0 0 80px rgba(255, 255, 255, 0.1),
-              0 8px 32px rgba(255, 255, 255, 0.2);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
+  contain: layout style paint;
 }
 
 .education-item__year {
@@ -763,7 +705,8 @@
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto var(--spacing-xl);
-  contain: layout style;
+  contain: layout style paint;
+  content-visibility: auto;
 }
 
 .process-step {
@@ -778,16 +721,8 @@
   flex-direction: column;
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
-}
-
-.process-step:nth-child(odd):hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
+  contain: layout style paint;
 }
 
 .process-step:nth-child(even) {
@@ -800,18 +735,8 @@
   flex-direction: column;
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
-}
-
-.process-step:nth-child(even):hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(255, 255, 255, 0.4),
-              inset 0 0 80px rgba(255, 255, 255, 0.1),
-              0 8px 32px rgba(255, 255, 255, 0.2);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
+  contain: layout style paint;
 }
 
 .process-step__number {
@@ -861,7 +786,8 @@
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto var(--spacing-xl);
-  contain: layout style;
+  contain: layout style paint;
+  content-visibility: auto;
 }
 
 .principle-card {
@@ -872,18 +798,10 @@
   flex-direction: column;
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   min-height: 240px;
   text-align: center;
-}
-
-.principle-card:hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
+  contain: layout style paint;
 }
 
 .principle-card__title {
@@ -909,7 +827,8 @@
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto var(--spacing-xl);
-  contain: layout style;
+  contain: layout style paint;
+  content-visibility: auto;
 }
 
 .comparison-card {
@@ -920,18 +839,10 @@
   flex-direction: column;
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   min-height: 280px;
   text-align: center;
-}
-
-.comparison-card:hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
+  contain: layout style paint;
 }
 
 .comparison-card--dark {
@@ -942,15 +853,6 @@
               0 0 20px rgba(255, 255, 255, 0.1);
 }
 
-.comparison-card--dark:hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(255, 255, 255, 0.4),
-              inset 0 0 80px rgba(255, 255, 255, 0.1),
-              0 8px 32px rgba(255, 255, 255, 0.2);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
-}
 
 .comparison-card__characteristic {
   font-family: var(--font-family-display);
@@ -1000,7 +902,8 @@
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto var(--spacing-xl);
-  contain: layout style;
+  contain: layout style paint;
+  content-visibility: auto;
 }
 
 .certification-card {
@@ -1016,16 +919,8 @@
   flex-direction: column;
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
-}
-
-.certification-card:nth-child(odd):hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
+  contain: layout style paint;
 }
 
 .certification-card:nth-child(even) {
@@ -1038,18 +933,8 @@
   flex-direction: column;
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
-}
-
-.certification-card:nth-child(even):hover {
-  transform: translateY(-16px) scale(1.02);
-  box-shadow: 0 24px 64px rgba(255, 255, 255, 0.4),
-              inset 0 0 80px rgba(255, 255, 255, 0.1),
-              0 8px 32px rgba(255, 255, 255, 0.2);
-  border-width: 4px;
-  will-change: transform, box-shadow;
-  z-index: 10;
+  contain: layout style paint;
 }
 
 .certification-card__title {
@@ -1081,25 +966,25 @@
 /* RESPONSIVE ANIMATION TIMINGS                                               */
 /* ============================================================================ */
 
-/* Tablet - трохи швидше (500ms вместо 550ms) */
+/* Tablet - трохи швидше (400ms) */
 @media (max-width: 1024px) {
   .accordion--opening .accordion__content {
-    transition-duration: 500ms, 500ms, 300ms, 500ms;
+    transition-duration: 400ms, 400ms, 250ms, 400ms;
   }
   
   .accordion--closing .accordion__content {
-    transition-duration: 350ms, 350ms, 220ms, 350ms;
+    transition-duration: 300ms, 300ms, 180ms, 300ms;
   }
 }
 
-/* Mobile - ще швидше для touch UX (450ms) */
+/* Mobile - ще швидше для touch UX (350ms) */
 @media (max-width: 767px) {
   .accordion--opening .accordion__content {
-    transition-duration: 450ms, 450ms, 280ms, 450ms;
+    transition-duration: 350ms, 350ms, 220ms, 350ms;
   }
   
   .accordion--closing .accordion__content {
-    transition-duration: 320ms, 320ms, 200ms, 320ms;
+    transition-duration: 280ms, 280ms, 160ms, 280ms;
   }
 }
 

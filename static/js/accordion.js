@@ -15,28 +15,36 @@ window.AccordionModule = (function() {
   let countersAnimated = false;
 
   /**
-   * Анімація лічильника для статистики
+   * Анімація лічильника для статистики (оптимізована з requestAnimationFrame)
    */
-  function animateCounter(element, duration = 2000) {
-    const target = parseInt(element.textContent, 10) || 0;
+  function animateCounter(element, duration = 1500) {
+    const text = element.textContent.trim();
+    const target = parseInt(text, 10) || 0;
     if (target === 0) return;
     
     const start = 0;
-    const increment = target / (duration / 16);
-    let current = start;
-    const isPercentage = element.textContent.includes('%');
+    const startTime = performance.now();
+    const isPercentage = text.includes('%');
     const suffix = isPercentage ? '%' : '+';
     
-    const timer = setInterval(function() {
-      current += increment;
-      if (current >= target) {
-        element.textContent = target + suffix;
-        clearInterval(timer);
+    function updateCounter(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function для плавності
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(start + (target - start) * eased);
+      
+      element.textContent = current + suffix;
+      
+      if (progress < 1) {
+        requestAnimationFrame(updateCounter);
       } else {
-        const displayValue = Math.floor(current);
-        element.textContent = displayValue + suffix;
+        element.textContent = target + suffix;
       }
-    }, 16);
+    }
+    
+    requestAnimationFrame(updateCounter);
   }
 
   /**
@@ -53,27 +61,39 @@ window.AccordionModule = (function() {
   }
 
   /**
-   * Отримує точну висоту контенту акордеона
+   * Отримує точну висоту контенту акордеона (оптимізовано без reflow)
    */
   function getContentHeight(accordion) {
     const content = accordion.querySelector('.accordion__content');
     if (!content) return 0;
     
-    // Тимчасово показуємо для вимірювання
-    content.style.display = 'block';
-    content.style.position = 'absolute';
-    content.style.visibility = 'hidden';
-    content.style.height = 'auto';
+    // Використовуємо scrollHeight для точного вимірювання
+    // Без зміни стилів - це швидше та не викликає reflow
+    const wasExpanded = accordion.getAttribute('aria-expanded') === 'true';
     
-    const height = content.scrollHeight;
-    
-    // Повертаємо як було
-    content.style.display = '';
-    content.style.position = '';
-    content.style.visibility = '';
-    content.style.height = '';
-    
-    return height;
+    if (!wasExpanded) {
+      // Тимчасово знімаємо обмеження для вимірювання
+      const originalHeight = content.style.height;
+      const originalMaxHeight = content.style.maxHeight;
+      const originalOverflow = content.style.overflow;
+      
+      content.style.height = 'auto';
+      content.style.maxHeight = 'none';
+      content.style.overflow = 'visible';
+      
+      // Використовуємо scrollHeight для точного вимірювання
+      const height = content.scrollHeight;
+      
+      // Повертаємо стилі
+      content.style.height = originalHeight;
+      content.style.maxHeight = originalMaxHeight;
+      content.style.overflow = originalOverflow;
+      
+      return height;
+    } else {
+      // Якщо вже розгорнутий - просто повертаємо поточну висоту
+      return content.scrollHeight;
+    }
   }
 
   /**
@@ -115,20 +135,21 @@ window.AccordionModule = (function() {
       accordion.classList.add('accordion--expanded');
       
       // Очищення will-change для економії GPU пам'яті
-      content.style.willChange = 'auto';
+      requestAnimationFrame(function() {
+        content.style.willChange = 'auto';
+      });
       
       content.removeEventListener('transitionend', handleTransitionEnd);
     };
     
     content.addEventListener('transitionend', handleTransitionEnd, { once: true });
     
-    // Плавний скрол через RequestAnimationFrame (для синхронізації з 60/120fps)
+    // Плавний скрол (оптимізовано - один requestAnimationFrame)
     requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        accordion.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
-        });
+      accordion.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start',
+        inline: 'nearest'
       });
     });
     
@@ -150,7 +171,9 @@ window.AccordionModule = (function() {
       accordion.classList.remove('accordion--closing');
       
       // Очищення will-change
-      content.style.willChange = 'auto';
+      requestAnimationFrame(function() {
+        content.style.willChange = 'auto';
+      });
       
       content.removeEventListener('transitionend', handleTransitionEnd);
     };
