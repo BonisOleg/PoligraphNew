@@ -25,54 +25,15 @@
 </section>
 
 <section class="why-us">
-    <div class="why-us__container">
-        <h2 class="why-us__title">Чому ми</h2>
-        <div class="why-us__slider">
-            <article class="why-us__slide" data-slide-index="0">
-                <div class="why-us__slide-image-container">
-                    <img class="why-us__slide-image" 
-                         src="" 
-                         alt="Перевага 1"
-                         loading="lazy">
-                </div>
-                <div class="why-us__slide-content">
-                    <h3 class="why-us__slide-title">Перевага 1</h3>
-                    <p class="why-us__slide-description">Опис переваги 1</p>
-                    <button class="why-us__slide-button" type="button" aria-label="Дізнатися більше про перевагу 1">
-                        Дізнатися більше
-                    </button>
-                </div>
-            </article>
-            <article class="why-us__slide" data-slide-index="1">
-                <div class="why-us__slide-image-container">
-                    <img class="why-us__slide-image" 
-                         src="" 
-                         alt="Перевага 2"
-                         loading="lazy">
-                </div>
-                <div class="why-us__slide-content">
-                    <h3 class="why-us__slide-title">Перевага 2</h3>
-                    <p class="why-us__slide-description">Опис переваги 2</p>
-                    <button class="why-us__slide-button" type="button" aria-label="Дізнатися більше про перевагу 2">
-                        Дізнатися більше
-                    </button>
-                </div>
-            </article>
-            <article class="why-us__slide" data-slide-index="2">
-                <div class="why-us__slide-image-container">
-                    <img class="why-us__slide-image" 
-                         src="" 
-                         alt="Перевага 3"
-                         loading="lazy">
-                </div>
-                <div class="why-us__slide-content">
-                    <h3 class="why-us__slide-title">Перевага 3</h3>
-                    <p class="why-us__slide-description">Опис переваги 3</p>
-                    <button class="why-us__slide-button" type="button" aria-label="Дізнатися більше про перевагу 3">
-                        Дізнатися більше
-                    </button>
-                </div>
-            </article>
+    <div class="why-us__slider">
+        <div class="why-us__slide" data-slide-index="0">
+            <img src="{% static 'img/spec.png' %}" alt="Спеціалізація" class="why-us__image">
+        </div>
+        <div class="why-us__slide" data-slide-index="1">
+            <img src="{% static 'img/price.png' %}" alt="Ціни" class="why-us__image">
+        </div>
+        <div class="why-us__slide" data-slide-index="2">
+            <img src="{% static 'img/poli.png' %}" alt="Поліграф" class="why-us__image">
         </div>
     </div>
 </section>

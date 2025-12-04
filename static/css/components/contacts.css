@@ -238,14 +238,14 @@
 
 /* DESKTOP: sticky scroll ефект - кожна секція прилипає і наступна перекриває */
 @media (min-width: 1025px) {
-  .main--contacts .contacts__top {
+  .contacts__top {
     position: sticky;
     top: 0;
     height: 100vh;
     overflow: hidden;
   }
 
-  .main--contacts .contacts__bottom {
+  .contacts__bottom {
     position: sticky;
     top: 0;
     height: 100vh;

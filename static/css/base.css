@@ -56,6 +56,24 @@
   /* Інше */
   --border-radius: 0.25rem;
   --transition-speed: 0.2s;
+  
+  /* Z-index layers (систематизація для уникнення конфліктів) */
+  --z-index-base: 1;
+  --z-index-dropdown: 100;
+  --z-index-sticky: 200;
+  --z-index-fixed: 300;
+  --z-index-modal-backdrop: 400;
+  --z-index-modal: 500;
+  --z-index-popover: 600;
+  --z-index-tooltip: 700;
+  
+  /* Header використовує fixed layer */
+  --z-index-header: var(--z-index-fixed);
+  
+  /* Transition timings (додавлення для більш швидких анімацій) */
+  --transition-fast: 0.15s;
+  --transition-base: 0.3s;
+  --transition-slow: 0.7s;
 }
 
 /* ============================================================================ */
