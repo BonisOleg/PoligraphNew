@@ -24,7 +24,7 @@
                 <p class="accordion__section-description">Спеціалізуємося на перевірках у Львові: професійний поліграфолог, перевірка на детекторі брехні та корпоративні послуги для бізнесу.</p>
                 <div class="accordion__services-grid">
                     {% for service in services_list %}
-                    <article class="service-card">
+                    <article class="service-card{% if forloop.counter0|divisibleby:2 %} service-card--dark{% endif %}">
                         <h3 class="service-card__title">{{ service.title }}</h3>
                         <p class="service-card__price">{{ service.price }}</p>
                         {% if service.discount %}

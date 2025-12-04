@@ -56,7 +56,7 @@
 
 .accordion {
   border: 1px solid var(--color-secondary);
-  border-radius: var(--border-radius);
+  border-radius: 40px;
   overflow: hidden;
   background-color: var(--color-bg);
 }
@@ -65,6 +65,16 @@
 .main--about .accordion {
   background-color: rgba(0, 0, 0, 0.3);
   border-color: rgba(255, 255, 255, 0.2);
+  /* Згорнутий стан - фіксована висота 23vh */
+  height: 23vh;
+  height: 23dvh; /* для сучасних браузерів з підтримкою dvh */
+}
+
+/* Розгорнутий стан - автоматична висота під контент */
+.main--about .accordion[aria-expanded="true"] {
+  height: auto;
+  min-height: 23vh;
+  min-height: 23dvh; /* для сучасних браузерів */
 }
 
 .accordion__header {
@@ -77,21 +87,21 @@
   gap: var(--spacing-sm);
 }
 
-/* На сторінці "Про нас" з чорним фоном - темний фон для заголовка */
+/* На сторінці "Про нас" - header завжди має мінімальну висоту 23vh */
+/* Текст зверху, не центрований, щоб не стрибав при розгортанні */
 .main--about .accordion__header {
+  min-height: 23vh;
+  min-height: 23dvh; /* для сучасних браузерів */
+  justify-content: flex-start;
+  align-items: flex-start;
   background-color: rgba(0, 0, 0, 0.4);
   color: var(--color-text-light);
 }
 
-.accordion__header:hover {
-  background-color: var(--color-primary);
-  color: var(--color-bg);
-}
-
-/* На сторінці "Про нас" з чорним фоном - інший hover ефект */
-.main--about .accordion__header:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: var(--color-text-light);
+/* В згорнутому стані header займає всю висоту акордеона (23vh) */
+.main--about .accordion:not([aria-expanded="true"]) .accordion__header {
+  height: 23vh;
+  height: 23dvh;
 }
 
 .accordion__title {
@@ -119,94 +129,205 @@
   opacity: 0.9;
 }
 
+/* Базові стилі контенту */
 .accordion__content {
-  padding: var(--spacing-xl);
-  display: none;
+  display: block;
+  max-height: 0;
+  padding: 0 var(--spacing-xl);
+  overflow: hidden;
+  opacity: 0;
+  transform: scaleY(0.95);
+  transform-origin: top center;
+  
+  /* GPU оптимізація для iOS */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  
+  /* Без transition у згорнутому стані */
+  transition: none;
 }
 
-[aria-expanded="true"] ~ .accordion__content,
+/* Анімація відкриття (desktop: 550ms) */
+.accordion--opening .accordion__content {
+  max-height: var(--content-height);
+  padding: var(--spacing-xl);
+  opacity: 1;
+  transform: scaleY(1);
+  
+  /* Elastic ефект - легкий bounce */
+  transition:
+    max-height 550ms cubic-bezier(0.34, 1.2, 0.64, 1),
+    padding 550ms cubic-bezier(0.34, 1.2, 0.64, 1),
+    opacity 350ms ease-out 100ms,
+    transform 550ms cubic-bezier(0.34, 1.2, 0.64, 1);
+  
+  /* Підказка браузеру для GPU */
+  will-change: max-height, opacity, transform;
+}
+
+/* Розгорнутий стан */
 .accordion[aria-expanded="true"] .accordion__content {
-  display: block;
+  max-height: var(--content-height);
+  padding: var(--spacing-xl);
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* Анімація закриття (швидша за відкриття) */
+.accordion--closing .accordion__content {
+  max-height: 0;
+  padding: 0 var(--spacing-xl);
+  opacity: 0;
+  transform: scaleY(0.95);
+  
+  /* Без bounce при закритті - плавніше */
+  transition:
+    max-height 400ms cubic-bezier(0.4, 0, 0.6, 1),
+    padding 400ms cubic-bezier(0.4, 0, 0.6, 1),
+    opacity 250ms ease-in,
+    transform 400ms cubic-bezier(0.4, 0, 0.6, 1);
+  
+  will-change: max-height, opacity, transform;
+}
+
+/* Fade-in для внутрішнього контенту */
+.accordion__content > * {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 300ms ease-out 200ms, 
+              transform 300ms ease-out 200ms;
+}
+
+.accordion--opening .accordion__content > *,
+.accordion[aria-expanded="true"] .accordion__content > * {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .accordion__stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: var(--spacing-lg);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
   margin-bottom: var(--spacing-xl);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 900px;
 }
 
 .accordion__stat-item {
   text-align: center;
-  padding: var(--spacing-md);
-  background-color: var(--color-bg-light);
-  border-radius: var(--border-radius);
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  border: 2px solid #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* На сторінці "Про нас" з чорним фоном - темний фон для статистики */
-.main--about .accordion__stat-item {
-  background-color: rgba(0, 0, 0, 0.4);
+.accordion__stat-item:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 16px 48px rgba(255, 255, 255, 0.25), 0 0 30px rgba(255, 255, 255, 0.2);
+  border-color: #FFFFFF;
 }
 
 .accordion__stat-number {
   display: block;
-  font-size: var(--font-size-xl);
-  font-weight: bold;
-  color: var(--color-primary);
-  margin-bottom: var(--spacing-xs);
+  font-family: var(--font-family-display-bold);
+  font-size: var(--font-size-6xl);
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--spacing-md);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.4);
 }
 
 .accordion__stat-label {
   display: block;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-}
-
-/* На сторінці "Про нас" з чорним фоном - світлий текст */
-.main--about .accordion__stat-label {
-  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-family-display);
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
 }
 
 .accordion__section-title {
-  font-size: var(--font-size-xl);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
   margin-bottom: var(--spacing-md);
-  color: var(--color-text);
-}
-
-/* На сторінці "Про нас" з чорним фоном - світлий текст */
-.main--about .accordion__section-title {
   color: var(--color-text-light);
+  letter-spacing: -0.01em;
 }
 
 .accordion__section-description {
+  font-family: var(--font-family-base);
   margin-bottom: var(--spacing-lg);
-  color: var(--color-text-muted);
-}
-
-/* На сторінці "Про нас" з чорним фоном - світлий текст */
-.main--about .accordion__section-description {
   color: rgba(255, 255, 255, 0.8);
+  font-size: 1.125rem;
 }
 
 .accordion__services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--spacing-lg);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem 2rem;
   margin-bottom: var(--spacing-xl);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  padding: 0;
+  contain: layout style;
+  min-height: 1100px;
 }
 
 .service-card {
-  padding: var(--spacing-lg);
-  background-color: var(--color-bg-light);
-  border-radius: var(--border-radius);
-  border: 1px solid var(--color-secondary);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.75rem;
+  background: #FFFFFF;
+  border: 3px solid #000000;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-height: 450px;
+  position: relative;
 }
 
-/* На сторінці "Про нас" з чорним фоном - темний фон для карток послуг */
-.main--about .service-card {
-  background-color: rgba(0, 0, 0, 0.4);
-  border-color: rgba(255, 255, 255, 0.2);
+.service-card:hover {
+  transform: translateY(-16px) scale(1.02);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-color: #000000;
+  border-width: 4px;
+  will-change: transform, box-shadow;
+  z-index: 10;
 }
+
+/* Чорна картка - акцентна */
+.service-card--dark {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 4px 24px rgba(255, 255, 255, 0.2),
+              inset 0 0 60px rgba(255, 255, 255, 0.05),
+              0 0 20px rgba(255, 255, 255, 0.1);
+  min-height: 450px;
+}
+
+.service-card--dark:hover {
+  transform: translateY(-16px) scale(1.02);
+  box-shadow: 0 24px 64px rgba(255, 255, 255, 0.4),
+              inset 0 0 80px rgba(255, 255, 255, 0.1),
+              0 8px 32px rgba(255, 255, 255, 0.2);
+  border-color: #FFFFFF;
+  border-width: 4px;
+  will-change: transform, box-shadow;
+  z-index: 10;
+}
+
+/* На сторінці "Про нас" - контент акордеона на чорному фоні */
+.main--about .accordion__content {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 
 .service-card__icon {
   font-size: 2rem;
@@ -214,60 +335,108 @@
 }
 
 .service-card__title {
-  font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-sm);
-  color: var(--color-text);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
-/* На сторінці "Про нас" з чорним фоном - світлий текст */
-.main--about .service-card__title {
-  color: var(--color-text-light);
+.service-card--dark .service-card__title {
+  color: #FFFFFF;
 }
 
 .service-card__price {
-  font-size: var(--font-size-xl);
-  font-weight: bold;
-  color: var(--color-primary);
-  margin-bottom: var(--spacing-xs);
+  font-family: var(--font-family-display-bold);
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  color: #000000;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem 0;
+}
+
+.service-card--dark .service-card__price {
+  color: #FFFFFF;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3);
 }
 
 .service-card__discount {
-  font-size: var(--font-size-sm);
-  color: var(--color-success);
+  font-family: var(--font-family-base);
+  font-size: 0.875rem;
+  color: #666666;
   margin-bottom: var(--spacing-md);
+  font-weight: 500;
 }
 
 .service-card__features {
   list-style: none;
   padding: 0;
-  margin: 0 0 var(--spacing-md) 0;
+  margin: 0.75rem 0 var(--spacing-md) 0;
+  flex-grow: 1;
 }
 
 .service-card__features li {
-  padding: var(--spacing-xs) 0;
+  padding: 0.35rem 0;
   padding-left: var(--spacing-lg);
   position: relative;
+  font-family: var(--font-family-base);
+  font-size: 0.95rem;
+  color: #666666;
+}
+
+.service-card--dark .service-card__features li {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .service-card__features li::before {
   content: "✓";
   position: absolute;
   left: 0;
-  color: var(--color-success);
+  color: #000000;
+  font-weight: bold;
+}
+
+.service-card--dark .service-card__features li::before {
+  color: #FFFFFF;
 }
 
 .service-card__button {
   display: inline-block;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background-color: var(--color-primary);
-  color: var(--color-bg);
+  margin: auto 0 0 0;
+  padding: 1rem 2rem;
+  font-family: var(--font-family-display);
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #000000;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+  border-radius: 8px;
   text-decoration: none;
-  border-radius: var(--border-radius);
-  transition: background-color var(--transition-speed);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
 }
 
 .service-card__button:hover {
-  background-color: var(--color-info);
+  background-color: #FFFFFF;
+  color: #000000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.service-card--dark .service-card__button {
+  background-color: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
+}
+
+.service-card--dark .service-card__button:hover {
+  background-color: #000000;
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4);
 }
 
 .accordion__advantages-grid {
@@ -624,6 +793,155 @@
 /* На сторінці "Про нас" з чорним фоном - світлий текст */
 .main--about .certification-card__description {
   color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================================================ */
+/* RESPONSIVE ANIMATION TIMINGS                                               */
+/* ============================================================================ */
+
+/* Tablet - трохи швидше (500ms вместо 550ms) */
+@media (max-width: 1024px) {
+  .accordion--opening .accordion__content {
+    transition-duration: 500ms, 500ms, 300ms, 500ms;
+  }
+  
+  .accordion--closing .accordion__content {
+    transition-duration: 350ms, 350ms, 220ms, 350ms;
+  }
+}
+
+/* Mobile - ще швидше для touch UX (450ms) */
+@media (max-width: 767px) {
+  .accordion--opening .accordion__content {
+    transition-duration: 450ms, 450ms, 280ms, 450ms;
+  }
+  
+  .accordion--closing .accordion__content {
+    transition-duration: 320ms, 320ms, 200ms, 320ms;
+  }
+}
+
+/* ============================================================================ */
+/* RESPONSIVE ДИЗАЙН - СІТКА КАРТОК І СТАТИСТИКА                               */
+/* ============================================================================ */
+
+/* Tablet: 1200px -> 2 колонки для карток */
+@media (max-width: 1200px) {
+  .accordion__services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: 768px -> 1 колонка для карток */
+@media (max-width: 768px) {
+  .accordion__services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .accordion__stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .accordion__stat-number {
+    font-size: 4rem; /* 64px на мобільних */
+  }
+  
+  .service-card__price {
+    font-size: 2.5rem; /* 40px на мобільних */
+  }
+  
+  .service-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .accordion__stat-item {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* Дуже маленькі екрани */
+@media (max-width: 480px) {
+  .accordion__stat-number {
+    font-size: 3rem; /* 48px на дуже маленьких */
+  }
+  
+  .service-card__price {
+    font-size: 2rem; /* 32px на дуже маленьких */
+  }
+  
+  .service-card__title {
+    font-size: 1.25rem;
+  }
+  
+  .accordion__section-title {
+    font-size: 1.875rem; /* 30px */
+  }
+}
+
+/* ============================================================================ */
+/* iOS SAFARI SPECIFIC OPTIMIZATION                                           */
+/* ============================================================================ */
+
+/* iOS Safari detection */
+@supports (-webkit-touch-callout: none) {
+  .accordion {
+    /* Ізоляція layout для performance */
+    contain: layout style;
+    
+    /* Smooth scrolling на iOS */
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .accordion__content {
+    /* Subpixel rendering для чіткості */
+    -webkit-font-smoothing: subpixel-antialiased;
+    
+    /* Запобігання flickering */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* ProMotion 120Hz підтримка (iOS 13.3+) */
+  @media (prefers-reduced-motion: no-preference) {
+    .accordion--opening .accordion__content {
+      /* Більш плавна крива для 120fps */
+      transition-timing-function: cubic-bezier(0.34, 1.15, 0.64, 1);
+    }
+  }
+}
+
+/* ============================================================================ */
+/* ACCESSIBILITY: PREFERS-REDUCED-MOTION                                      */
+/* ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion__content,
+  .accordion--opening .accordion__content,
+  .accordion--closing .accordion__content {
+    transition-duration: 0.15s;
+    transition-timing-function: linear;
+    will-change: auto;
+  }
+  
+  .accordion__content > * {
+    transition-duration: 0.1s;
+    will-change: auto;
+  }
+  
+  /* Вимикаємо transform анімації */
+  .accordion__content {
+    transform: none;
+  }
+  
+  .accordion--opening .accordion__content {
+    transform: none;
+  }
+  
+  .accordion__content > * {
+    transform: none;
+  }
 }
 
 

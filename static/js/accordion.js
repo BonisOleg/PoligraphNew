@@ -1,39 +1,163 @@
 /**
  * Логіка акордеонів для сторінки "Про нас"
- * HTMX-ready версія з підтримкою реініціалізації
+ * Elastic-анімація з динамічним розрахунком висоти
+ * Оптимізовано для desktop, tablet, iOS
+ * Включена анімація лічильників для статистики
  */
 
 window.AccordionModule = (function() {
   'use strict';
 
-  // Приватні змінні (доступні тільки всередині модуля)
+  // Приватні змінні
   let accordions = [];
   let listeners = [];
+  let activeAccordion = null;
+  let countersAnimated = false;
+
+  /**
+   * Анімація лічильника для статистики
+   */
+  function animateCounter(element, duration = 2000) {
+    const target = parseInt(element.textContent, 10) || 0;
+    if (target === 0) return;
+    
+    const start = 0;
+    const increment = target / (duration / 16);
+    let current = start;
+    const isPercentage = element.textContent.includes('%');
+    const suffix = isPercentage ? '%' : '+';
+    
+    const timer = setInterval(function() {
+      current += increment;
+      if (current >= target) {
+        element.textContent = target + suffix;
+        clearInterval(timer);
+      } else {
+        const displayValue = Math.floor(current);
+        element.textContent = displayValue + suffix;
+      }
+    }, 16);
+  }
+
+  /**
+   * Запуск анімації всіх лічильників
+   */
+  function animateAllCounters() {
+    if (countersAnimated) return;
+    countersAnimated = true;
+    
+    const counters = document.querySelectorAll('.accordion__stat-number');
+    counters.forEach(function(counter) {
+      animateCounter(counter, 2000);
+    });
+  }
+
+  /**
+   * Отримує точну висоту контенту акордеона
+   */
+  function getContentHeight(accordion) {
+    const content = accordion.querySelector('.accordion__content');
+    if (!content) return 0;
+    
+    // Тимчасово показуємо для вимірювання
+    content.style.display = 'block';
+    content.style.position = 'absolute';
+    content.style.visibility = 'hidden';
+    content.style.height = 'auto';
+    
+    const height = content.scrollHeight;
+    
+    // Повертаємо як було
+    content.style.display = '';
+    content.style.position = '';
+    content.style.visibility = '';
+    content.style.height = '';
+    
+    return height;
+  }
 
   /**
    * Закриває всі акордеони
    */
   function closeAllAccordions() {
     accordions.forEach(function(accordion) {
-      accordion.classList.remove('accordion--expanded');
-      accordion.setAttribute('aria-expanded', 'false');
+      if (accordion.getAttribute('aria-expanded') === 'true') {
+        closeAccordion(accordion);
+      }
     });
   }
 
   /**
-   * Відкриває конкретний акордеон
+   * Відкриває конкретний акордеон з elastic анімацією
    */
   function openAccordion(accordion) {
-    accordion.classList.add('accordion--expanded');
+    const content = accordion.querySelector('.accordion__content');
+    if (!content) return;
+
+    // Розраховуємо висоту контенту
+    const height = getContentHeight(accordion);
+    
+    // Встановлюємо CSS змінну з висотою
+    accordion.style.setProperty('--content-height', height + 'px');
+    
+    // Додаємо клас для анімації
+    accordion.classList.add('accordion--opening');
     accordion.setAttribute('aria-expanded', 'true');
     
-    // Плавний скрол до відкритого акордеона
-    setTimeout(function() {
-      accordion.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
+    // Запускаємо анімацію лічильників при відкритті першого акордеона
+    if (activeAccordion === null) {
+      animateAllCounters();
+    }
+    
+    // Прибираємо will-change після завершення
+    const handleTransitionEnd = function() {
+      accordion.classList.remove('accordion--opening');
+      accordion.classList.add('accordion--expanded');
+      
+      // Очищення will-change для економії GPU пам'яті
+      content.style.willChange = 'auto';
+      
+      content.removeEventListener('transitionend', handleTransitionEnd);
+    };
+    
+    content.addEventListener('transitionend', handleTransitionEnd, { once: true });
+    
+    // Плавний скрол через RequestAnimationFrame (для синхронізації з 60/120fps)
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        accordion.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
       });
-    }, 100);
+    });
+    
+    activeAccordion = accordion;
+  }
+
+  /**
+   * Закриває конкретний акордеон з анімацією
+   */
+  function closeAccordion(accordion) {
+    const content = accordion.querySelector('.accordion__content');
+    if (!content) return;
+
+    accordion.classList.remove('accordion--expanded');
+    accordion.classList.add('accordion--closing');
+    accordion.setAttribute('aria-expanded', 'false');
+    
+    const handleTransitionEnd = function() {
+      accordion.classList.remove('accordion--closing');
+      
+      // Очищення will-change
+      content.style.willChange = 'auto';
+      
+      content.removeEventListener('transitionend', handleTransitionEnd);
+    };
+    
+    content.addEventListener('transitionend', handleTransitionEnd, { once: true });
+    
+    activeAccordion = null;
   }
 
   /**
@@ -43,10 +167,10 @@ window.AccordionModule = (function() {
     return function(e) {
       e.stopPropagation();
       
-      const isExpanded = accordion.classList.contains('accordion--expanded');
+      const isExpanded = accordion.getAttribute('aria-expanded') === 'true';
       
       if (isExpanded) {
-        closeAllAccordions();
+        closeAccordion(accordion);
       } else {
         closeAllAccordions();
         openAccordion(accordion);
@@ -162,6 +286,7 @@ window.AccordionModule = (function() {
     // Очищуємо масиви
     listeners = [];
     accordions = [];
+    activeAccordion = null;
   }
 
   // Публічний API модуля

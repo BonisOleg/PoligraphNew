@@ -25,7 +25,6 @@
 .hero__video-wrapper {
   position: absolute;
   top: 0;
-  left: 50%;
   width: 100%;
   height: 100%;
   display: flex;
@@ -37,10 +36,16 @@
   transform: translateX(-50%) translateY(var(--parallax-offset));
 }
 
-/* Desktop: 50% ширини */
+/* Desktop: 52% позиціонування, 11% від топу */
 @media (min-width: 768px) {
   .hero__video-wrapper {
+    top: 11%;
+    left: 52%;
     max-width: 50%;
+  }
+
+  .hero__text--top-right {
+    right: calc(28rem + var(--safe-area-right)) !important;
   }
 }
 
@@ -120,7 +125,6 @@
 
 .hero__text--top-right {
   top: calc(2rem + var(--safe-area-top));
-  right: calc(2rem + var(--safe-area-right));
   text-align: right;
 }
 
@@ -170,6 +174,10 @@
 /* ============================================================================ */
 
 @media (max-width: 767px) {
+  .hero__video-wrapper {
+    left: 54%;
+  }
+
   .hero__text {
     font-size: clamp(1.2rem, 4vw, 2rem);
   }

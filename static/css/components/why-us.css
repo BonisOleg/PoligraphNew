@@ -19,6 +19,10 @@
   background-color: #010101;
 }
 
+.why-us__overlay {
+  display: none; /* Приховано за замовчуванням (mobile-first) */
+}
+
 .why-us__slider {
   display: flex;
   min-height: 90vh;
@@ -95,6 +99,30 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
+  .why-us__overlay {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 28%;
+    background-color: #010101;
+    z-index: 10; /* Достатньо для перекриття карток (вони relative, не мають z-index) */
+    /* pointer-events за замовчуванням (auto) - блокує hover на картках під overlay */
+  }
+
+  .why-us__overlay-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: 400;
+    text-align: center;
+  }
 }
 
 /* ============================================================================ */
@@ -126,5 +154,9 @@
     left: auto;
     transform: none;
     transition: none;
+  }
+
+  .why-us__overlay {
+    display: none; /* Приховано на мобільній версії */
   }
 }

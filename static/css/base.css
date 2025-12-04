@@ -45,13 +45,19 @@
   --spacing-xxl: 3rem;
   
   /* Шрифти */
-  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-display: 'Montserrat', sans-serif;
+  --font-family-display-bold: 'Oswald', sans-serif;
   --font-family-mono: "Courier New", monospace;
   
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2.5rem;
+  --font-size-4xl: 3.5rem;
+  --font-size-6xl: 6rem;
   
   /* Інше */
   --border-radius: 0.25rem;
