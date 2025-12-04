@@ -1,13 +1,13 @@
 /**
- * Hero секція: HTMX-ready з parallax
- * 100% кросплатформенне рішення
+ * Hero секція: HTMX-ready з parallax та sessionStorage
+ * 100% кросплатформенне рішення (iOS, Android, OPPO, Windows, Mac)
  * 
  * Функціонал:
+ * - Відео грає один раз за сесію браузера (sessionStorage)
+ * - Після завершення зберігається на останньому кадрі
  * - HTMX cleanup та реініціалізація
  * - JS parallax через requestAnimationFrame
  * - Синхронізація тексту з відео (5 секунда)
- * - Явна зупинка на останньому кадрі
- * - Повний cleanup без memory leaks
  * - Retry механізм для надійності
  */
 
@@ -15,11 +15,6 @@
   'use strict';
 
   let heroInstance = null;
-
-  // Window-based прапор (очищається при reload, зберігається при HTMX)
-  if (typeof window.heroVideoPlayed === 'undefined') {
-    window.heroVideoPlayed = false;
-  }
 
   // ========================================================================
   // HERO CONTROLLER FACTORY
@@ -52,8 +47,8 @@
           return;
         }
 
-        // Перевірити window прапор
-        if (window.heroVideoPlayed) {
+        // Перевірити sessionStorage (відео завершено в поточній сесії)
+        if (sessionStorage.getItem('heroVideoCompleted') === 'true') {
           this.setupStaticMode();
           return;
         }
@@ -67,8 +62,6 @@
 
         this.setupVideoListeners();
         this.setupParallax();
-        this.setupVisibilityListener();
-        this.setupKeyboardControls();
         this.startVideo();
       },
 
@@ -145,20 +138,17 @@
           self.video.removeAttribute('controls');
           self.video.controls = false;
           
-          // Встановити window прапор
-          window.heroVideoPlayed = true;
+          // Зберегти стан у sessionStorage
+          sessionStorage.setItem('heroVideoCompleted', 'true');
         };
 
         const onError = function() {
           console.warn('Hero video load failed');
           
-          // Використовувати КЛАСИ замість inline styles
+          // Показати текст при помилці (дати повторну спробу при наступному візиті)
           self.textElements.forEach(function(el) {
             el.classList.add('hero__text--error');
           });
-          
-          // Встановити прапор щоб не грати повторно
-          window.heroVideoPlayed = true;
         };
 
         // canplay замість loadedmetadata - надійніше для Safari
@@ -246,53 +236,6 @@
           // Використовуємо CSS змінну замість inline transform
           this.videoWrapper.style.setProperty('--parallax-offset', parallaxValue + 'px');
         }
-      },
-
-      // Visibility
-      setupVisibilityListener: function() {
-        const self = this;
-        
-        const onVisibilityChange = function() {
-          if (!self.video) return;
-          
-          if (document.hidden) {
-            self.video.pause();
-          } else if (!self.video.ended && !self.video.classList.contains('hero__video--ended')) {
-            self.video.play().catch(function() {});
-          }
-        };
-
-        document.addEventListener('visibilitychange', onVisibilityChange);
-        this.listeners.push(
-          { el: document, event: 'visibilitychange', fn: onVisibilityChange }
-        );
-      },
-
-      // Keyboard
-      setupKeyboardControls: function() {
-        const self = this;
-        
-        const onKeyDown = function(event) {
-          if (!self.video || self.video.classList.contains('hero__video--ended')) return;
-          
-          const activeTag = event.target.tagName;
-          if (['INPUT', 'TEXTAREA', 'BUTTON', 'A', 'SELECT'].indexOf(activeTag) !== -1) {
-            return;
-          }
-
-          if (event.key === ' ' || event.key === 'Enter') {
-            event.preventDefault();
-            
-            if (self.video.paused) {
-              self.video.play().catch(function() {});
-            } else {
-              self.video.pause();
-            }
-          }
-        };
-
-        document.addEventListener('keydown', onKeyDown);
-        this.listeners.push({ el: document, event: 'keydown', fn: onKeyDown });
       },
 
       // Cleanup
