@@ -11,22 +11,23 @@
 /* СТОРІНКА "ПРО НАС" - ЧОРНИЙ ФОН ТА ВІДСТУПИ                                  */
 /* ============================================================================ */
 
-/* Чорний фон для main контейнера */
+/* Прозорий фон для main контейнера - логотип на body видимий */
 .main--about {
-  background-color: var(--color-bg-dark);
+  background-color: transparent;
   color: var(--color-text-light);
   min-height: 100vh;
   min-height: -webkit-fill-available;
   min-height: 100dvh;
+  position: relative;
+  z-index: 1;
 }
 
-/* Відступи для акордеонів: відступ від верху = відступ від кнопки меню */
-/* Розрахунок: 5vh (відступ до кнопки) + 120px (висота кнопки) + 5vh (відступ від кнопки) */
+/* Відступи для акордеонів */
 .about-accordions {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
-  padding-top: calc(10vh + 120px);
+  padding-top: 100px;
   padding-left: var(--spacing-lg);
   padding-right: var(--spacing-lg);
   padding-bottom: var(--spacing-xxl);
@@ -61,9 +62,9 @@
   background-color: var(--color-bg);
 }
 
-/* На сторінці "Про нас" з чорним фоном - темний фон для акордеонів */
+/* На сторінці "Про нас" з чорним фоном - прозорі акордеони */
 .main--about .accordion {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: transparent;
   border-color: rgba(255, 255, 255, 0.2);
   /* Згорнутий стан - фіксована висота 23vh */
   height: 23vh;
@@ -80,11 +81,20 @@
 .accordion__header {
   padding: var(--spacing-lg);
   background-color: var(--color-bg-light);
-  cursor: pointer;
   transition: background-color var(--transition-speed);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+}
+
+/* Кастомний курсор тільки для згорнутих акордеонів */
+.accordion:not([aria-expanded="true"]) .accordion__header {
+  cursor: url('data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2270%22 height=%2235%22%3E%3Cpath d=%22M23 12 L35 22 L47 12%22 fill=%22none%22 stroke=%22white%22 stroke-width=%222%22/%3E%3Ctext x=%2235%22 y=%2227%22 font-size=%227%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22hanging%22 font-family=%22Arial, sans-serif%22%3E%D0%94%D0%95%D0%A2%D0%90%D0%9B%D0%AC%D0%9D%D0%86%D0%A8%D0%95%3C/text%3E%3C/svg%3E') 35 22, auto;
+}
+
+/* На розгорнутих акордеонах - стандартний курсор */
+.accordion[aria-expanded="true"] .accordion__header {
+  cursor: default;
 }
 
 /* На сторінці "Про нас" - header завжди має мінімальну висоту 23vh */
@@ -94,7 +104,7 @@
   min-height: 23dvh; /* для сучасних браузерів */
   justify-content: flex-start;
   align-items: flex-start;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: transparent;
   color: var(--color-text-light);
 }
 
@@ -326,9 +336,9 @@
   z-index: 10;
 }
 
-/* На сторінці "Про нас" - контент акордеона на чорному фоні */
+/* На сторінці "Про нас" - контент акордеона прозорий */
 .main--about .accordion__content {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: transparent;
 }
 
 

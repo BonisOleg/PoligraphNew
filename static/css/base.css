@@ -94,11 +94,43 @@ body {
   line-height: 1.5;
 }
 
-/* Чорний фон для body на сторінці "Про нас" */
+/* Чорний фон для body на сторінці "Про нас" з логотипом */
 /* Використовуємо :has() для сучасних браузерів та fallback через специфічність */
 body:has(.main--about) {
   background-color: var(--color-bg-dark);
   color: var(--color-text-light);
+  position: relative;
+}
+
+body:has(.main--about)::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../img/Logoabout.png');
+  background-size: auto 70vh;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Mobile: логотип 95% ширини, висота auto */
+@media (max-width: 767px) {
+  body:has(.main--about)::before {
+    background-size: 95% auto;
+  }
+}
+
+/* iOS Safari: підтримка ::before */
+@supports (-webkit-touch-callout: none) {
+  body:has(.main--about)::before {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
 }
 
 /* Fallback для браузерів без підтримки :has() - стилі застосуються через .main--about */

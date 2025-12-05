@@ -58,6 +58,11 @@
   transition: opacity 0.3s ease-in;
 }
 
+/* Відео готове до показу (встановлюється JS в init) */
+.hero__video--visible {
+  opacity: 1;
+}
+
 /* Приховати Safari controls */
 .hero__video::-webkit-media-controls {
   display: none;
@@ -79,6 +84,31 @@
   display: none;
 }
 
+/* Додаткові Safari controls приховування */
+.hero__video::-webkit-media-controls-timeline {
+  display: none !important;
+}
+
+.hero__video::-webkit-media-controls-current-time-display {
+  display: none !important;
+}
+
+.hero__video::-webkit-media-controls-time-remaining-display {
+  display: none !important;
+}
+
+.hero__video::-webkit-media-controls-fullscreen-button {
+  display: none !important;
+}
+
+.hero__video::-webkit-media-controls-volume-slider {
+  display: none !important;
+}
+
+.hero__video::-webkit-media-controls-mute-button {
+  display: none !important;
+}
+
 /* Заборонити взаємодію після ended */
 .hero__video--ended {
   pointer-events: none;
@@ -87,10 +117,6 @@
 /* Відео в статичному режимі (вже було відтворено) */
 .hero__video--static {
   pointer-events: none;
-}
-
-.hero__video--loaded {
-  opacity: 1;
 }
 
 /* ============================================================================ */

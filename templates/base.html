@@ -121,13 +121,14 @@
     </footer>
     
     <!-- 4. ВЛАСНІ JS ФАЙЛИ (ПІСЛЯ HTMX, З DEFER) -->
-    <!-- Порядок КРИТИЧНО ВАЖЛИВИЙ: модулі → app-init → hero -->
+    <!-- Порядок КРИТИЧНО ВАЖЛИВИЙ: модулі → app-init → hero → main-sync -->
     <script src="{% static 'js/header.js' %}" defer></script>
     <script src="{% static 'js/accordion.js' %}" defer></script>
     <script src="{% static 'js/why-us.js' %}" defer></script>
     <script src="{% static 'js/footer-accordion.js' %}" defer></script>
     <script src="{% static 'js/app-init.js' %}" defer></script>
     <script src="{% static 'js/hero.js' %}" defer></script>
+    <script src="{% static 'js/main-class-sync.js' %}" defer></script>
 </body>
 </html>
 

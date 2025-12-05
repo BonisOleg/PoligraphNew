@@ -42,7 +42,7 @@
           if (this.initAttempts < 10) {
             this.initAttempts++;
             const self = this;
-            setTimeout(function() { self.init(); }, 50);
+            setTimeout(function() { self.init(); }, 10);
           }
           return;
         }
@@ -60,6 +60,9 @@
           el.classList.remove('hero__text--error');
         });
 
+        // Відео видиме одразу після init (без затримки на canplay)
+        this.video.classList.add('hero__video--visible');
+
         this.setupVideoListeners();
         this.setupParallax();
         this.startVideo();
@@ -75,7 +78,7 @@
         this.video.pause();
         
         // Додати класи
-        this.video.classList.add('hero__video--static', 'hero__video--ended', 'hero__video--loaded');
+        this.video.classList.add('hero__video--static', 'hero__video--ended', 'hero__video--visible');
         
         // Показати текст одразу
         this.textElements.forEach(function(el) {
@@ -113,8 +116,6 @@
         const self = this;
 
         const onCanPlay = function() {
-          self.video.classList.add('hero__video--loaded');
-          
           // Спробувати відтворити якщо autoplay не спрацював
           if (self.video.paused) {
             self.video.play().catch(function() {});
@@ -168,16 +169,22 @@
       // Запуск відео
       startVideo: function() {
         const self = this;
+        let retryCount = 0;
+        const maxRetries = 3;
         
-        // НЕ використовуємо load() - може спричинити миготіння
-        // Просто пробуємо play() з retry
+        // Обмежений retry (максимум 3 спроби)
         const tryPlay = function() {
           if (!self.video) return;
           
           self.video.play().catch(function(err) {
-            console.warn('Autoplay attempt failed:', err);
-            // Retry через 200ms (для повільних пристроїв)
-            setTimeout(tryPlay, 200);
+            retryCount++;
+            if (retryCount < maxRetries) {
+              console.warn('Autoplay attempt ' + retryCount + ' failed, retrying...');
+              // Retry через 300ms
+              setTimeout(tryPlay, 300);
+            } else {
+              console.warn('Autoplay failed after ' + maxRetries + ' attempts');
+            }
           });
         };
         
@@ -303,7 +310,7 @@
             heroInstance = createHeroController();
             heroInstance.init();
           }
-        }, 150);
+        }, 50);
       }
     });
   }
