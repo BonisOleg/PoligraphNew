@@ -101,6 +101,22 @@
       if (event.detail.target && event.detail.target.id === 'main') {
         console.log('[AppInit] afterSwap - reinitializing modules');
         
+        // Оновлюємо клас на body на основі класу main
+        const mainElement = document.getElementById('main');
+        if (mainElement) {
+          if (mainElement.classList.contains('main--about')) {
+            if (!document.body.classList.contains('body--about')) {
+              document.body.classList.add('body--about');
+              console.log('[AppInit] Added body--about class after HTMX swap');
+            }
+          } else {
+            if (document.body.classList.contains('body--about')) {
+              document.body.classList.remove('body--about');
+              console.log('[AppInit] Removed body--about class after HTMX swap');
+            }
+          }
+        }
+        
         // Невелика затримка для гарантії що DOM готовий
         setTimeout(function() {
           initAllModules();
@@ -122,6 +138,16 @@
     console.log('[AppInit] Initial page load - initializing');
     setupHTMXListeners();
     initAllModules();
+    
+    // Fallback: додаємо клас на body для сторінки "про нас" якщо його немає
+    // Це потрібно для старих браузерів без підтримки :has()
+    const mainElement = document.getElementById('main');
+    if (mainElement && mainElement.classList.contains('main--about')) {
+      if (!document.body.classList.contains('body--about')) {
+        document.body.classList.add('body--about');
+        console.log('[AppInit] Added body--about class as fallback');
+      }
+    }
   }
 
   // Запускаємо після завантаження DOM

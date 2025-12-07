@@ -13,14 +13,13 @@
 
 .main--contacts {
   position: relative;
-  /* Дозволяє sticky overlay працювати правильно */
 }
 
 .contacts__top {
   position: relative;
   z-index: 1;
   padding: var(--spacing-xxl) var(--spacing-lg);
-  background-color: var(--color-bg);
+  background-color: var(--color-bg-dark);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -33,11 +32,14 @@
 }
 
 .contacts__title {
-  font-size: 2.5rem;
-  font-weight: 600;
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
   margin-bottom: var(--spacing-xl);
-  color: var(--color-text);
+  color: #FFFFFF;
   text-align: center;
+  letter-spacing: -0.01em;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .contacts__content-grid {
@@ -48,13 +50,6 @@
   margin: 0 auto;
 }
 
-.contacts__info-column {
-  /* Ліва колонка: Контактна інформація */
-}
-
-.contacts__certs-column {
-  /* Права колонка: Сертифікати */
-}
 
 .contacts__info {
   display: flex;
@@ -66,40 +61,74 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
-  padding: var(--spacing-md);
-  background-color: var(--color-bg-light);
-  border-radius: var(--border-radius);
+  padding: 2rem 1.75rem;
+  border-radius: 16px;
+  position: relative;
+}
+
+.contacts__info-item:nth-child(odd) {
+  background: #FFFFFF;
+  border: 3px solid #000000;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contacts__info-item:nth-child(even) {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 4px 24px rgba(255, 255, 255, 0.2), inset 0 0 60px rgba(255, 255, 255, 0.05), 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .contacts__info-label {
   font-weight: 600;
-  color: var(--color-text-muted);
   font-size: var(--font-size-sm);
 }
 
+.contacts__info-item:nth-child(odd) .contacts__info-label {
+  color: #666666;
+}
+
+.contacts__info-item:nth-child(even) .contacts__info-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .contacts__info-value {
-  color: var(--color-text);
-  font-size: var(--font-size-lg);
+  font-size: 1.25rem;
   text-decoration: none;
+}
+
+.contacts__info-item:nth-child(odd) .contacts__info-value {
+  color: #000000;
+}
+
+.contacts__info-item:nth-child(even) .contacts__info-value {
+  color: #FFFFFF;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .contacts__info-value:focus {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
-  border-radius: var(--border-radius);
+  border-radius: 8px;
 }
 
 .contacts__certificates {
-  padding: var(--spacing-xl);
-  background-color: var(--color-bg-light);
-  border-radius: var(--border-radius);
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 4px 24px rgba(255, 255, 255, 0.2), inset 0 0 60px rgba(255, 255, 255, 0.05), 0 0 20px rgba(255, 255, 255, 0.1);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .contacts__certificates-title {
-  font-size: var(--font-size-xl);
-  font-weight: 600;
+  font-family: var(--font-family-display-bold);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
   margin-bottom: var(--spacing-md);
-  color: var(--color-text);
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .contacts__certificates-list {
@@ -115,14 +144,15 @@
   padding: var(--spacing-sm) 0;
   padding-left: var(--spacing-lg);
   position: relative;
-  color: var(--color-text);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
 }
 
 .contacts__certificates-item::before {
   content: "✓";
   position: absolute;
   left: 0;
-  color: var(--color-success);
+  color: #FFFFFF;
   font-weight: bold;
 }
 
@@ -258,12 +288,12 @@
 /* ============================================================================ */
 
 @media (max-width: 1024px) {
-  /* Вимкнути sticky на планшетах */
   .main--contacts .contacts__top,
   .main--contacts .contacts__bottom {
     position: relative;
     height: auto;
   }
+
   .contacts__content-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-xl);
@@ -288,11 +318,15 @@
   }
 
   .contacts__title {
-    font-size: 2rem;
+    font-size: var(--font-size-2xl);
   }
 
   .contacts__content-grid {
     gap: var(--spacing-lg);
+  }
+
+  .contacts__info-item {
+    padding: 1.5rem 1.25rem;
   }
 
   .contacts__map-wrapper {
@@ -314,7 +348,15 @@
   }
 
   .contacts__info-item {
-    padding: var(--spacing-sm);
+    padding: 1.25rem 1rem;
+  }
+
+  .contacts__certificates {
+    padding: 2rem 1.5rem;
+  }
+
+  .contacts__certificates-title {
+    font-size: var(--font-size-xl);
   }
 
   .contacts__map-container {

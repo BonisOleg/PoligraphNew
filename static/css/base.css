@@ -86,23 +86,21 @@
 /* БАЗОВІ СТИЛІ                                                                */
 /* ============================================================================ */
 
+main {
+  position: relative;
+  z-index: 1;
+}
+
 body {
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
-  color: var(--color-text);
-  background-color: var(--color-bg);
-  line-height: 1.5;
-}
-
-/* Чорний фон для body на сторінці "Про нас" з логотипом */
-/* Використовуємо :has() для сучасних браузерів та fallback через специфічність */
-body:has(.main--about) {
-  background-color: var(--color-bg-dark);
   color: var(--color-text-light);
+  background-color: var(--color-bg-dark);
+  line-height: 1.5;
   position: relative;
 }
 
-body:has(.main--about)::before {
+body::before {
   content: '';
   position: fixed;
   top: 0;
@@ -118,22 +116,21 @@ body:has(.main--about)::before {
   pointer-events: none;
 }
 
-/* Mobile: логотип 95% ширини, висота auto */
+/* Mobile: логотип 95% ширини */
 @media (max-width: 767px) {
-  body:has(.main--about)::before {
+  body::before {
     background-size: 95% auto;
   }
 }
 
-/* iOS Safari: підтримка ::before */
+/* iOS Safari */
 @supports (-webkit-touch-callout: none) {
-  body:has(.main--about)::before {
+  body::before {
     height: 100vh;
     height: -webkit-fill-available;
   }
 }
 
-/* Fallback для браузерів без підтримки :has() - стилі застосуються через .main--about */
 
 /* ============================================================================ */
 /* УТИЛІТАРНІ КЛАСИ                                                            */

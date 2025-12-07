@@ -11,16 +11,6 @@
 /* СТОРІНКА "ПРО НАС" - ЧОРНИЙ ФОН ТА ВІДСТУПИ                                  */
 /* ============================================================================ */
 
-/* Прозорий фон для main контейнера - логотип на body видимий */
-.main--about {
-  background-color: transparent;
-  color: var(--color-text-light);
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-  min-height: 100dvh;
-  position: relative;
-  z-index: 1;
-}
 
 /* Відступи для акордеонів */
 .about-accordions {
@@ -56,23 +46,21 @@
 }
 
 .accordion {
-  border: 1px solid var(--color-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 40px;
   overflow: hidden;
-  background-color: var(--color-bg);
+  background-color: transparent;
 }
 
-/* На сторінці "Про нас" з чорним фоном - прозорі акордеони */
-.main--about .accordion {
-  background-color: transparent;
-  border-color: rgba(255, 255, 255, 0.2);
+/* Висота акордеонів */
+.accordion {
   /* Згорнутий стан - фіксована висота 23vh */
   height: 23vh;
   height: 23dvh; /* для сучасних браузерів з підтримкою dvh */
 }
 
 /* Розгорнутий стан - автоматична висота під контент */
-.main--about .accordion[aria-expanded="true"] {
+.accordion[aria-expanded="true"] {
   height: auto;
   min-height: 23vh;
   min-height: 23dvh; /* для сучасних браузерів */
@@ -80,11 +68,12 @@
 
 .accordion__header {
   padding: var(--spacing-lg);
-  background-color: var(--color-bg-light);
+  background-color: transparent;
   transition: background-color var(--transition-speed);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  color: var(--color-text-light);
 }
 
 /* Кастомний курсор тільки для згорнутих акордеонів */
@@ -97,19 +86,17 @@
   cursor: default;
 }
 
-/* На сторінці "Про нас" - header завжди має мінімальну висоту 23vh */
+/* Header завжди має мінімальну висоту 23vh */
 /* Текст зверху, не центрований, щоб не стрибав при розгортанні */
-.main--about .accordion__header {
+.accordion__header {
   min-height: 23vh;
   min-height: 23dvh; /* для сучасних браузерів */
   justify-content: flex-start;
   align-items: flex-start;
-  background-color: transparent;
-  color: var(--color-text-light);
 }
 
 /* В згорнутому стані header займає всю висоту акордеона (23vh) */
-.main--about .accordion:not([aria-expanded="true"]) .accordion__header {
+.accordion:not([aria-expanded="true"]) .accordion__header {
   height: 23vh;
   height: 23dvh;
 }
@@ -121,8 +108,7 @@
   color: inherit;
 }
 
-/* На сторінці "Про нас" з чорним фоном - білий текст для заголовків */
-.main--about .accordion__title {
+.accordion__title {
   color: var(--color-text-light);
 }
 
@@ -133,8 +119,7 @@
   opacity: 0.8;
 }
 
-/* На сторінці "Про нас" з чорним фоном - білий текст для підзаголовків */
-.main--about .accordion__subtitle {
+.accordion__subtitle {
   color: var(--color-text-light);
   opacity: 0.9;
 }
@@ -229,6 +214,16 @@
   max-width: 900px;
   contain: layout style paint;
   content-visibility: auto;
+}
+
+.accordion[id="service-1"] .accordion__stats {
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1200px;
+  gap: 1.5rem;
+}
+
+.accordion[id="service-1"] .accordion__stat-item {
+  padding: 2.5rem 1.5rem;
 }
 
 .accordion__stat-item {
@@ -336,8 +331,7 @@
   z-index: 10;
 }
 
-/* На сторінці "Про нас" - контент акордеона прозорий */
-.main--about .accordion__content {
+.accordion__content {
   background-color: transparent;
 }
 
@@ -484,9 +478,9 @@
 /* Переваги - адаптивна сітка (3×2 або 2×3 залежно від контенту) */
 .accordion__advantages-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  max-width: 1200px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.5rem;
+  max-width: 1400px;
   margin: 0 auto;
   contain: layout style paint;
   content-visibility: auto;
@@ -500,10 +494,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1.75rem;
+  padding: 1.5rem 1.25rem;
   border-radius: 16px;
   position: relative;
-  min-height: 240px;
+  min-height: 200px;
   text-align: center;
   contain: layout style paint;
 }
@@ -517,10 +511,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1.75rem;
+  padding: 1.5rem 1.25rem;
   border-radius: 16px;
   position: relative;
-  min-height: 240px;
+  min-height: 200px;
   text-align: center;
   contain: layout style paint;
 }
@@ -908,16 +902,16 @@
 /* Сертифікація - сітка 2×2 */
 .accordion__certification-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  max-width: 1200px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 1400px;
   margin: 0 auto var(--spacing-xl);
   contain: layout style paint;
   content-visibility: auto;
 }
 
 .certification-card {
-  min-height: 240px;
+  min-height: 200px;
   text-align: center;
 }
 
@@ -927,7 +921,7 @@
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.75rem;
+  padding: 1.5rem 1.25rem;
   border-radius: 16px;
   position: relative;
   contain: layout style paint;
@@ -941,7 +935,7 @@
               0 0 20px rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.75rem;
+  padding: 1.5rem 1.25rem;
   border-radius: 16px;
   position: relative;
   contain: layout style paint;
@@ -1007,6 +1001,18 @@
   .accordion__services-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  
+  .accordion__advantages-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .accordion[id="service-1"] .accordion__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .accordion__certification-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Mobile: 768px -> 1 колонка для карток */
@@ -1019,6 +1025,10 @@
   .accordion__stats {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+  
+  .accordion[id="service-1"] .accordion__stats {
+    grid-template-columns: 1fr;
   }
   
   .accordion__stat-number {
