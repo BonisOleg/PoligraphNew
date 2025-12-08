@@ -9,23 +9,32 @@
 
 .cta {
   padding: var(--spacing-xxl) var(--spacing-xl);
-  background-color: var(--color-bg);
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+  position: relative;
+  min-height: 100vh;
 }
 
 .cta__container {
-  max-width: 600px;
+  max-width: 400px;
   margin: 0 auto;
-  padding: var(--spacing-xl);
-  background-color: var(--color-bg-light);
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem 1.75rem;
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  border: 3px solid #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(255, 255, 255, 0.2), inset 0 0 60px rgba(255, 255, 255, 0.05), 0 0 20px rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-width 0.3s ease;
+  position: relative;
 }
 
 .cta__title {
   font-size: clamp(1.5rem, 3vw, 2rem);
   text-align: center;
   margin-bottom: var(--spacing-xl);
-  color: var(--color-text);
+  color: #FFFFFF;
+  text-transform: uppercase;
+  font-family: var(--font-family-display);
+  font-weight: 700;
 }
 
 .cta__form {
@@ -42,27 +51,27 @@
 
 .cta__form-label {
   font-size: var(--font-size-base);
-  color: var(--color-text);
+  color: #FFFFFF;
   font-weight: 500;
 }
 
 .cta__form-input,
 .cta__form-textarea {
   padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--color-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: var(--border-radius);
   font-size: var(--font-size-base);
   font-family: var(--font-family-base);
-  color: var(--color-text);
-  background-color: var(--color-bg);
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.1);
   transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 .cta__form-input:focus,
 .cta__form-textarea:focus {
   outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  border-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .cta__form-textarea {
@@ -71,20 +80,25 @@
 }
 
 .cta__form-submit {
-  padding: var(--spacing-md) var(--spacing-lg);
-  background-color: var(--color-primary);
-  color: var(--color-bg);
-  border: none;
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-base);
-  font-weight: 500;
+  padding: 1rem 2rem;
+  background-color: #FFFFFF;
+  color: #000000;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-family-display);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   cursor: pointer;
-  transition: background-color var(--transition-speed);
+  transition: all 0.3s ease;
   margin-top: var(--spacing-sm);
 }
 
 .cta__form-submit:hover {
-  background-color: var(--color-info);
+  background-color: #000000;
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4);
 }
 
 .cta__form-submit:active {
@@ -109,4 +123,34 @@
   color: var(--color-bg);
 }
 
+.cta__container:hover {
+  transform: translateY(-12px) scale(1.01);
+  box-shadow: 0 20px 48px rgba(255, 255, 255, 0.35), inset 0 0 70px rgba(255, 255, 255, 0.08), 0 6px 24px rgba(255, 255, 255, 0.15);
+  border-width: 4px;
+}
 
+/* Desktop: позиціонування в лівій нижній четвертині */
+@media (min-width: 768px) {
+  .cta__container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    max-width: none;
+    margin: 0;
+  }
+}
+
+/* Mobile: звичайне позиціонування */
+@media (max-width: 767px) {
+  .cta {
+    min-height: auto;
+  }
+
+  .cta__container {
+    position: static;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}

@@ -20,7 +20,8 @@
 }
 
 .why-us__overlay {
-  display: none; /* Приховано за замовчуванням (mobile-first) */
+  display: none;
+  /* Приховано за замовчуванням (mobile-first) */
 }
 
 .why-us__slider {
@@ -44,21 +45,73 @@
   /* Фіксований розмір */
   height: 70%;
   width: auto;
-  
+
   /* Заповнення */
   object-fit: cover;
   object-position: center;
   display: block;
-  
+
   /* Позиціонування */
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  
+
   /* Анімація */
   transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================================ */
+/* НАПИСИ НА ЗОБРАЖЕННЯХ                                                        */
+/* ============================================================================ */
+
+.why-us__image-label {
+  /* Приховано за замовчуванням (mobile-first) */
+  display: none;
+}
+
+/* ============================================================================ */
+/* КОНТЕНТ В БЛОКАХ (показується при hover на розтягнутий блок)                */
+/* ============================================================================ */
+
+.why-us__slide-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 70%, transparent 100%);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 5;
+  /* Нижче overlay (z-index: 10), але вище зображення */
+}
+
+.why-us__slide-title {
+  font-family: var(--font-family-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.why-us__slide-description {
+  font-family: var(--font-family-base);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 1.5rem 0;
+}
+
+.why-us__slide-button {
+  display: inline-block;
+  margin: 0;
 }
 
 /* ============================================================================ */
@@ -77,14 +130,36 @@
     transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  .why-us__image-label {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: var(--font-family-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    z-index: 4;
+    /* Вище зображення, але нижче overlay та контенту */
+    opacity: 1;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    line-height: 1.2;
+  }
+
   /* При hover на slider - звужуємо всі картки */
   .why-us__slider:hover .why-us__slide {
-    flex: 0.43; /* ~15% кожна (0.43 + 0.43 + 2.14 = 3) */
+    flex: 0.43;
+    /* ~15% кожна (0.43 + 0.43 + 2.14 = 3) */
   }
 
   /* При hover на конкретну - розширюємо до 70% (більша специфічність) */
   .why-us__slider:hover .why-us__slide:hover {
-    flex: 2.14; /* ~70% (2.14 / 3 = 0.713) */
+    flex: 2.14;
+    /* ~70% (2.14 / 3 = 0.713) */
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   }
 
@@ -100,6 +175,21 @@
     transform: translateX(-50%);
   }
 
+  /* Контент з'являється на всіх картках при їх розтягуванні */
+  /* Затримка 0.3s */
+  .why-us__slider:hover .why-us__slide:hover .why-us__slide-content {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.3s,
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+  }
+
+  /* Написи зникають при hover на slider */
+  .why-us__slider:hover .why-us__image-label {
+    opacity: 0;
+  }
+
   .why-us__overlay {
     display: block;
     position: absolute;
@@ -108,7 +198,8 @@
     width: 100%;
     height: 28%;
     background-color: #010101;
-    z-index: 10; /* Достатньо для перекриття карток (вони relative, не мають z-index) */
+    z-index: 10;
+    /* Достатньо для перекриття карток (вони relative, не мають z-index) */
     /* pointer-events за замовчуванням (auto) - блокує hover на картках під overlay */
   }
 
@@ -119,9 +210,10 @@
     transform: translate(-50%, -50%);
     margin: 0;
     color: #ffffff;
-    font-size: 2.5rem;
-    font-weight: 400;
+    font-size: clamp(1.5rem, 5vw, 3.5rem);
+    font-weight: 700;
     text-align: center;
+    text-transform: uppercase;
   }
 }
 
@@ -157,6 +249,17 @@
   }
 
   .why-us__overlay {
-    display: none; /* Приховано на мобільній версії */
+    display: none;
+    /* Приховано на мобільній версії */
+  }
+
+  /* Мобільна версія заголовка (якщо overlay буде показано) */
+  .why-us__overlay-title {
+    font-size: clamp(2.4rem, 8vw, 4rem);
+  }
+
+  /* Контент прихований на mobile/tablet */
+  .why-us__slide-content {
+    display: none;
   }
 }

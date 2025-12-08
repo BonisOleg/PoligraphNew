@@ -11,7 +11,7 @@
  * - Retry механізм для надійності
  */
 
-(function() {
+(function () {
   'use strict';
 
   let heroInstance = null;
@@ -33,7 +33,7 @@
       initAttempts: 0,
 
       // Ініціалізація з retry
-      init: function() {
+      init: function () {
         this.video = document.querySelector('.hero__video');
         this.videoWrapper = document.querySelector('.hero__video-wrapper');
         this.textElements = document.querySelectorAll('.hero__text');
@@ -43,7 +43,7 @@
           if (this.initAttempts < 10) {
             this.initAttempts++;
             const self = this;
-            setTimeout(function() { self.init(); }, 10);
+            setTimeout(function () { self.init(); }, 10);
           }
           return;
         }
@@ -55,7 +55,7 @@
         }
 
         // Скинути стан тексту
-        this.textElements.forEach(function(el) {
+        this.textElements.forEach(function (el) {
           el.classList.remove('hero__text--visible');
           el.classList.remove('hero__text--static');
           el.classList.remove('hero__text--error');
@@ -74,22 +74,22 @@
       },
 
       // Налаштувати статичний режим (відео вже було відтворено)
-      setupStaticMode: function() {
+      setupStaticMode: function () {
         const self = this;
-        
+
         // КРИТИЧНО: Видалити autoplay ПЕРЕД будь-якими діями
         this.video.autoplay = false;
         this.video.removeAttribute('autoplay');
         this.video.pause();
-        
+
         // Додати класи
         this.video.classList.add('hero__video--static', 'hero__video--ended', 'hero__video--visible');
-        
+
         // Показати текст одразу
-        this.textElements.forEach(function(el) {
+        this.textElements.forEach(function (el) {
           el.classList.add('hero__text--static');
         });
-        
+
         // Встановити на останній кадр
         function setLastFrame() {
           if (self.video.duration && !isNaN(self.video.duration)) {
@@ -98,76 +98,76 @@
           }
           return false;
         }
-        
+
         // Спроба 1: синхронно (якщо metadata вже є)
         if (!setLastFrame()) {
           // Спроба 2: чекати loadedmetadata
-          this.video.addEventListener('loadedmetadata', function() {
+          this.video.addEventListener('loadedmetadata', function () {
             setLastFrame();
           }, { once: true });
-          
+
           // Спроба 3: fallback через 500ms
-          setTimeout(function() {
+          setTimeout(function () {
             setLastFrame();
           }, 500);
         }
-        
+
         // Parallax
         this.setupParallax();
       },
 
       // Відео listeners
-      setupVideoListeners: function() {
+      setupVideoListeners: function () {
         const self = this;
 
-        const onCanPlay = function() {
-          // Запускати відео ТІЛЬКИ якщо воно ще не було запущено
-          if (!self.videoStarted && self.video.paused) {
+        const onCanPlay = function () {
+          // Запускати ТІЛЬКИ якщо не грає І не запущено
+          if ((self.video.paused || self.video.ended) && !self.videoStarted) {
             self.videoStarted = true;
-            self.video.play().catch(function() {
-              self.videoStarted = false; // Скинути при помилці
+            self.video.play().catch(function () {
+              self.videoStarted = false;
             });
           }
         };
 
-        const onTimeUpdate = function() {
+        const onTimeUpdate = function () {
           if (self.video.currentTime >= 5 && !self.textAnimated) {
             self.triggerTextAnimation();
           }
         };
 
-        const onEnded = function() {
+        const onEnded = function () {
           self.video.classList.add('hero__video--ended');
           self.video.pause();
-          
+
           // Встановити на останній кадр
           self.video.currentTime = self.video.duration - 0.1;
-          
+
           // Заборонити controls
           self.video.removeAttribute('controls');
           self.video.controls = false;
-          
+
           // Зберегти стан у sessionStorage
           sessionStorage.setItem('heroVideoCompleted', 'true');
         };
 
-        const onError = function() {
+        const onError = function () {
           console.warn('Hero video load failed');
-          
+
           // Показати текст при помилці (дати повторну спробу при наступному візиті)
-          self.textElements.forEach(function(el) {
+          self.textElements.forEach(function (el) {
             el.classList.add('hero__text--error');
           });
         };
 
-        // canplay замість loadedmetadata - надійніше для Safari
-        this.video.addEventListener('canplay', onCanPlay);
+        // canplay з once:true - спрацює тільки один раз
+        this.video.addEventListener('canplay', onCanPlay, { once: true });
         this.video.addEventListener('timeupdate', onTimeUpdate);
         this.video.addEventListener('ended', onEnded);
         this.video.addEventListener('error', onError);
 
+        // canplay видалено з listeners (бо once:true автоматично видаляє)
         this.listeners.push(
-          { el: this.video, event: 'canplay', fn: onCanPlay },
           { el: this.video, event: 'timeupdate', fn: onTimeUpdate },
           { el: this.video, event: 'ended', fn: onEnded },
           { el: this.video, event: 'error', fn: onError }
@@ -175,31 +175,39 @@
       },
 
       // Запуск відео
-      startVideo: function() {
+      startVideo: function () {
         const self = this;
         let retryCount = 0;
         const maxRetries = 3;
-        
+
         // Обмежений retry (максимум 3 спроби)
-        const tryPlay = function() {
+        const tryPlay = function () {
           if (!self.video) return;
-          
-          self.video.play().catch(function(err) {
-            retryCount++;
-            if (retryCount < maxRetries) {
-              console.warn('Autoplay attempt ' + retryCount + ' failed, retrying...');
-              // Retry через 300ms
-              setTimeout(tryPlay, 300);
-            } else {
-              console.warn('Autoplay failed after ' + maxRetries + ' attempts');
-            }
-          });
+
+          // Перевірка: не грає І не запущено раніше
+          if ((self.video.paused || self.video.ended) && !self.videoStarted) {
+            self.videoStarted = true;
+            self.video.play().then(function() {
+              // Успішний запуск
+            }).catch(function (err) {
+              retryCount++;
+              if (retryCount < maxRetries) {
+                console.warn('Autoplay attempt ' + retryCount + ' failed, retrying...');
+                self.videoStarted = false; // Скинути для retry
+                // Retry через 300ms
+                setTimeout(tryPlay, 300);
+              } else {
+                console.warn('Autoplay failed after ' + maxRetries + ' attempts');
+                self.videoStarted = false;
+              }
+            });
+          }
         };
-        
+
         tryPlay();
 
         // Fallback для тексту
-        setTimeout(function() {
+        setTimeout(function () {
           if (!self.textAnimated) {
             self.triggerTextAnimation();
           }
@@ -207,15 +215,15 @@
       },
 
       // Анімація тексту
-      triggerTextAnimation: function() {
+      triggerTextAnimation: function () {
         if (this.textAnimated) return;
         this.textAnimated = true;
 
         const self = this;
 
-        requestAnimationFrame(function() {
-          requestAnimationFrame(function() {
-            self.textElements.forEach(function(el) {
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            self.textElements.forEach(function (el) {
               el.classList.add('hero__text--visible');
             });
           });
@@ -223,12 +231,12 @@
       },
 
       // Parallax
-      setupParallax: function() {
+      setupParallax: function () {
         const self = this;
 
-        const onScroll = function() {
+        const onScroll = function () {
           if (!self.scrollTicking) {
-            self.rafId = requestAnimationFrame(function() {
+            self.rafId = requestAnimationFrame(function () {
               self.updateParallax();
               self.scrollTicking = false;
             });
@@ -240,9 +248,9 @@
         this.listeners.push({ el: window, event: 'scroll', fn: onScroll });
       },
 
-      updateParallax: function() {
+      updateParallax: function () {
         if (!this.videoWrapper) return;
-        
+
         const scrolled = window.pageYOffset;
         const heroHeight = this.videoWrapper.offsetHeight;
 
@@ -254,8 +262,8 @@
       },
 
       // Cleanup
-      destroy: function() {
-        this.listeners.forEach(function(listener) {
+      destroy: function () {
+        this.listeners.forEach(function (listener) {
           listener.el.removeEventListener(listener.event, listener.fn);
         });
         this.listeners = [];
@@ -267,15 +275,15 @@
 
         if (this.video) {
           this.video.pause();
-          
+
           // Видалити статичні класи при cleanup
           this.video.classList.remove('hero__video--static');
-          
+
           this.video = null;
         }
 
         if (this.textElements) {
-          this.textElements.forEach(function(el) {
+          this.textElements.forEach(function (el) {
             el.classList.remove('hero__text--static');
             el.classList.remove('hero__text--error');
           });
@@ -303,17 +311,17 @@
       return;
     }
 
-    document.body.addEventListener('htmx:beforeSwap', function(event) {
+    document.body.addEventListener('htmx:beforeSwap', function (event) {
       if (event.detail.target.id === 'main' && heroInstance) {
         heroInstance.destroy();
         heroInstance = null;
       }
     });
 
-    document.body.addEventListener('htmx:afterSwap', function(event) {
+    document.body.addEventListener('htmx:afterSwap', function (event) {
       if (event.detail.target.id === 'main') {
         // Затримка для повільних пристроїв
-        setTimeout(function() {
+        setTimeout(function () {
           const heroSection = document.querySelector('[data-hero-section]');
           if (heroSection && !heroInstance) {
             heroInstance = createHeroController();
@@ -337,7 +345,7 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       setupHTMXListeners();
       initOnLoad();
     });

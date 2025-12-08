@@ -43,6 +43,9 @@
   /* Чорний фон */
   background-color: var(--color-bg-dark);
   
+  /* Без border за замовчуванням */
+  border: 1px solid transparent;
+  
   /* КРИТИЧНО для iOS Safari: ізоляція layout shifts */
   contain: layout style;
   overflow: hidden;
@@ -61,6 +64,11 @@
   
   /* Анімація ширини */
   transition: width var(--transition-slow, 0.7s) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Білий border тільки на головній сторінці */
+body.body--index .header__capsule {
+  border-color: #ffffff;
 }
 
 /* Desktop: розтягується на 30vw */
@@ -217,14 +225,15 @@
   opacity: 0;
   pointer-events: none;
   
-  /* З'являється ПІСЛЯ розтягування капсули (затримка = час розтягування) */
-  transition: opacity var(--transition-base, 0.3s) var(--transition-slow, 0.7s);
+  /* Базовий transition без затримки (для закриття) */
+  transition: opacity var(--transition-base, 0.3s);
 }
 
-/* Навігація видима при відкритті */
+/* При відкритті - додаємо затримку */
 .header__capsule[data-open="true"] .header__nav {
   opacity: 1;
   pointer-events: auto;
+  transition: opacity var(--transition-base, 0.3s) var(--transition-slow, 0.7s);
 }
 
 /* ============================================================================ */
@@ -264,18 +273,19 @@
   font-size: 0.9rem;
   
   border-radius: var(--border-radius);
+  border: 1px solid transparent; /* Прозорий border за замовчуванням */
   
-  /* Hover animation */
+  /* Hover animation - ТІЛЬКИ transform і border-color */
   transition: transform var(--transition-base, 0.3s),
-              background-color var(--transition-fast, 0.15s);
+              border-color var(--transition-fast, 0.15s);
   
   white-space: nowrap;
 }
 
 .header__nav-link:hover,
 .header__nav-link:focus-visible {
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-5px); /* Підняття при hover */
+  border-color: #ffffff; /* Білий border при hover */
 }
 
 .header__nav-link:focus-visible {
@@ -283,9 +293,9 @@
   outline-offset: 2px;
 }
 
-/* Active link (поточна сторінка) */
+/* Active link (поточна сторінка) - білий border завжди */
 .header__nav-link[aria-current="page"] {
-  background-color: rgba(255, 255, 255, 0.15);
+  border-color: #ffffff; /* Білий border для обраної сторінки */
   font-weight: 600;
 }
 

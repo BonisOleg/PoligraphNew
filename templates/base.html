@@ -57,7 +57,7 @@
     
     {% block extra_head %}{% endblock %}
 </head>
-<body{% if request.resolver_match.url_name == 'about' %} class="body--about"{% endif %}>
+<body{% if request.resolver_match.url_name == 'index' %} class="body--index"{% elif request.resolver_match.url_name == 'about' %} class="body--about"{% endif %}>
     <header class="header" role="banner">
         <!-- КАПСУЛА: один контейнер що розтягується -->
         <div class="header__capsule" data-open="false">

@@ -1,27 +1,21 @@
 {% load static %}
 <section class="hero" data-hero-section>
     <div class="hero__video-wrapper">
-        <video class="hero__video" 
-               autoplay 
-               muted 
-               playsinline
-               webkit-playsinline
-               preload="metadata"
-               disablePictureInPicture
-               disableRemotePlayback
-               x-webkit-airplay="deny"
-               controlslist="nodownload nofullscreen noremoteplayback"
-               aria-hidden="true">
+        <video class="hero__video" autoplay muted loop="false" playsinline preload="metadata"
+            disablePictureInPicture disableRemotePlayback x-webkit-airplay="deny" aria-hidden="true">
             <source src="{% static 'video/95934818-94b0-4a8f-878c-f8c6b45af65a.mp4' %}" type="video/mp4">
             Ваш браузер не підтримує відео.
         </video>
     </div>
     <div class="hero__text-container">
-        <p class="hero__text hero__text--top-right" aria-hidden="true">
-            Погляньте
+        <p class="hero__text hero__text--center" aria-hidden="true">
+            ПОГЛЯНЬТЕ
         </p>
-        <p class="hero__text hero__text--bottom-left" aria-hidden="true">
-            правді у вічі
+        <p class="hero__text hero__text--left" aria-hidden="true">
+            ПРАВДІ
+        </p>
+        <p class="hero__text hero__text--right" aria-hidden="true">
+            У ВІЧІ
         </p>
     </div>
 </section>
@@ -30,74 +24,94 @@
     <div class="why-us__slider">
         <div class="why-us__slide" data-slide-index="0">
             <img src="{% static 'img/spec.png' %}" alt="Спеціалізація" class="why-us__image">
+            <span class="why-us__image-label">ОСВІТЧЕНІСТЬ</span>
+            <div class="why-us__slide-content">
+                <h3 class="why-us__slide-title">Дипломований представник Національної Асоціації Поліграфологів України
+                </h3>
+                <p class="why-us__slide-description">
+                    Керівниця представництва НАПУ у Львівській області. Юрист-магістр з відзнакою та магістр з
+                    публічного управління.
+                    Понад 150+ успішних перевірок з точністю 98%. Сучасне обладнання та науковий підхід до кожної
+                    справи.
+                </p>
+                <a href="{% url 'pages:about' %}#service-1" class="why-us__slide-button service-card__button"
+                    hx-get="{% url 'pages:about' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">
+                    Детальніше →
+                </a>
+            </div>
         </div>
         <div class="why-us__slide" data-slide-index="1">
             <img src="{% static 'img/price.png' %}" alt="Ціни" class="why-us__image">
+            <span class="why-us__image-label">ЦІНИ</span>
+            <div class="why-us__slide-content">
+                <h3 class="why-us__slide-title">Кращі ціни для корпоративних перевірок</h3>
+                <p class="why-us__slide-description">
+                    Спеціальні умови для бізнесу: знижки при регулярній співпраці та масових перевірках персоналу.
+                    Гнучкі тарифи від 2500 грн для скринінгу при працевлаштуванні. Індивідуальний підхід до кожного
+                    клієнта.
+                </p>
+                <a href="{% url 'pages:about' %}#service-0" class="why-us__slide-button service-card__button"
+                    hx-get="{% url 'pages:about' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">
+                    Детальніше →
+                </a>
+            </div>
         </div>
         <div class="why-us__slide" data-slide-index="2">
             <img src="{% static 'img/poli.png' %}" alt="Поліграф" class="why-us__image">
+            <span class="why-us__image-label">ОБЛАДНАННЯ</span>
+            <div class="why-us__slide-content">
+                <h3 class="why-us__slide-title">Професійний поліграф РУБІКОН</h3>
+                <p class="why-us__slide-description">
+                    Офіційний дилер поліграфів РУБІКОН в Україні. Сучасне обладнання з точністю 95-98%, 7 каналів
+                    моніторингу
+                    та гарантією до 3 років. Відповідає стандартам Американської Асоціації Поліграфологів та
+                    сертифіковано в Україні.
+                </p>
+                <a href="{% url 'pages:about' %}#service-2" class="why-us__slide-button service-card__button"
+                    hx-get="{% url 'pages:about' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">
+                    Детальніше →
+                </a>
+            </div>
         </div>
     </div>
     <div class="why-us__overlay">
-        <h2 class="why-us__overlay-title">чому ми?</h2>
+        <h2 class="why-us__overlay-title">ЧОМУ МИ?</h2>
     </div>
 </section>
 
 <section class="cta">
     <div class="cta__container">
         <h2 class="cta__title">Залишити заявку</h2>
-        <form class="cta__form" 
-              method="post" 
-              action="{% url 'pages:index' %}"
-              hx-post="{% url 'pages:index' %}"
-              hx-target="#cta-form-result"
-              hx-swap="innerHTML">
+        <form class="cta__form" method="post" action="{% url 'pages:index' %}" hx-post="{% url 'pages:index' %}"
+            hx-target="#cta-form-result" hx-swap="innerHTML">
             {% csrf_token %}
             <div class="cta__form-group">
                 <label class="cta__form-label" for="cta-name">
                     Ім'я
                 </label>
-                <input class="cta__form-input" 
-                       type="text" 
-                       id="cta-name" 
-                       name="name" 
-                       required
-                       aria-required="true"
-                       aria-label="Введіть ваше ім'я">
+                <input class="cta__form-input" type="text" id="cta-name" name="name" required aria-required="true"
+                    aria-label="Введіть ваше ім'я">
             </div>
             <div class="cta__form-group">
                 <label class="cta__form-label" for="cta-phone">
                     Телефон
                 </label>
-                <input class="cta__form-input" 
-                       type="tel" 
-                       id="cta-phone" 
-                       name="phone" 
-                       required
-                       aria-required="true"
-                       aria-label="Введіть ваш телефон">
+                <input class="cta__form-input" type="tel" id="cta-phone" name="phone" required aria-required="true"
+                    aria-label="Введіть ваш телефон">
             </div>
             <div class="cta__form-group">
                 <label class="cta__form-label" for="cta-email">
                     Email
                 </label>
-                <input class="cta__form-input" 
-                       type="email" 
-                       id="cta-email" 
-                       name="email" 
-                       required
-                       aria-required="true"
-                       aria-label="Введіть ваш email">
+                <input class="cta__form-input" type="email" id="cta-email" name="email" required aria-required="true"
+                    aria-label="Введіть ваш email">
             </div>
             <div class="cta__form-group">
                 <label class="cta__form-label" for="cta-message">
                     Повідомлення
                 </label>
-                <textarea class="cta__form-textarea" 
-                          id="cta-message" 
-                          name="message" 
-                          rows="4"
-                          aria-label="Введіть ваше повідомлення"></textarea>
+                <textarea class="cta__form-textarea" id="cta-message" name="message" rows="4"
+                    aria-label="Введіть ваше повідомлення"></textarea>
             </div>
             <button class="cta__form-submit" type="submit" aria-label="Відправити заявку">
                 Відправити
@@ -106,4 +120,3 @@
         </form>
     </div>
 </section>
-

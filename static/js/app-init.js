@@ -104,22 +104,56 @@
         // Оновлюємо клас на body на основі класу main
         const mainElement = document.getElementById('main');
         if (mainElement) {
-          if (mainElement.classList.contains('main--about')) {
-            if (!document.body.classList.contains('body--about')) {
-              document.body.classList.add('body--about');
-              console.log('[AppInit] Added body--about class after HTMX swap');
-            }
-          } else {
-            if (document.body.classList.contains('body--about')) {
-              document.body.classList.remove('body--about');
-              console.log('[AppInit] Removed body--about class after HTMX swap');
-            }
+          // Спочатку видаляємо всі body класи сторінок
+          document.body.classList.remove('body--index', 'body--about');
+          
+          // Додаємо відповідний клас
+          if (mainElement.classList.contains('main--index')) {
+            document.body.classList.add('body--index');
+            console.log('[AppInit] Added body--index class after HTMX swap');
+          } else if (mainElement.classList.contains('main--about')) {
+            document.body.classList.add('body--about');
+            console.log('[AppInit] Added body--about class after HTMX swap');
           }
+          // contacts не має body класу
         }
         
         // Невелика затримка для гарантії що DOM готовий
         setTimeout(function() {
           initAllModules();
+          
+          // Обробка якорів після HTMX навігації
+          if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const targetElement = document.getElementById(hash);
+            
+            if (targetElement) {
+              // Затримка для гарантії що акордеони ініціалізовані
+              setTimeout(function() {
+                // Якщо це акордеон - відкриваємо його
+                if (targetElement.classList.contains('accordion')) {
+                  const header = targetElement.querySelector('.accordion__header');
+                  if (header) {
+                    header.click();
+                    
+                    // Плавний скрол до акордеона
+                    setTimeout(function() {
+                      targetElement.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                      });
+                    }, 100);
+                  }
+                } else {
+                  // Якщо не акордеон - просто скрол
+                  targetElement.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                  });
+                }
+              }, 200); // Затримка після ініціалізації модулів
+            }
+          }
         }, 50);
       }
     });

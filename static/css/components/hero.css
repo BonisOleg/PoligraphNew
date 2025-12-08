@@ -44,8 +44,16 @@
     max-width: 50%;
   }
 
-  .hero__text--top-right {
-    right: calc(28rem + var(--safe-area-right)) !important;
+  .hero__text--center {
+    max-width: 50%;
+  }
+  
+  .hero__text--left {
+    max-width: 30%;
+  }
+  
+  .hero__text--right {
+    max-width: 30%;
   }
 }
 
@@ -56,6 +64,7 @@
   display: block;
   opacity: 0;
   transition: opacity 0.3s ease-in;
+  pointer-events: none;
 }
 
 /* Відео готове до показу (встановлюється JS в init) */
@@ -149,21 +158,41 @@
   transition: opacity 5s ease-out, transform 5s ease-out;
 }
 
-.hero__text--top-right {
-  top: calc(2rem + var(--safe-area-top));
-  text-align: right;
+/* Для центрованого тексту - об'єднуємо translateX з анімацією */
+.hero__text--center {
+  transform: translate3d(-50%, 20px, 0);
 }
 
-.hero__text--bottom-left {
+/* ПОГЛЯНЬТЕ - по центру, зверху */
+.hero__text--center {
+  top: calc(2rem + var(--safe-area-top));
+  left: 50%;
+  text-align: center;
+}
+
+/* ПРАВДІ - ліворуч, внизу */
+.hero__text--left {
   bottom: calc(2rem + var(--safe-area-bottom));
-  left: calc(2rem + var(--safe-area-left));
+  left: calc(2rem + 60px + var(--safe-area-left));
   text-align: left;
+}
+
+/* У ВІЧІ - праворуч, внизу */
+.hero__text--right {
+  bottom: calc(2rem + var(--safe-area-bottom));
+  right: calc(2rem + 80px + var(--safe-area-right));
+  text-align: right;
 }
 
 /* JS додає цей клас на 5 секунді відео */
 .hero__text--visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+}
+
+/* Для центрованого тексту при видимості */
+.hero__text--center.hero__text--visible {
+  transform: translate3d(-50%, 0, 0);
 }
 
 /* Текст одразу видимий для статичного режиму */
@@ -173,11 +202,21 @@
   transition: none;
 }
 
+/* Для центрованого тексту в статичному режимі */
+.hero__text--center.hero__text--static {
+  transform: translate3d(-50%, 0, 0);
+}
+
 /* Текст для error fallback */
 .hero__text--error {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   transition: none;
+}
+
+/* Для центрованого тексту в error режимі */
+.hero__text--center.hero__text--error {
+  transform: translate3d(-50%, 0, 0);
 }
 
 /* ============================================================================ */
@@ -193,6 +232,10 @@
     opacity: 1;
     transform: none;
   }
+  
+  .hero__text--center.hero__text--visible {
+    transform: translateX(-50%);
+  }
 }
 
 /* ============================================================================ */
@@ -205,16 +248,41 @@
   }
 
   .hero__text {
-    font-size: clamp(1.2rem, 4vw, 2rem);
+    font-size: clamp(2.4rem, 8vw, 4rem);
   }
   
-  .hero__text--top-right {
-    top: calc(1rem + var(--safe-area-top));
+  /* ПОГЛЯНЬТЕ - під відео на мобільній */
+  .hero__text--center {
+    top: 70vh;
+    bottom: auto;
+    left: 50%;
+    transform: translate3d(-50%, 20px, 0);
+  }
+  
+  .hero__text--left {
+    bottom: calc(1rem + var(--safe-area-bottom));
+    left: calc(1rem + var(--safe-area-left));
+  }
+  
+  .hero__text--right {
+    bottom: calc(1rem + var(--safe-area-bottom));
     right: calc(1rem + var(--safe-area-right));
   }
   
-  .hero__text--bottom-left {
-    bottom: calc(1rem + var(--safe-area-bottom));
-    left: calc(1rem + var(--safe-area-left));
+  /* Для анімації на мобільній */
+  .hero__text--center {
+    transform: translate3d(-50%, 20px, 0);
+  }
+  
+  .hero__text--center.hero__text--visible {
+    transform: translate3d(-50%, 0, 0);
+  }
+  
+  .hero__text--center.hero__text--static {
+    transform: translate3d(-50%, 0, 0);
+  }
+  
+  .hero__text--center.hero__text--error {
+    transform: translate3d(-50%, 0, 0);
   }
 }
