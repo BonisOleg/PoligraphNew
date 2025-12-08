@@ -26,6 +26,7 @@
       videoWrapper: null,
       textElements: null,
       textAnimated: false,
+      videoStarted: false,
       listeners: [],
       rafId: null,
       scrollTicking: false,
@@ -62,6 +63,10 @@
 
         // Відео видиме одразу після init (без затримки на canplay)
         this.video.classList.add('hero__video--visible');
+
+        // Явно заборонити controls та loop для Safari
+        this.video.controls = false;
+        this.video.loop = false;
 
         this.setupVideoListeners();
         this.setupParallax();
@@ -116,9 +121,12 @@
         const self = this;
 
         const onCanPlay = function() {
-          // Спробувати відтворити якщо autoplay не спрацював
-          if (self.video.paused) {
-            self.video.play().catch(function() {});
+          // Запускати відео ТІЛЬКИ якщо воно ще не було запущено
+          if (!self.videoStarted && self.video.paused) {
+            self.videoStarted = true;
+            self.video.play().catch(function() {
+              self.videoStarted = false; // Скинути при помилці
+            });
           }
         };
 
@@ -276,6 +284,7 @@
         this.videoWrapper = null;
         this.textElements = null;
         this.textAnimated = false;
+        this.videoStarted = false;
         this.scrollTicking = false;
         this.initAttempts = 0;
       }
