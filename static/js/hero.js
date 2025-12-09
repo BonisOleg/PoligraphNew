@@ -61,12 +61,8 @@
           el.classList.remove('hero__text--error');
         });
 
-        // Відео видиме одразу після init (без затримки на canplay)
+        // Відео з'явиться через opacity fade-in
         this.video.classList.add('hero__video--visible');
-
-        // Явно заборонити controls та loop для Safari
-        this.video.controls = false;
-        this.video.loop = false;
 
         this.setupVideoListeners();
         this.setupParallax();

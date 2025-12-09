@@ -62,14 +62,13 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  visibility: hidden;
-  transition: visibility 0s 0.3s;
+  opacity: 0;
+  transition: opacity 0.8s ease-in;
 }
 
 /* Відео готове до показу (встановлюється JS в init) */
 .hero__video--visible {
-  visibility: visible;
-  transition: none;
+  opacity: 1;
 }
 
 /* Заборонити взаємодію після ended */
