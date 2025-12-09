@@ -62,57 +62,14 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  opacity: 0;
-  transition: opacity 0.3s ease-in;
-  pointer-events: none;
-}
-
-/* Safari overlay приховування - всі можливі стани */
-.hero__video::-webkit-media-controls-overlay-enclosure {
-  display: none !important;
-}
-
-.hero__video::-webkit-media-controls-overlay-play-button {
-  display: none !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-/* Для всіх станів відео */
-.hero__video:hover::-webkit-media-controls-overlay-play-button,
-.hero__video:focus::-webkit-media-controls-overlay-play-button,
-.hero__video[paused]::-webkit-media-controls-overlay-play-button {
-  display: none !important;
-  opacity: 0 !important;
+  visibility: hidden;
+  transition: visibility 0s 0.3s;
 }
 
 /* Відео готове до показу (встановлюється JS в init) */
 .hero__video--visible {
-  opacity: 1;
-}
-
-/* Safari specific - всі розміри екрану */
-@media all and (-webkit-min-device-pixel-ratio: 0) {
-  .hero__video {
-    -webkit-appearance: none;
-  }
-
-  .hero__video::-webkit-media-controls-overlay-enclosure {
-    display: none !important;
-    visibility: hidden !important;
-  }
-}
-
-/* Mobile Safari */
-@supports (-webkit-touch-callout: none) {
-  .hero__video {
-    -webkit-appearance: none;
-  }
-
-  .hero__video::-webkit-media-controls-overlay-play-button {
-    display: none !important;
-    opacity: 0 !important;
-  }
+  visibility: visible;
+  transition: none;
 }
 
 /* Заборонити взаємодію після ended */

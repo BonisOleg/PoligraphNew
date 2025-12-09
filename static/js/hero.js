@@ -70,6 +70,13 @@
 
         this.setupVideoListeners();
         this.setupParallax();
+
+        // Fallback для анімації тексту якщо відео не грає
+        setTimeout(function () {
+          if (!self.textAnimated) {
+            self.triggerTextAnimation();
+          }
+        }, 6000);
       },
 
       // Налаштувати статичний режим (відео вже було відтворено)
