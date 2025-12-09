@@ -70,7 +70,6 @@
 
         this.setupVideoListeners();
         this.setupParallax();
-        this.startVideo();
       },
 
       // Налаштувати статичний режим (відео вже було відтворено)
@@ -120,16 +119,6 @@
       setupVideoListeners: function () {
         const self = this;
 
-        const onCanPlay = function () {
-          // Запускати ТІЛЬКИ якщо не грає І не запущено
-          if ((self.video.paused || self.video.ended) && !self.videoStarted) {
-            self.videoStarted = true;
-            self.video.play().catch(function () {
-              self.videoStarted = false;
-            });
-          }
-        };
-
         const onTimeUpdate = function () {
           if (self.video.currentTime >= 5 && !self.textAnimated) {
             self.triggerTextAnimation();
@@ -160,58 +149,15 @@
           });
         };
 
-        // canplay з once:true - спрацює тільки один раз
-        this.video.addEventListener('canplay', onCanPlay, { once: true });
         this.video.addEventListener('timeupdate', onTimeUpdate);
         this.video.addEventListener('ended', onEnded);
         this.video.addEventListener('error', onError);
 
-        // canplay видалено з listeners (бо once:true автоматично видаляє)
         this.listeners.push(
           { el: this.video, event: 'timeupdate', fn: onTimeUpdate },
           { el: this.video, event: 'ended', fn: onEnded },
           { el: this.video, event: 'error', fn: onError }
         );
-      },
-
-      // Запуск відео
-      startVideo: function () {
-        const self = this;
-        let retryCount = 0;
-        const maxRetries = 3;
-
-        // Обмежений retry (максимум 3 спроби)
-        const tryPlay = function () {
-          if (!self.video) return;
-
-          // Перевірка: не грає І не запущено раніше
-          if ((self.video.paused || self.video.ended) && !self.videoStarted) {
-            self.videoStarted = true;
-            self.video.play().then(function() {
-              // Успішний запуск
-            }).catch(function (err) {
-              retryCount++;
-              if (retryCount < maxRetries) {
-                console.warn('Autoplay attempt ' + retryCount + ' failed, retrying...');
-                self.videoStarted = false; // Скинути для retry
-                // Retry через 300ms
-                setTimeout(tryPlay, 300);
-              } else {
-                console.warn('Autoplay failed after ' + maxRetries + ' attempts');
-                self.videoStarted = false;
-              }
-            });
-          }
-        };
-
-        tryPlay();
-
-        // Fallback для тексту
-        setTimeout(function () {
-          if (!self.textAnimated) {
-            self.triggerTextAnimation();
-          }
-        }, 6000);
       },
 
       // Анімація тексту

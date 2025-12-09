@@ -47,11 +47,11 @@
   .hero__text--center {
     max-width: 50%;
   }
-  
+
   .hero__text--left {
     max-width: 30%;
   }
-  
+
   .hero__text--right {
     max-width: 30%;
   }
@@ -67,55 +67,52 @@
   pointer-events: none;
 }
 
+/* Safari overlay приховування - всі можливі стани */
+.hero__video::-webkit-media-controls-overlay-enclosure {
+  display: none !important;
+}
+
+.hero__video::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Для всіх станів відео */
+.hero__video:hover::-webkit-media-controls-overlay-play-button,
+.hero__video:focus::-webkit-media-controls-overlay-play-button,
+.hero__video[paused]::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  opacity: 0 !important;
+}
+
 /* Відео готове до показу (встановлюється JS в init) */
 .hero__video--visible {
   opacity: 1;
 }
 
-/* Приховати Safari controls */
-.hero__video::-webkit-media-controls {
-  display: none;
+/* Safari specific - всі розміри екрану */
+@media all and (-webkit-min-device-pixel-ratio: 0) {
+  .hero__video {
+    -webkit-appearance: none;
+  }
+
+  .hero__video::-webkit-media-controls-overlay-enclosure {
+    display: none !important;
+    visibility: hidden !important;
+  }
 }
 
-.hero__video::-webkit-media-controls-enclosure {
-  display: none;
-}
+/* Mobile Safari */
+@supports (-webkit-touch-callout: none) {
+  .hero__video {
+    -webkit-appearance: none;
+  }
 
-.hero__video::-webkit-media-controls-panel {
-  display: none;
-}
-
-.hero__video::-webkit-media-controls-play-button {
-  display: none;
-}
-
-.hero__video::-webkit-media-controls-start-playback-button {
-  display: none;
-}
-
-/* Додаткові Safari controls приховування */
-.hero__video::-webkit-media-controls-timeline {
-  display: none !important;
-}
-
-.hero__video::-webkit-media-controls-current-time-display {
-  display: none !important;
-}
-
-.hero__video::-webkit-media-controls-time-remaining-display {
-  display: none !important;
-}
-
-.hero__video::-webkit-media-controls-fullscreen-button {
-  display: none !important;
-}
-
-.hero__video::-webkit-media-controls-volume-slider {
-  display: none !important;
-}
-
-.hero__video::-webkit-media-controls-mute-button {
-  display: none !important;
+  .hero__video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+    opacity: 0 !important;
+  }
 }
 
 /* Заборонити взаємодію після ended */
@@ -227,12 +224,12 @@
   .hero__text {
     transition: none;
   }
-  
+
   .hero__text--visible {
     opacity: 1;
     transform: none;
   }
-  
+
   .hero__text--center.hero__text--visible {
     transform: translateX(-50%);
   }
@@ -250,7 +247,7 @@
   .hero__text {
     font-size: clamp(2.4rem, 8vw, 4rem);
   }
-  
+
   /* ПОГЛЯНЬТЕ - під відео на мобільній */
   .hero__text--center {
     top: 70vh;
@@ -258,30 +255,30 @@
     left: 50%;
     transform: translate3d(-50%, 20px, 0);
   }
-  
+
   .hero__text--left {
     bottom: calc(1rem + var(--safe-area-bottom));
     left: calc(1rem + var(--safe-area-left));
   }
-  
+
   .hero__text--right {
     bottom: calc(1rem + var(--safe-area-bottom));
     right: calc(1rem + var(--safe-area-right));
   }
-  
+
   /* Для анімації на мобільній */
   .hero__text--center {
     transform: translate3d(-50%, 20px, 0);
   }
-  
+
   .hero__text--center.hero__text--visible {
     transform: translate3d(-50%, 0, 0);
   }
-  
+
   .hero__text--center.hero__text--static {
     transform: translate3d(-50%, 0, 0);
   }
-  
+
   .hero__text--center.hero__text--error {
     transform: translate3d(-50%, 0, 0);
   }
