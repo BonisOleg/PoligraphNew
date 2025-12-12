@@ -1,8 +1,8 @@
 {% load static %}
 <section class="hero" data-hero-section>
     <div class="hero__video-wrapper">
-        <video class="hero__video" autoplay muted loop="false" playsinline preload="auto" disablePictureInPicture
-            disableRemotePlayback x-webkit-airplay="deny" aria-hidden="true">
+        <video class="hero__video" controls="false" autoplay muted loop="false" playsinline preload="metadata"
+            disablePictureInPicture disableRemotePlayback aria-hidden="true">
             <source src="{% static 'video/95934818-94b0-4a8f-878c-f8c6b45af65a.mp4' %}" type="video/mp4">
             Ваш браузер не підтримує відео.
         </video>
@@ -80,43 +80,56 @@
 </section>
 
 <section class="cta">
-    <div class="cta__container">
-        <h2 class="cta__title">Залишити заявку</h2>
-        <form class="cta__form" method="post" action="{% url 'pages:index' %}" hx-post="{% url 'pages:index' %}"
-            hx-target="#cta-form-result" hx-swap="innerHTML">
-            {% csrf_token %}
-            <div class="cta__form-group">
-                <label class="cta__form-label" for="cta-name">
-                    Ім'я
-                </label>
-                <input class="cta__form-input" type="text" id="cta-name" name="name" required aria-required="true"
-                    aria-label="Введіть ваше ім'я">
+    <div class="cta__wrapper">
+        <div class="cta__form-section">
+            <h2 class="cta__header">
+                Консультація <span class="cta__price-old">500 грн</span>
+                <span class="cta__price-new">0 грн</span>
+                <span class="cta__subtitle">Залишайте заявку</span>
+            </h2>
+            <div class="cta__form-container">
+                <div class="cta__container">
+                    <form class="cta__form" method="post" action="{% url 'pages:index' %}" hx-post="{% url 'pages:index' %}"
+                        hx-target="#cta-form-result" hx-swap="innerHTML">
+                        {% csrf_token %}
+                        <div class="cta__form-group">
+                            <label class="cta__form-label" for="cta-name">
+                                Ім'я
+                            </label>
+                            <input class="cta__form-input" type="text" id="cta-name" name="name" required aria-required="true"
+                                aria-label="Введіть ваше ім'я">
+                        </div>
+                        <div class="cta__form-group">
+                            <label class="cta__form-label" for="cta-phone">
+                                Телефон
+                            </label>
+                            <input class="cta__form-input" type="tel" id="cta-phone" name="phone" required aria-required="true"
+                                aria-label="Введіть ваш телефон">
+                        </div>
+                        <div class="cta__form-group">
+                            <label class="cta__form-label" for="cta-email">
+                                Email
+                            </label>
+                            <input class="cta__form-input" type="email" id="cta-email" name="email" required aria-required="true"
+                                aria-label="Введіть ваш email">
+                        </div>
+                        <div class="cta__form-group">
+                            <label class="cta__form-label" for="cta-message">
+                                Повідомлення
+                            </label>
+                            <textarea class="cta__form-textarea" id="cta-message" name="message" rows="4"
+                                aria-label="Введіть ваше повідомлення"></textarea>
+                        </div>
+                        <button class="cta__form-submit" type="submit" aria-label="Відправити заявку">
+                            Відправити
+                        </button>
+                        <div class="cta__form-result" id="cta-form-result" aria-live="polite"></div>
+                    </form>
+                </div>
             </div>
-            <div class="cta__form-group">
-                <label class="cta__form-label" for="cta-phone">
-                    Телефон
-                </label>
-                <input class="cta__form-input" type="tel" id="cta-phone" name="phone" required aria-required="true"
-                    aria-label="Введіть ваш телефон">
-            </div>
-            <div class="cta__form-group">
-                <label class="cta__form-label" for="cta-email">
-                    Email
-                </label>
-                <input class="cta__form-input" type="email" id="cta-email" name="email" required aria-required="true"
-                    aria-label="Введіть ваш email">
-            </div>
-            <div class="cta__form-group">
-                <label class="cta__form-label" for="cta-message">
-                    Повідомлення
-                </label>
-                <textarea class="cta__form-textarea" id="cta-message" name="message" rows="4"
-                    aria-label="Введіть ваше повідомлення"></textarea>
-            </div>
-            <button class="cta__form-submit" type="submit" aria-label="Відправити заявку">
-                Відправити
-            </button>
-            <div class="cta__form-result" id="cta-form-result" aria-live="polite"></div>
-        </form>
+        </div>
+        <div class="cta__image-wrapper">
+            <img src="{% static 'img/about.png' %}" alt="Про нас" class="cta__image">
+        </div>
     </div>
 </section>

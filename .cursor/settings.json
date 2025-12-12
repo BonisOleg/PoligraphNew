@@ -1,0 +1,21 @@
+{
+  // Вимкнути автоматичне форматування для HTML файлів (Django шаблони)
+  "[html]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null
+  },
+  // Вимкнути Prettier для HTML
+  "prettier.disableLanguages": ["html"],
+  // Вимкнути автоматичне форматування при вставці
+  "editor.formatOnPaste": false,
+  // Налаштування для Django шаблонів
+  "files.associations": {
+    "*.html": "django-html"
+  },
+  // Вимкнути форматування для всіх HTML файлів у templates/
+  "files.exclude": {},
+  "[django-html]": {
+    "editor.formatOnSave": false
+  }
+}
+

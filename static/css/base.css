@@ -22,20 +22,20 @@
   --color-danger: #dc3545;
   --color-warning: #ffc107;
   --color-info: #17a2b8;
-  
+
   --color-text: #212529;
   --color-text-muted: #6c757d;
   --color-bg: #ffffff;
   --color-bg-light: #f8f9fa;
   --color-bg-dark: #070707;
   --color-text-light: #ffffff;
-  
+
   /* Safe area для iOS (notch/Dynamic Island) */
   --safe-area-top: env(safe-area-inset-top, 0px);
   --safe-area-right: env(safe-area-inset-right, 0px);
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
   --safe-area-left: env(safe-area-inset-left, 0px);
-  
+
   /* Відступи */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -43,13 +43,14 @@
   --spacing-lg: 1.5rem;
   --spacing-xl: 2rem;
   --spacing-xxl: 3rem;
-  
+
   /* Шрифти */
   --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-family-display: 'Montserrat', sans-serif;
   --font-family-display-bold: 'Oswald', sans-serif;
+  --font-family-hero: 'Rubik Scribble', sans-serif;
   --font-family-mono: "Courier New", monospace;
-  
+
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
@@ -58,11 +59,11 @@
   --font-size-3xl: 2.5rem;
   --font-size-4xl: 3.5rem;
   --font-size-6xl: 6rem;
-  
+
   /* Інше */
   --border-radius: 0.25rem;
   --transition-speed: 0.2s;
-  
+
   /* Z-index layers (систематизація для уникнення конфліктів) */
   --z-index-base: 1;
   --z-index-dropdown: 100;
@@ -72,14 +73,26 @@
   --z-index-modal: 500;
   --z-index-popover: 600;
   --z-index-tooltip: 700;
-  
+
   /* Header використовує fixed layer */
   --z-index-header: var(--z-index-fixed);
-  
+
   /* Transition timings (додавлення для більш швидких анімацій) */
   --transition-fast: 0.15s;
   --transition-base: 0.3s;
   --transition-slow: 0.7s;
+}
+
+/* ============================================================================ */
+/* ШРИФТИ (@font-face)                                                         */
+/* ============================================================================ */
+
+@font-face {
+  font-family: 'Electronica Display Stencil';
+  src: url('../fonts/Electronica Display Stencil.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* ============================================================================ */
@@ -137,18 +150,42 @@ body::before {
 /* ============================================================================ */
 
 /* Відступи */
-.mt-sm { margin-top: var(--spacing-sm); }
-.mt-md { margin-top: var(--spacing-md); }
-.mt-lg { margin-top: var(--spacing-lg); }
+.mt-sm {
+  margin-top: var(--spacing-sm);
+}
 
-.mb-sm { margin-bottom: var(--spacing-sm); }
-.mb-md { margin-bottom: var(--spacing-md); }
-.mb-lg { margin-bottom: var(--spacing-lg); }
+.mt-md {
+  margin-top: var(--spacing-md);
+}
+
+.mt-lg {
+  margin-top: var(--spacing-lg);
+}
+
+.mb-sm {
+  margin-bottom: var(--spacing-sm);
+}
+
+.mb-md {
+  margin-bottom: var(--spacing-md);
+}
+
+.mb-lg {
+  margin-bottom: var(--spacing-lg);
+}
 
 /* Текст */
-.text-center { text-align: center; }
-.text-right { text-align: right; }
-.text-muted { color: var(--color-text-muted); }
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
 
 /* HTMX індикатори завантаження */
 .htmx-indicator {
@@ -166,4 +203,3 @@ body::before {
 /* ============================================================================ */
 /* ДОДАЙТЕ СВОЇ СТИЛІ НИЖЧЕ                                                    */
 /* ============================================================================ */
-

@@ -569,6 +569,14 @@
   position: relative;
 }
 
+.accordion__hero-image {
+  width: 30%;
+  margin: 0 auto var(--spacing-md);
+  display: block;
+  height: auto;
+  border-radius: 8px;
+}
+
 .accordion__hero-badge {
   display: inline-block;
   padding: var(--spacing-xs) var(--spacing-md);

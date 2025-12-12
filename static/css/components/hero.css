@@ -1,6 +1,5 @@
 /* Hero секція з JS parallax
  * BEM методологія
- * Position: absolute (не fixed) для iOS сумісності
  * Parallax через JS
  */
 
@@ -12,14 +11,13 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  height: -webkit-fill-available;
   height: 100dvh;
   background: var(--color-bg-dark);
   overflow: hidden;
 }
 
 /* ============================================================================ */
-/* ВІДЕО WRAPPER (absolute для iOS)                                            */
+/* ВІДЕО WRAPPER                                                                */
 /* ============================================================================ */
 
 .hero__video-wrapper {
@@ -63,7 +61,8 @@
   object-fit: contain;
   display: block;
   opacity: 0;
-  transition: opacity 0.8s ease-in;
+  transition: opacity 0.3s ease-in;
+  pointer-events: none;
 }
 
 /* Відео готове до показу (встановлюється JS в init) */
@@ -102,8 +101,9 @@
 .hero__text {
   position: absolute;
   color: var(--color-text-light);
-  font-size: clamp(1.5rem, 5vw, 3.5rem);
-  font-weight: 700;
+  font-family: var(--font-family-hero);
+  font-size: clamp(2.25rem, 7.5vw, 5.25rem);
+  font-weight: normal;
   line-height: 1.2;
   opacity: 0;
   transform: translate3d(0, 20px, 0);
@@ -201,7 +201,7 @@
   }
 
   .hero__text {
-    font-size: clamp(2.4rem, 8vw, 4rem);
+    font-size: clamp(3.6rem, 12vw, 6rem);
   }
 
   /* ПОГЛЯНЬТЕ - під відео на мобільній */

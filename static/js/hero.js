@@ -61,18 +61,15 @@
           el.classList.remove('hero__text--error');
         });
 
-        // Відео з'явиться через opacity fade-in
+        // Відео видиме одразу після init (без затримки на canplay)
         this.video.classList.add('hero__video--visible');
+
+        // Заборонити controls та loop
+        this.video.controls = false;
+        this.video.loop = false;
 
         this.setupVideoListeners();
         this.setupParallax();
-
-        // Fallback для анімації тексту якщо відео не грає
-        setTimeout(function () {
-          if (!self.textAnimated) {
-            self.triggerTextAnimation();
-          }
-        }, 6000);
       },
 
       // Налаштувати статичний режим (відео вже було відтворено)
