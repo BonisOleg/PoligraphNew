@@ -11,7 +11,9 @@
  */
 
 /* ============================================================================ */
+
 /* БАЗОВІ СТИЛІ                                                                */
+
 /* ============================================================================ */
 
 .why-us {
@@ -21,6 +23,7 @@
 
 .why-us__overlay {
   display: none;
+
   /* Приховано за замовчуванням (mobile-first) */
 }
 
@@ -33,12 +36,14 @@
   border-radius: var(--border-radius);
   overflow: hidden;
   position: relative;
-  flex: 1;
+  flex: 1 0 0;
   min-width: 0;
 }
 
 /* ============================================================================ */
+
 /* ЗОБРАЖЕННЯ                                                                   */
+
 /* ============================================================================ */
 
 .why-us__image {
@@ -58,12 +63,13 @@
   transform: translateX(-50%);
 
   /* Анімація */
-  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================================================ */
+
 /* НАПИСИ НА ЗОБРАЖЕННЯХ                                                        */
+
 /* ============================================================================ */
 
 .why-us__image-label {
@@ -72,7 +78,9 @@
 }
 
 /* ============================================================================ */
+
 /* КОНТЕНТ В БЛОКАХ (показується при hover на розтягнутий блок)                */
+
 /* ============================================================================ */
 
 .why-us__slide-content {
@@ -88,6 +96,7 @@
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 5;
+
   /* Нижче overlay (z-index: 10), але вище зображення */
 }
 
@@ -96,7 +105,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: #ffffff;
-  margin: 0 0 1rem 0;
+  margin: 0 0 1rem;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
@@ -106,7 +115,7 @@
   font-size: 1rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1.5rem;
 }
 
 .why-us__slide-button {
@@ -115,17 +124,24 @@
 }
 
 /* ============================================================================ */
+
 /* DESKTOP (>1024px): Pure CSS Hover - 70% / 15% / 15%                        */
+
 /* ============================================================================ */
 
-@media (min-width: 1025px) {
+/* Заголовок прихований на desktop (overlay показується) */
+.why-us__title {
+  display: none;
+}
+
+@media (width >= 1025px) {
   .why-us__slider {
     display: flex;
     min-height: 90vh;
   }
 
   .why-us__slide {
-    flex: 1;
+    flex: 1 0 0;
     min-width: 0;
     transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -142,6 +158,7 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     z-index: 4;
+
     /* Вище зображення, але нижче overlay та контенту */
     opacity: 1;
     transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -153,12 +170,14 @@
   /* При hover на slider - звужуємо всі картки */
   .why-us__slider:hover .why-us__slide {
     flex: 0.43;
+
     /* ~15% кожна (0.43 + 0.43 + 2.14 = 3) */
   }
 
   /* При hover на конкретну - розширюємо до 70% (більша специфічність) */
   .why-us__slider:hover .why-us__slide:hover {
     flex: 2.14;
+
     /* ~70% (2.14 / 3 = 0.713) */
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   }
@@ -176,6 +195,7 @@
   }
 
   /* Контент з'являється на всіх картках при їх розтягуванні */
+
   /* Затримка 0.3s */
   .why-us__slider:hover .why-us__slide:hover .why-us__slide-content {
     opacity: 1;
@@ -199,7 +219,9 @@
     height: 28%;
     background-color: #010101;
     z-index: 10;
+
     /* Достатньо для перекриття карток (вони relative, не мають z-index) */
+
     /* pointer-events за замовчуванням (auto) - блокує hover на картках під overlay */
   }
 
@@ -219,48 +241,110 @@
 }
 
 /* ============================================================================ */
+
 /* TABLET/MOBILE (<1024px): Статичні блоки                                    */
+
 /* ============================================================================ */
 
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   .why-us {
     min-height: auto;
     padding: var(--spacing-xl) 0;
   }
 
-  .why-us__slider {
-    display: flex;
-    gap: var(--spacing-md);
+  /* Заголовок видимий на mobile/tablet */
+  .why-us__title {
+    display: block;
+    text-align: center;
+    font-size: clamp(2.4rem, 8vw, 4rem);
+    font-family: var(--font-family-hero);
+    color: #ffffff;
+    margin: 0 0 var(--spacing-xl) 0;
     padding: 0 var(--spacing-md);
   }
 
+  .why-us__slider {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    max-width: 100%;
+    width: 100%;
+    padding: 0 var(--spacing-sm);
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
   .why-us__slide {
-    flex: 1;
-    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    min-height: auto;
+    overflow: visible;
   }
 
   .why-us__image {
     position: relative;
-    height: auto;
     width: 100%;
+    max-width: 200px;
+    height: auto;
+    min-height: 180px;
+    object-fit: contain;
+    margin: 0 auto;
     bottom: auto;
     left: auto;
     transform: none;
     transition: none;
   }
 
+  /* Показати контент одразу без hover */
+  .why-us__slide-content {
+    display: block;
+    position: relative;
+    width: 100%;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.95) 100%);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+  }
+
   .why-us__overlay {
     display: none;
-    /* Приховано на мобільній версії */
   }
 
-  /* Мобільна версія заголовка (якщо overlay буде показано) */
-  .why-us__overlay-title {
-    font-size: clamp(2.4rem, 8vw, 4rem);
-  }
-
-  /* Контент прихований на mobile/tablet */
-  .why-us__slide-content {
+  .why-us__image-label {
     display: none;
+  }
+}
+
+/* ============================================================================ */
+
+/* МАЛІ ЕКРАНИ (≤480px): Оптимізація padding та розмірів тексту                */
+
+/* ============================================================================ */
+
+@media (width <= 480px) {
+  .why-us__title {
+    font-size: clamp(2rem, 10vw, 3rem);
+    margin-bottom: var(--spacing-md);
+    padding: 0 var(--spacing-sm);
+  }
+
+  .why-us__slider {
+    padding: 0 var(--spacing-xs);
+    gap: var(--spacing-lg);
+  }
+
+  .why-us__slide-content {
+    padding: var(--spacing-sm);
+  }
+
+  .why-us__slide-title {
+    font-size: 1.25rem;
+  }
+
+  .why-us__slide-description {
+    font-size: 0.9rem;
   }
 }

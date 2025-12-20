@@ -26,7 +26,6 @@
       videoWrapper: null,
       textElements: null,
       textAnimated: false,
-      videoStarted: false,
       listeners: [],
       rafId: null,
       scrollTicking: false,
@@ -43,7 +42,7 @@
           if (this.initAttempts < 10) {
             this.initAttempts++;
             const self = this;
-            setTimeout(function () { self.init(); }, 10);
+            setTimeout(() => { self.init(); }, 10);
           }
           return;
         }
@@ -55,7 +54,7 @@
         }
 
         // Скинути стан тексту
-        this.textElements.forEach(function (el) {
+        this.textElements.forEach((el) => {
           el.classList.remove('hero__text--visible');
           el.classList.remove('hero__text--static');
           el.classList.remove('hero__text--error');
@@ -76,16 +75,15 @@
       setupStaticMode: function () {
         const self = this;
 
-        // КРИТИЧНО: Видалити autoplay ПЕРЕД будь-якими діями
+        // КРИТИЧНО: Вимкнути autoplay ПЕРЕД будь-якими діями
         this.video.autoplay = false;
-        this.video.removeAttribute('autoplay');
         this.video.pause();
 
         // Додати класи
         this.video.classList.add('hero__video--static', 'hero__video--ended', 'hero__video--visible');
 
         // Показати текст одразу
-        this.textElements.forEach(function (el) {
+        this.textElements.forEach((el) => {
           el.classList.add('hero__text--static');
         });
 
@@ -101,12 +99,12 @@
         // Спроба 1: синхронно (якщо metadata вже є)
         if (!setLastFrame()) {
           // Спроба 2: чекати loadedmetadata
-          this.video.addEventListener('loadedmetadata', function () {
+          this.video.addEventListener('loadedmetadata', () => {
             setLastFrame();
           }, { once: true });
 
           // Спроба 3: fallback через 500ms
-          setTimeout(function () {
+          setTimeout(() => {
             setLastFrame();
           }, 500);
         }
@@ -133,7 +131,6 @@
           self.video.currentTime = self.video.duration - 0.1;
 
           // Заборонити controls
-          self.video.removeAttribute('controls');
           self.video.controls = false;
 
           // Зберегти стан у sessionStorage
@@ -144,7 +141,7 @@
           console.warn('Hero video load failed');
 
           // Показати текст при помилці (дати повторну спробу при наступному візиті)
-          self.textElements.forEach(function (el) {
+          self.textElements.forEach((el) => {
             el.classList.add('hero__text--error');
           });
         };
@@ -162,14 +159,14 @@
 
       // Анімація тексту
       triggerTextAnimation: function () {
-        if (this.textAnimated) return;
+        if (this.textAnimated) {return;}
         this.textAnimated = true;
 
         const self = this;
 
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            self.textElements.forEach(function (el) {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            self.textElements.forEach((el) => {
               el.classList.add('hero__text--visible');
             });
           });
@@ -182,7 +179,7 @@
 
         const onScroll = function () {
           if (!self.scrollTicking) {
-            self.rafId = requestAnimationFrame(function () {
+            self.rafId = requestAnimationFrame(() => {
               self.updateParallax();
               self.scrollTicking = false;
             });
@@ -195,7 +192,7 @@
       },
 
       updateParallax: function () {
-        if (!this.videoWrapper) return;
+        if (!this.videoWrapper) {return;}
 
         const scrolled = window.pageYOffset;
         const heroHeight = this.videoWrapper.offsetHeight;
@@ -203,13 +200,13 @@
         if (scrolled < heroHeight) {
           const parallaxValue = scrolled * 0.5;
           // Використовуємо CSS змінну замість inline transform
-          this.videoWrapper.style.setProperty('--parallax-offset', parallaxValue + 'px');
+          this.videoWrapper.style.setProperty('--parallax-offset', `${parallaxValue  }px`);
         }
       },
 
       // Cleanup
       destroy: function () {
-        this.listeners.forEach(function (listener) {
+        this.listeners.forEach((listener) => {
           listener.el.removeEventListener(listener.event, listener.fn);
         });
         this.listeners = [];
@@ -229,7 +226,7 @@
         }
 
         if (this.textElements) {
-          this.textElements.forEach(function (el) {
+          this.textElements.forEach((el) => {
             el.classList.remove('hero__text--static');
             el.classList.remove('hero__text--error');
           });
@@ -238,7 +235,6 @@
         this.videoWrapper = null;
         this.textElements = null;
         this.textAnimated = false;
-        this.videoStarted = false;
         this.scrollTicking = false;
         this.initAttempts = 0;
       }
@@ -250,53 +246,30 @@
   // ========================================================================
   // HTMX INTEGRATION
   // ========================================================================
-
-  function setupHTMXListeners() {
-    if (!document.body || typeof htmx === 'undefined') {
-      setTimeout(setupHTMXListeners, 100);
-      return;
-    }
-
-    document.body.addEventListener('htmx:beforeSwap', function (event) {
-      if (event.detail.target.id === 'main' && heroInstance) {
-        heroInstance.destroy();
-        heroInstance = null;
-      }
-    });
-
-    document.body.addEventListener('htmx:afterSwap', function (event) {
-      if (event.detail.target.id === 'main') {
-        // Затримка для повільних пристроїв
-        setTimeout(function () {
-          const heroSection = document.querySelector('[data-hero-section]');
-          if (heroSection && !heroInstance) {
-            heroInstance = createHeroController();
-            heroInstance.init();
-          }
-        }, 50);
-      }
-    });
-  }
+  // Примітка: HTMX listeners тепер централізовані в app-init.js
+  // для уникнення race conditions. Hero cleanup та ініціалізація
+  // виконуються через app-init.js
 
   // ========================================================================
   // ІНІЦІАЛІЗАЦІЯ
   // ========================================================================
+
+  // Експортуємо createHeroController для використання в app-init.js
+  window.createHeroController = createHeroController;
 
   function initOnLoad() {
     const heroSection = document.querySelector('[data-hero-section]');
     if (heroSection) {
       heroInstance = createHeroController();
       heroInstance.init();
+      // Зберігаємо для cleanup в app-init.js
+      window.heroInstance = heroInstance;
     }
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      setupHTMXListeners();
-      initOnLoad();
-    });
+    document.addEventListener('DOMContentLoaded', initOnLoad);
   } else {
-    setupHTMXListeners();
     initOnLoad();
   }
 })();

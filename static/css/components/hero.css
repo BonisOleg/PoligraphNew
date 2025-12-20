@@ -4,7 +4,9 @@
  */
 
 /* ============================================================================ */
+
 /* HERO КОНТЕЙНЕР                                                               */
+
 /* ============================================================================ */
 
 .hero {
@@ -17,7 +19,9 @@
 }
 
 /* ============================================================================ */
+
 /* ВІДЕО WRAPPER                                                                */
+
 /* ============================================================================ */
 
 .hero__video-wrapper {
@@ -29,13 +33,15 @@
   align-items: center;
   justify-content: center;
   z-index: 1;
+
   /* Parallax через CSS змінну (встановлюється JS) */
   --parallax-offset: 0px;
+
   transform: translateX(-50%) translateY(var(--parallax-offset));
 }
 
 /* Desktop: 52% позиціонування, 11% від топу */
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .hero__video-wrapper {
     top: 11%;
     left: 52%;
@@ -46,12 +52,8 @@
     max-width: 50%;
   }
 
-  .hero__text--left {
-    max-width: 30%;
-  }
-
-  .hero__text--right {
-    max-width: 30%;
+  .hero__text--center-bottom {
+    max-width: 50%;
   }
 }
 
@@ -81,7 +83,9 @@
 }
 
 /* ============================================================================ */
+
 /* ТЕКСТОВИЙ КОНТЕЙНЕР                                                          */
+
 /* ============================================================================ */
 
 .hero__text-container {
@@ -95,7 +99,9 @@
 }
 
 /* ============================================================================ */
+
 /* ТЕКСТ З АНІМАЦІЄЮ (через JS)                                                */
+
 /* ============================================================================ */
 
 .hero__text {
@@ -114,27 +120,27 @@
 /* Для центрованого тексту - об'єднуємо translateX з анімацією */
 .hero__text--center {
   transform: translate3d(-50%, 20px, 0);
-}
 
-/* ПОГЛЯНЬТЕ - по центру, зверху */
-.hero__text--center {
+  /* ПОГЛЯНЬТЕ - по центру, зверху */
   top: calc(2rem + var(--safe-area-top));
   left: 50%;
   text-align: center;
 }
 
-/* ПРАВДІ - ліворуч, внизу */
-.hero__text--left {
+/* ПРАВДІ У ВІЧІ - по центру під відео */
+.hero__text--center-bottom {
   bottom: calc(2rem + var(--safe-area-bottom));
-  left: calc(2rem + 60px + var(--safe-area-left));
-  text-align: left;
+  left: 50%;
+  transform: translate3d(-50%, 20px, 0);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
-/* У ВІЧІ - праворуч, внизу */
-.hero__text--right {
-  bottom: calc(2rem + var(--safe-area-bottom));
-  right: calc(2rem + 80px + var(--safe-area-right));
-  text-align: right;
+.hero__text-line {
+  display: block;
+  line-height: 1.2;
 }
 
 /* JS додає цей клас на 5 секунді відео */
@@ -145,6 +151,11 @@
 
 /* Для центрованого тексту при видимості */
 .hero__text--center.hero__text--visible {
+  transform: translate3d(-50%, 0, 0);
+}
+
+/* Для center-bottom при видимості */
+.hero__text--center-bottom.hero__text--visible {
   transform: translate3d(-50%, 0, 0);
 }
 
@@ -160,6 +171,11 @@
   transform: translate3d(-50%, 0, 0);
 }
 
+/* Для center-bottom в статичному режимі */
+.hero__text--center-bottom.hero__text--static {
+  transform: translate3d(-50%, 0, 0);
+}
+
 /* Текст для error fallback */
 .hero__text--error {
   opacity: 1;
@@ -172,8 +188,15 @@
   transform: translate3d(-50%, 0, 0);
 }
 
+/* Для center-bottom в error режимі */
+.hero__text--center-bottom.hero__text--error {
+  transform: translate3d(-50%, 0, 0);
+}
+
 /* ============================================================================ */
+
 /* ACCESSIBILITY                                                                */
+
 /* ============================================================================ */
 
 @media (prefers-reduced-motion: reduce) {
@@ -189,13 +212,19 @@
   .hero__text--center.hero__text--visible {
     transform: translateX(-50%);
   }
+
+  .hero__text--center-bottom.hero__text--visible {
+    transform: translateX(-50%);
+  }
 }
 
 /* ============================================================================ */
+
 /* МОБІЛЬНА АДАПТАЦІЯ                                                           */
+
 /* ============================================================================ */
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .hero__video-wrapper {
     left: 54%;
   }
@@ -204,38 +233,21 @@
     font-size: clamp(3.6rem, 12vw, 6rem);
   }
 
-  /* ПОГЛЯНЬТЕ - під відео на мобільній */
+  /* ПОГЛЯНЬТЕ - над відео на мобільній */
   .hero__text--center {
-    top: 70vh;
+    top: calc(2rem + var(--safe-area-top));
     bottom: auto;
+    left: 50%;
+    /* transform та правила для модифікаторів (--visible, --static, --error) 
+       визначені в базовому блоці вище і працюють через каскад */
+  }
+
+  .hero__text--center-bottom {
+    bottom: calc(1rem + var(--safe-area-bottom));
     left: 50%;
     transform: translate3d(-50%, 20px, 0);
   }
 
-  .hero__text--left {
-    bottom: calc(1rem + var(--safe-area-bottom));
-    left: calc(1rem + var(--safe-area-left));
-  }
-
-  .hero__text--right {
-    bottom: calc(1rem + var(--safe-area-bottom));
-    right: calc(1rem + var(--safe-area-right));
-  }
-
-  /* Для анімації на мобільній */
-  .hero__text--center {
-    transform: translate3d(-50%, 20px, 0);
-  }
-
-  .hero__text--center.hero__text--visible {
-    transform: translate3d(-50%, 0, 0);
-  }
-
-  .hero__text--center.hero__text--static {
-    transform: translate3d(-50%, 0, 0);
-  }
-
-  .hero__text--center.hero__text--error {
-    transform: translate3d(-50%, 0, 0);
-  }
+  /* Правила для .hero__text--center з модифікаторами (--visible, --static, --error) 
+     визначені в базовому блоці вище і працюють через каскад */
 }

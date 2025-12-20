@@ -21,7 +21,7 @@ window.FooterAccordionModule = (function() {
     accordion.setAttribute('aria-expanded', 'true');
   }
 
-  function createClickHandler(accordion, header) {
+  function createClickHandler(accordion, _header) {
     return function(e) {
       if (!isMobile()) {
         return;
@@ -55,7 +55,7 @@ window.FooterAccordionModule = (function() {
   function createEscapeHandler() {
     return function(e) {
       if (e.key === 'Escape' && isMobile()) {
-        footerAccordions.forEach(function(accordion) {
+        footerAccordions.forEach((accordion) => {
           closeAccordion(accordion);
         });
       }
@@ -85,7 +85,7 @@ window.FooterAccordionModule = (function() {
 
     listeners = [];
 
-    footerAccordions.forEach(function(accordion) {
+    footerAccordions.forEach((accordion) => {
       const header = accordion.querySelector('.footer__accordion-header');
       
       if (!header) {
@@ -123,7 +123,7 @@ window.FooterAccordionModule = (function() {
   function destroy() {
     console.log('[FooterAccordion] Destroying module, removing', listeners.length, 'listeners');
 
-    listeners.forEach(function(listener) {
+    listeners.forEach((listener) => {
       listener.el.removeEventListener(listener.event, listener.fn);
     });
 

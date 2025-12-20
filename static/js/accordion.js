@@ -20,7 +20,7 @@ window.AccordionModule = (function() {
   function animateCounter(element, duration = 1500) {
     const text = element.textContent.trim();
     const target = parseInt(text, 10) || 0;
-    if (target === 0) return;
+    if (target === 0) { return; }
     
     const start = 0;
     const startTime = performance.now();
@@ -51,11 +51,11 @@ window.AccordionModule = (function() {
    * Запуск анімації всіх лічильників
    */
   function animateAllCounters() {
-    if (countersAnimated) return;
+    if (countersAnimated) { return; }
     countersAnimated = true;
     
     const counters = document.querySelectorAll('.accordion__stat-number');
-    counters.forEach(function(counter) {
+    counters.forEach((counter) => {
       animateCounter(counter, 2000);
     });
   }
@@ -65,7 +65,7 @@ window.AccordionModule = (function() {
    */
   function getContentHeight(accordion) {
     const content = accordion.querySelector('.accordion__content');
-    if (!content) return 0;
+    if (!content) { return 0; }
     
     // Використовуємо scrollHeight для точного вимірювання
     // Без зміни стилів - це швидше та не викликає reflow
@@ -90,17 +90,17 @@ window.AccordionModule = (function() {
       content.style.overflow = originalOverflow;
       
       return height;
-    } else {
+    } 
       // Якщо вже розгорнутий - просто повертаємо поточну висоту
       return content.scrollHeight;
-    }
+    
   }
 
   /**
    * Закриває всі акордеони
    */
   function closeAllAccordions() {
-    accordions.forEach(function(accordion) {
+    accordions.forEach((accordion) => {
       if (accordion.getAttribute('aria-expanded') === 'true') {
         closeAccordion(accordion);
       }
@@ -112,13 +112,13 @@ window.AccordionModule = (function() {
    */
   function openAccordion(accordion) {
     const content = accordion.querySelector('.accordion__content');
-    if (!content) return;
+    if (!content) { return; }
 
     // Розраховуємо висоту контенту
     const height = getContentHeight(accordion);
     
     // Встановлюємо CSS змінну з висотою
-    accordion.style.setProperty('--content-height', height + 'px');
+    accordion.style.setProperty('--content-height', `${height  }px`);
     
     // Додаємо клас для анімації
     accordion.classList.add('accordion--opening');
@@ -135,7 +135,7 @@ window.AccordionModule = (function() {
       accordion.classList.add('accordion--expanded');
       
       // Очищення will-change для економії GPU пам'яті
-      requestAnimationFrame(function() {
+      requestAnimationFrame(() => {
         content.style.willChange = 'auto';
       });
       
@@ -145,7 +145,7 @@ window.AccordionModule = (function() {
     content.addEventListener('transitionend', handleTransitionEnd, { once: true });
     
     // Плавний скрол (оптимізовано - один requestAnimationFrame)
-    requestAnimationFrame(function() {
+    requestAnimationFrame(() => {
       accordion.scrollIntoView({ 
         behavior: 'smooth', 
         block: 'start',
@@ -161,7 +161,7 @@ window.AccordionModule = (function() {
    */
   function closeAccordion(accordion) {
     const content = accordion.querySelector('.accordion__content');
-    if (!content) return;
+    if (!content) { return; }
 
     accordion.classList.remove('accordion--expanded');
     accordion.classList.add('accordion--closing');
@@ -171,7 +171,7 @@ window.AccordionModule = (function() {
       accordion.classList.remove('accordion--closing');
       
       // Очищення will-change
-      requestAnimationFrame(function() {
+      requestAnimationFrame(() => {
         content.style.willChange = 'auto';
       });
       
@@ -256,7 +256,7 @@ window.AccordionModule = (function() {
     listeners = [];
 
     // Налаштовуємо обробники для кожного акордеона
-    accordions.forEach(function(accordion) {
+    accordions.forEach((accordion) => {
       const header = accordion.querySelector('.accordion__header');
       
       if (!header) {
@@ -302,7 +302,7 @@ window.AccordionModule = (function() {
     console.log('[Accordion] Destroying module, removing', listeners.length, 'listeners');
 
     // Видаляємо всі event listeners
-    listeners.forEach(function(listener) {
+    listeners.forEach((listener) => {
       listener.el.removeEventListener(listener.event, listener.fn);
     });
 

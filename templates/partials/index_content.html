@@ -1,7 +1,7 @@
 {% load static %}
 <section class="hero" data-hero-section>
     <div class="hero__video-wrapper">
-        <video class="hero__video" controls="false" autoplay muted loop="false" playsinline preload="metadata"
+        <video class="hero__video" autoplay muted playsinline preload="metadata" poster="{% static 'img/main.png' %}"
             disablePictureInPicture disableRemotePlayback aria-hidden="true">
             <source src="{% static 'video/95934818-94b0-4a8f-878c-f8c6b45af65a.mp4' %}" type="video/mp4">
             Ваш браузер не підтримує відео.
@@ -11,16 +11,15 @@
         <p class="hero__text hero__text--center" aria-hidden="true">
             ПОГЛЯНЬТЕ
         </p>
-        <p class="hero__text hero__text--left" aria-hidden="true">
-            ПРАВДІ
-        </p>
-        <p class="hero__text hero__text--right" aria-hidden="true">
-            У ВІЧІ
+        <p class="hero__text hero__text--center-bottom" aria-hidden="true">
+            <span class="hero__text-line">ПРАВДІ</span>
+            <span class="hero__text-line">У ВІЧІ</span>
         </p>
     </div>
 </section>
 
 <section class="why-us">
+    <h2 class="why-us__title">ЧОМУ МИ?</h2>
     <div class="why-us__slider">
         <div class="why-us__slide" data-slide-index="0">
             <img src="{% static 'img/spec.png' %}" alt="Спеціалізація" class="why-us__image">
@@ -103,14 +102,14 @@
                             <label class="cta__form-label" for="cta-phone">
                                 Телефон
                             </label>
-                            <input class="cta__form-input" type="tel" id="cta-phone" name="phone" required aria-required="true"
+                            <input class="cta__form-input" type="tel" id="cta-phone" name="phone" inputmode="tel" autocomplete="tel" required aria-required="true"
                                 aria-label="Введіть ваш телефон">
                         </div>
                         <div class="cta__form-group">
                             <label class="cta__form-label" for="cta-email">
                                 Email
                             </label>
-                            <input class="cta__form-input" type="email" id="cta-email" name="email" required aria-required="true"
+                            <input class="cta__form-input" type="email" id="cta-email" name="email" autocomplete="email" required aria-required="true"
                                 aria-label="Введіть ваш email">
                         </div>
                         <div class="cta__form-group">

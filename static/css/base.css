@@ -11,7 +11,9 @@
  */
 
 /* ============================================================================ */
+
 /* CSS CUSTOM PROPERTIES (ЗМІННІ)                                              */
+
 /* ============================================================================ */
 
 :root {
@@ -22,7 +24,6 @@
   --color-danger: #dc3545;
   --color-warning: #ffc107;
   --color-info: #17a2b8;
-
   --color-text: #212529;
   --color-text-muted: #6c757d;
   --color-bg: #ffffff;
@@ -50,7 +51,6 @@
   --font-family-display-bold: 'Oswald', sans-serif;
   --font-family-hero: 'Rubik Scribble', sans-serif;
   --font-family-mono: "Courier New", monospace;
-
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
@@ -81,10 +81,16 @@
   --transition-fast: 0.15s;
   --transition-base: 0.3s;
   --transition-slow: 0.7s;
+
+  /* Header розміри */
+  --header-capsule-mobile-open-width: 90vw; /* Ширина меню на мобільному при відкритті (100vw - 10%) */
+  --header-capsule-desktop-open-width: 30vw; /* Ширина меню на десктопі при відкритті */
 }
 
 /* ============================================================================ */
+
 /* ШРИФТИ (@font-face)                                                         */
+
 /* ============================================================================ */
 
 @font-face {
@@ -96,7 +102,9 @@
 }
 
 /* ============================================================================ */
+
 /* БАЗОВІ СТИЛІ                                                                */
+
 /* ============================================================================ */
 
 main {
@@ -105,6 +113,7 @@ main {
 }
 
 body {
+  overscroll-behavior: none;
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
   color: var(--color-text-light);
@@ -130,7 +139,7 @@ body::before {
 }
 
 /* Mobile: логотип 95% ширини */
-@media (max-width: 767px) {
+@media (width <= 767px) {
   body::before {
     background-size: 95% auto;
   }
@@ -139,14 +148,17 @@ body::before {
 /* iOS Safari */
 @supports (-webkit-touch-callout: none) {
   body::before {
-    height: 100vh;
+    height: 100vh; /* Fallback */
+    height: 100dvh;
     height: -webkit-fill-available;
   }
 }
 
 
 /* ============================================================================ */
+
 /* УТИЛІТАРНІ КЛАСИ                                                            */
+
 /* ============================================================================ */
 
 /* Відступи */
@@ -201,5 +213,7 @@ body::before {
 }
 
 /* ============================================================================ */
+
 /* ДОДАЙТЕ СВОЇ СТИЛІ НИЖЧЕ                                                    */
+
 /* ============================================================================ */

@@ -8,7 +8,9 @@
  */
 
 /* ============================================================================ */
+
 /* ВЕРХНІЙ БЛОК - КОНТАКТНА ІНФОРМАЦІЯ                                          */
+
 /* ============================================================================ */
 
 .main--contacts {
@@ -18,52 +20,78 @@
 .contacts__top {
   position: relative;
   z-index: 1;
-  padding: var(--spacing-xxl) var(--spacing-lg);
+  padding: clamp(var(--spacing-lg), 4vw, var(--spacing-xxl)) clamp(var(--spacing-md), 3vw, var(--spacing-lg));
   background-color: var(--color-bg-dark);
-  min-height: 100vh;
+  min-height: 100vh; /* Fallback */
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .contacts__container {
-  max-width: 1200px;
+  max-width: min(1200px, 100% - 2rem);
+  width: 100%;
   margin: 0 auto;
+  padding: 0 clamp(var(--spacing-sm), 2vw, var(--spacing-md));
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .contacts__title {
   font-family: var(--font-family-display);
-  font-size: var(--font-size-3xl);
+  font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-3xl));
   font-weight: 700;
   margin-bottom: var(--spacing-xl);
   color: #FFFFFF;
   text-align: center;
   letter-spacing: -0.01em;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contacts__content-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-xxl);
-  max-width: 1400px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
+.contacts__info-column,
+.contacts__certs-column {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
 
 .contacts__info {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contacts__info-item {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
-  padding: 2rem 1.75rem;
+  padding: clamp(1rem, 2.5vw, 2rem) clamp(1rem, 2vw, 1.75rem);
   border-radius: 16px;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .contacts__info-item:nth-child(odd) {
@@ -81,6 +109,8 @@
 .contacts__info-label {
   font-weight: 600;
   font-size: var(--font-size-sm);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .contacts__info-item:nth-child(odd) .contacts__info-label {
@@ -92,8 +122,11 @@
 }
 
 .contacts__info-value {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
   text-decoration: none;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .contacts__info-item:nth-child(odd) .contacts__info-value {
@@ -115,20 +148,25 @@
   background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
   border: 3px solid #FFFFFF;
   box-shadow: 0 4px 24px rgba(255, 255, 255, 0.2), inset 0 0 60px rgba(255, 255, 255, 0.05), 0 0 20px rgba(255, 255, 255, 0.1);
-  padding: 3rem 2rem;
+  padding: clamp(1.5rem, 3vw, 3rem) clamp(1.25rem, 2.5vw, 2rem);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .contacts__certificates-title {
   font-family: var(--font-family-display-bold);
-  font-size: var(--font-size-2xl);
+  font-size: clamp(var(--font-size-xl), 3vw, var(--font-size-2xl));
   font-weight: 700;
   margin-bottom: var(--spacing-md);
   color: #FFFFFF;
   letter-spacing: -0.01em;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .contacts__certificates-list {
@@ -138,6 +176,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  width: 100%;
 }
 
 .contacts__certificates-item {
@@ -145,7 +184,10 @@
   padding-left: var(--spacing-lg);
   position: relative;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .contacts__certificates-item::before {
@@ -157,36 +199,46 @@
 }
 
 /* ============================================================================ */
+
 /* НИЖНІЙ БЛОК - STICKY OVERLAY З GOOGLE КАРТОЮ                                */
+
 /* ============================================================================ */
 
 .contacts__bottom {
   position: relative;
   z-index: 2;
   background-color: var(--color-bg);
-  min-height: 100vh;
+  min-height: 100vh; /* Fallback */
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contacts__map-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-xl);
-  max-width: 1400px;
+  gap: clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
+  max-width: min(1400px, 100% - 2rem);
+  width: 100%;
   margin: 0 auto;
-  padding: var(--spacing-xxl) var(--spacing-lg);
-  min-height: 100vh;
+  padding: clamp(var(--spacing-xl), 4vw, var(--spacing-xxl)) clamp(var(--spacing-md), 3vw, var(--spacing-lg));
+  min-height: 100vh; /* Fallback */
+  min-height: 100dvh;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .contacts__map-container {
   width: 100%;
+  max-width: 100%;
   height: 500px;
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 .contacts__map {
@@ -200,13 +252,16 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
-  padding: 2rem 1.75rem;
+  padding: clamp(1.5rem, 2.5vw, 2rem) clamp(1.25rem, 2vw, 1.75rem);
   background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
   border: 3px solid #FFFFFF;
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(255, 255, 255, 0.2), inset 0 0 60px rgba(255, 255, 255, 0.05), 0 0 20px rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-width 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .contacts__map-info:hover {
@@ -216,7 +271,7 @@
 }
 
 .contacts__map-title {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
   font-family: var(--font-family-display);
   color: #FFFFFF;
@@ -224,12 +279,15 @@
   margin-bottom: var(--spacing-md);
   text-transform: uppercase;
   letter-spacing: -0.01em;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .contacts__map-details {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  width: 100%;
 }
 
 .contacts__map-detail {
@@ -239,6 +297,8 @@
   padding: var(--spacing-md);
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: var(--border-radius);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contacts__map-label {
@@ -251,6 +311,8 @@
   color: #FFFFFF;
   font-size: var(--font-size-base);
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .contacts__map-link {
@@ -266,18 +328,19 @@
 .contacts__map-open {
   display: inline-block;
   margin-top: var(--spacing-md);
-  padding: 1rem 2rem;
+  padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.25rem, 2.5vw, 2rem);
   background-color: #FFFFFF;
   color: #000000;
   border: 2px solid #FFFFFF;
   border-radius: 8px;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   font-weight: 600;
   font-family: var(--font-family-display);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  box-sizing: border-box;
 }
 
 .contacts__map-open:hover {
@@ -293,31 +356,36 @@
 }
 
 /* ============================================================================ */
+
 /* STICKY SCROLL - ТІЛЬКИ DESKTOP                                              */
+
 /* ============================================================================ */
 
-/* DESKTOP: sticky scroll ефект - кожна секція прилипає і наступна перекриває */
-@media (min-width: 1025px) {
+@media (width >= 1025px) {
   .contacts__top {
     position: sticky;
     top: 0;
-    height: 100vh;
+    height: 100vh; /* Fallback */
+    height: 100dvh;
     overflow: hidden;
   }
 
   .contacts__bottom {
     position: sticky;
     top: 0;
-    height: 100vh;
+    height: 100vh; /* Fallback */
+    height: 100dvh;
     overflow: hidden;
   }
 }
 
 /* ============================================================================ */
+
 /* RESPONSIVE                                                                   */
+
 /* ============================================================================ */
 
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   .main--contacts .contacts__top,
   .main--contacts .contacts__bottom {
     position: relative;
@@ -341,7 +409,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .contacts__top {
     min-height: auto;
     padding: var(--spacing-xl) var(--spacing-md);
@@ -372,7 +440,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .contacts__title {
     font-size: 1.5rem;
   }

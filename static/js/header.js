@@ -31,7 +31,7 @@ window.HeaderModule = (function() {
    * 3. Посилання з'являються (затримка 0.7s, потім opacity 0→1 за 0.3s)
    */
   function openMenu() {
-    if (!capsule || !toggleButton || !nav) return;
+    if (!capsule || !toggleButton || !nav) { return; }
     
     // Очищаємо timeout якщо є
     if (closeTimeout) {
@@ -51,7 +51,7 @@ window.HeaderModule = (function() {
     const firstLink = nav.querySelector('.header__nav-link');
     if (firstLink) {
       // 700ms (анімація розтягування) + 300ms (opacity появи) = 1000ms
-      setTimeout(function() {
+      setTimeout(() => {
         firstLink.focus();
       }, 1000);
     }
@@ -64,7 +64,7 @@ window.HeaderModule = (function() {
    * 3. Капсула стискується (0.7s - width анімація)
    */
   function closeMenu() {
-    if (!capsule || !toggleButton || !nav) return;
+    if (!capsule || !toggleButton || !nav) { return; }
     
     // КРОК 1: Стискаємо капсулу (width 30vw/100vw → 120px)
     capsule.setAttribute('data-open', 'false');
@@ -74,7 +74,7 @@ window.HeaderModule = (function() {
     toggleButton.setAttribute('aria-label', 'Відкрити меню');
     
     // КРОК 3: Hidden атрибут після анімації стискання (700ms)
-    closeTimeout = setTimeout(function() {
+    closeTimeout = setTimeout(() => {
       nav.setAttribute('hidden', '');
     }, 700);
     
@@ -86,7 +86,7 @@ window.HeaderModule = (function() {
    * Toggle меню
    */
   function toggleMenu() {
-    if (!capsule) return;
+    if (!capsule) { return; }
     
     const isOpen = capsule.getAttribute('data-open') === 'true';
     if (isOpen) {
@@ -121,9 +121,25 @@ window.HeaderModule = (function() {
 
     // Close на outside click (клік поза капсулою)
     const handleDocumentClick = function(e) {
-      if (capsule && !capsule.contains(e.target)) {
-        closeMenu();
+      if (!capsule) { return; }
+      
+      // Не закриваємо якщо клік всередині капсули
+      if (capsule.contains(e.target)) { return; }
+      
+      // Не закриваємо якщо клік на HTMX посилання (вони самі закриють меню)
+      const clickedLink = e.target.closest('a[hx-get], a[hx-post]');
+      if (clickedLink) { return; }
+      
+      // Не закриваємо якщо клік на інтерактивні елементи (кнопки, форми, тощо)
+      const interactiveElements = ['button', 'input', 'select', 'textarea', 'a'];
+      if (interactiveElements.includes(e.target.tagName.toLowerCase())) {
+        // Дозволяємо закрити тільки якщо це не важливий елемент
+        const isImportantElement = e.target.closest('.footer, .hero, .accordion');
+        if (isImportantElement) { return; }
       }
+      
+      // Закриваємо меню
+      closeMenu();
     };
 
     // Close на Escape (клавіша Escape)
@@ -135,9 +151,9 @@ window.HeaderModule = (function() {
 
     // Close на link click (натискання на посилання у меню)
     const navLinks = nav.querySelectorAll('.header__nav-link');
-    const handleLinkClick = function(e) {
+    const handleLinkClick = function(_e) {
       // Затримка 50ms щоб HTMX встиг спрацювати перед закриттям
-      setTimeout(function() {
+      setTimeout(() => {
         closeMenu();
       }, 50);
     };
@@ -146,19 +162,18 @@ window.HeaderModule = (function() {
     // ADD LISTENERS
     // ========================================================================
 
-    toggleButton.addEventListener('click', handleToggle);
-    document.addEventListener('click', handleDocumentClick);
-    document.addEventListener('keydown', handleEscape);
+    // Додаємо listeners та зберігаємо для cleanup
+    const addListener = function(el, event, fn) {
+      el.addEventListener(event, fn);
+      listeners.push({ el: el, event: event, fn: fn });
+    };
 
-    listeners.push(
-      { el: toggleButton, event: 'click', fn: handleToggle },
-      { el: document, event: 'click', fn: handleDocumentClick },
-      { el: document, event: 'keydown', fn: handleEscape }
-    );
+    addListener(toggleButton, 'click', handleToggle);
+    addListener(document, 'click', handleDocumentClick);
+    addListener(document, 'keydown', handleEscape);
 
-    navLinks.forEach(function(link) {
-      link.addEventListener('click', handleLinkClick);
-      listeners.push({ el: link, event: 'click', fn: handleLinkClick });
+    navLinks.forEach((link) => {
+      addListener(link, 'click', handleLinkClick);
     });
 
     console.log('[Header] Module initialized');
@@ -184,7 +199,7 @@ window.HeaderModule = (function() {
     }
 
     // Видаляємо всі listeners
-    listeners.forEach(function(listener) {
+    listeners.forEach((listener) => {
       listener.el.removeEventListener(listener.event, listener.fn);
     });
 

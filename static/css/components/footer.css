@@ -54,7 +54,7 @@
 .footer__nav-link {
   color: var(--color-text-light);
   text-decoration: none;
-  transition: color var(--transition-speed);
+  transition: opacity var(--transition-speed);
 }
 
 .footer__nav-link:hover {
@@ -75,7 +75,7 @@
 .footer__link {
   color: var(--color-text-light);
   text-decoration: none;
-  transition: color var(--transition-speed);
+  transition: opacity var(--transition-speed);
 }
 
 .footer__link:hover {
@@ -99,7 +99,7 @@
 .footer__contact-link {
   color: var(--color-text-light);
   text-decoration: none;
-  transition: color var(--transition-speed);
+  transition: opacity var(--transition-speed);
 }
 
 .footer__contact-link:hover {
@@ -120,7 +120,7 @@
   gap: var(--spacing-xs);
   color: var(--color-text-light);
   text-decoration: none;
-  transition: color var(--transition-speed);
+  transition: opacity var(--transition-speed);
 }
 
 .footer__social-link:hover {
@@ -163,7 +163,6 @@
   font-family: var(--font-family-base);
   color: var(--color-text-light);
   background-color: rgba(255, 255, 255, 0.1);
-  transition: border-color var(--transition-speed);
 }
 
 .footer__form-input:focus,
@@ -213,7 +212,7 @@
   font-size: var(--font-size-base);
   font-weight: 500;
   cursor: pointer;
-  transition: background-color var(--transition-speed);
+  transition: opacity var(--transition-speed);
 }
 
 .footer__form-submit:hover {
@@ -271,7 +270,7 @@
   padding: var(--spacing-md);
   background-color: rgba(255, 255, 255, 0.05);
   cursor: pointer;
-  transition: background-color var(--transition-speed);
+  transition: opacity var(--transition-speed);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -297,11 +296,13 @@
   padding: 0;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.3s ease;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.3s ease;
 }
 
 .footer__accordion[aria-expanded="true"] .footer__accordion-content {
   max-height: 2000px;
+  clip-path: inset(0 0 0% 0);
   padding: var(--spacing-md);
 }
 
@@ -315,7 +316,7 @@
 }
 
 /* Tablet: 2x2 Grid */
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (width >= 768px) and (width <= 1023px) {
   .footer__grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -337,7 +338,7 @@
 }
 
 /* Desktop: 4 колонки, без акордеонів */
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .footer__grid {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -373,7 +374,7 @@
 }
 
 /* Mobile: акордеони */
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .footer {
     padding: var(--spacing-md);
   }

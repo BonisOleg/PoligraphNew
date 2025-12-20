@@ -8,7 +8,9 @@
  */
 
 /* ============================================================================ */
+
 /* СТОРІНКА "ПРО НАС" - ЧОРНИЙ ФОН ТА ВІДСТУПИ                                  */
+
 /* ============================================================================ */
 
 
@@ -24,21 +26,21 @@
 }
 
 /* Для дуже маленьких екранів - адаптивні відступи */
-@media (max-height: 600px) {
+@media (height <= 600px) {
   .about-accordions {
     padding-top: calc(5vh + 120px + 2rem);
   }
 }
 
 /* Мобільні пристрої - зменшені відступи */
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .about-accordions {
     padding-top: calc(10vh + 120px);
     padding-left: var(--spacing-md);
     padding-right: var(--spacing-md);
   }
   
-  @media (max-height: 600px) {
+  @media (height <= 600px) {
     .about-accordions {
       padding-top: calc(5vh + 120px + 1.5rem);
     }
@@ -50,10 +52,7 @@
   border-radius: 40px;
   overflow: hidden;
   background-color: transparent;
-}
 
-/* Висота акордеонів */
-.accordion {
   /* Згорнутий стан - фіксована висота 23vh */
   height: 23vh;
   height: 23dvh; /* для сучасних браузерів з підтримкою dvh */
@@ -69,16 +68,28 @@
 .accordion__header {
   padding: var(--spacing-lg);
   background-color: transparent;
-  transition: background-color var(--transition-speed);
+  transition: opacity var(--transition-speed);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
   color: var(--color-text-light);
+
+  /* Header завжди має мінімальну висоту 23vh */
+
+  /* Текст зверху, не центрований, щоб не стрибав при розгортанні */
+  min-height: 23vh;
+  min-height: 23dvh; /* для сучасних браузерів */
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 /* Кастомний курсор тільки для згорнутих акордеонів */
 .accordion:not([aria-expanded="true"]) .accordion__header {
   cursor: url('data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2270%22 height=%2235%22%3E%3Cpath d=%22M23 12 L35 22 L47 12%22 fill=%22none%22 stroke=%22white%22 stroke-width=%222%22/%3E%3Ctext x=%2235%22 y=%2227%22 font-size=%227%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22hanging%22 font-family=%22Arial, sans-serif%22%3E%D0%94%D0%95%D0%A2%D0%90%D0%9B%D0%AC%D0%9D%D0%86%D0%A8%D0%95%3C/text%3E%3C/svg%3E') 35 22, auto;
+
+  /* В згорнутому стані header займає всю висоту акордеона (23vh) */
+  height: 23vh;
+  height: 23dvh;
 }
 
 /* На розгорнутих акордеонах - стандартний курсор */
@@ -86,40 +97,16 @@
   cursor: default;
 }
 
-/* Header завжди має мінімальну висоту 23vh */
-/* Текст зверху, не центрований, щоб не стрибав при розгортанні */
-.accordion__header {
-  min-height: 23vh;
-  min-height: 23dvh; /* для сучасних браузерів */
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-/* В згорнутому стані header займає всю висоту акордеона (23vh) */
-.accordion:not([aria-expanded="true"]) .accordion__header {
-  height: 23vh;
-  height: 23dvh;
-}
-
 .accordion__title {
   font-size: var(--font-size-xl);
   font-weight: bold;
   margin: 0;
-  color: inherit;
-}
-
-.accordion__title {
   color: var(--color-text-light);
 }
 
 .accordion__subtitle {
   font-size: var(--font-size-base);
   margin: 0;
-  color: inherit;
-  opacity: 0.8;
-}
-
-.accordion__subtitle {
   color: var(--color-text-light);
   opacity: 0.9;
 }
@@ -137,7 +124,6 @@
   
   /* GPU оптимізація для iOS */
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
   
   /* Без transition у згорнутому стані */
@@ -152,15 +138,14 @@
   opacity: 1;
   transform: scaleY(1);
   
-  /* Оптимізована анімація - використовуємо height замість max-height для кращої продуктивності */
+  /* Оптимізована анімація - використовуємо clip-path та transform для кращої продуктивності */
   transition:
-    height 450ms cubic-bezier(0.34, 1.1, 0.64, 1),
-    padding 450ms cubic-bezier(0.34, 1.1, 0.64, 1),
+    clip-path 450ms cubic-bezier(0.34, 1.1, 0.64, 1),
     opacity 300ms ease-out 50ms,
     transform 450ms cubic-bezier(0.34, 1.1, 0.64, 1);
   
   /* Підказка браузеру для GPU - тільки під час анімації */
-  will-change: height, padding, opacity, transform;
+  will-change: clip-path, opacity, transform;
 }
 
 /* Розгорнутий стан */
@@ -179,15 +164,14 @@
   padding: 0 var(--spacing-xl);
   opacity: 0;
   transform: scaleY(0.95);
+  clip-path: inset(0 0 100% 0);
   
-  /* Оптимізована анімація - використовуємо height */
+  /* Оптимізована анімація - використовуємо clip-path та transform */
   transition:
-    height 350ms cubic-bezier(0.4, 0, 0.6, 1),
-    padding 350ms cubic-bezier(0.4, 0, 0.6, 1),
+    clip-path 350ms cubic-bezier(0.4, 0, 0.6, 1),
     opacity 200ms ease-in,
     transform 350ms cubic-bezier(0.4, 0, 0.6, 1);
-  
-  will-change: height, padding, opacity, transform;
+  will-change: clip-path, opacity, transform;
 }
 
 /* Fade-in для внутрішнього контенту */
@@ -275,7 +259,7 @@
 .accordion__services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem 2rem;
+  gap: 2rem;
   margin-bottom: var(--spacing-xl);
   margin-left: auto;
   margin-right: auto;
@@ -293,9 +277,7 @@
   border: 3px solid #000000;
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-              border-width 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
   min-height: 450px;
   position: relative;
   contain: layout style paint;
@@ -331,9 +313,6 @@
   z-index: 10;
 }
 
-.accordion__content {
-  background-color: transparent;
-}
 
 
 .service-card__icon {
@@ -346,7 +325,7 @@
   font-size: var(--font-size-2xl);
   font-weight: 700;
   color: #000000;
-  margin: 0 0 1rem 0;
+  margin: 0 0 1rem;
   letter-spacing: -0.01em;
   text-transform: uppercase;
 }
@@ -362,7 +341,7 @@
   color: #000000;
   line-height: 1;
   letter-spacing: -0.02em;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.5rem;
 }
 
 .service-card--dark .service-card__price {
@@ -412,7 +391,7 @@
 
 .service-card__button {
   display: inline-block;
-  margin: auto 0 0 0;
+  margin: auto 0 0;
   padding: 1rem 2rem;
   font-family: var(--font-family-display);
   font-size: 1rem;
@@ -424,7 +403,7 @@
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .service-card__button:hover {
@@ -447,7 +426,9 @@
 }
 
 /* ============================================================================ */
+
 /* БАЗОВІ КЛАСИ КАРТОК (DRY)                                                   */
+
 /* ============================================================================ */
 
 /* Базовий клас для всіх карток */
@@ -975,11 +956,13 @@
 }
 
 /* ============================================================================ */
+
 /* RESPONSIVE ANIMATION TIMINGS                                               */
+
 /* ============================================================================ */
 
 /* Tablet - трохи швидше (400ms) */
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   .accordion--opening .accordion__content {
     transition-duration: 400ms, 400ms, 250ms, 400ms;
   }
@@ -990,7 +973,7 @@
 }
 
 /* Mobile - ще швидше для touch UX (350ms) */
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .accordion--opening .accordion__content {
     transition-duration: 350ms, 350ms, 220ms, 350ms;
   }
@@ -1001,11 +984,13 @@
 }
 
 /* ============================================================================ */
+
 /* RESPONSIVE ДИЗАЙН - СІТКА КАРТОК І СТАТИСТИКА                               */
+
 /* ============================================================================ */
 
 /* Tablet: 1200px -> 2 колонки для карток */
-@media (max-width: 1200px) {
+@media (width <= 1200px) {
   .accordion__services-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1024,7 +1009,7 @@
 }
 
 /* Mobile: 768px -> 1 колонка для карток */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .accordion__services-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -1098,7 +1083,7 @@
 }
 
 /* Дуже маленькі екрани */
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .accordion__stat-number {
     font-size: 3rem; /* 48px на дуже маленьких */
   }
@@ -1138,7 +1123,9 @@
 }
 
 /* ============================================================================ */
+
 /* iOS SAFARI SPECIFIC OPTIMIZATION                                           */
+
 /* ============================================================================ */
 
 /* iOS Safari detection */
@@ -1156,7 +1143,6 @@
     -webkit-font-smoothing: subpixel-antialiased;
     
     /* Запобігання flickering */
-    -webkit-transform: translateZ(0);
     transform: translateZ(0);
   }
   
@@ -1170,7 +1156,9 @@
 }
 
 /* ============================================================================ */
+
 /* ACCESSIBILITY: PREFERS-REDUCED-MOTION                                      */
+
 /* ============================================================================ */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1193,10 +1181,6 @@
   }
   
   .accordion--opening .accordion__content {
-    transform: none;
-  }
-  
-  .accordion__content > * {
     transform: none;
   }
 }

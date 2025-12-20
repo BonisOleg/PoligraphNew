@@ -15,7 +15,9 @@
  */
 
 /* ============================================================================ */
+
 /* HEADER CONTAINER                                                             */
+
 /* ============================================================================ */
 
 .header {
@@ -27,7 +29,9 @@
 }
 
 /* ============================================================================ */
+
 /* CAPSULE CONTAINER (один елемент замість трьох кіл)                          */
+
 /* ============================================================================ */
 
 .header__capsule {
@@ -59,10 +63,11 @@
   
   /* GPU оптимізація */
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
   
-  /* Анімація ширини */
+  /* Анімація ширини через width для кращої продуктивності */
+  /* transform-origin: right center - розтягування вліво від правого краю */
+  transform-origin: right center;
   transition: width var(--transition-slow, 0.7s) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -72,39 +77,65 @@ body.body--index .header__capsule {
 }
 
 /* Desktop: розтягується на 30vw */
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .header__capsule[data-open="true"] {
-    width: calc(30vw);
+    width: var(--header-capsule-desktop-open-width, 30vw);
     will-change: width; /* Только при відкритті */
   }
 }
 
-/* Mobile: розтягується на 100vw (повна ширина) */
-@media (max-width: 767px) {
+/* Mobile: адаптивний розмір капсули та розтягування */
+@media (width <= 767px) {
+  /* Базовий розмір капсули */
+  .header .header__capsule {
+    width: 20vw;
+    height: 20vw;
+    border-radius: calc(20vw / 2);
+    top: calc(3vh);
+    right: calc(5vw);
+  }
+  
+  /* Розтягування при відкритті - правий край залишається на місці */
   .header__capsule[data-open="true"] {
-    width: 100vw;
-    right: 0;
+    width: var(--header-capsule-mobile-open-width, 90vw);
+    /* right залишається calc(5vw) - не змінюється */
     will-change: width;
+  }
+  
+  /* Розмір кнопки */
+  .header .header__toggle {
+    width: 20vw;
+    height: 20vw;
+  }
+  
+  /* Розмір навігації */
+  .header .header__nav {
+    height: 20vw;
+    width: calc(100% - 20vw);
   }
 }
 
-/* Fallback для браузерів без calc() */
+/* Fallback для браузерів без calc() - використовуємо width замість transform */
 @supports not (width: calc(1vw)) {
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     .header__capsule[data-open="true"] {
       width: 576px; /* ~30vw при 1920px */
+      /* right залишається calc(10vw) - не змінюється */
     }
   }
   
-  @media (max-width: 767px) {
+  @media (width <= 767px) {
     .header__capsule[data-open="true"] {
-      width: 100%;
+      width: 90vw; /* 90% viewport width (100vw - 10%) */
+      /* right залишається calc(5vw) - не змінюється */
     }
   }
 }
 
 /* ============================================================================ */
+
 /* TOGGLE BUTTON (всередині капсули, права сторона)                            */
+
 /* ============================================================================ */
 
 .header__toggle {
@@ -149,13 +180,14 @@ body.body--index .header__capsule {
 }
 
 /* ============================================================================ */
+
 /* TOGGLE LABEL: текст "MENU"                                                  */
+
 /* ============================================================================ */
 
 .header__label {
   position: absolute;
   display: block;
-  
   color: var(--color-text-light);
   font-size: 0.75rem;
   font-weight: 600;
@@ -165,7 +197,6 @@ body.body--index .header__capsule {
   /* Видимий за замовчуванням */
   opacity: 1;
   transition: opacity var(--transition-base, 0.3s);
-  
   pointer-events: none;
 }
 
@@ -175,7 +206,9 @@ body.body--index .header__capsule {
 }
 
 /* ============================================================================ */
+
 /* TOGGLE CLOSE: символ X (хрестик)                                           */
+
 /* ============================================================================ */
 
 .header__close {
@@ -188,7 +221,6 @@ body.body--index .header__capsule {
   transform: rotate(0deg);
   transition: opacity var(--transition-base, 0.3s),
               transform var(--transition-base, 0.3s);
-  
   pointer-events: none;
   
   /* X символ: два перехрещених рядки */
@@ -204,7 +236,9 @@ body.body--index .header__capsule {
 }
 
 /* ============================================================================ */
+
 /* NAVIGATION: посилання (приховуються в капсулі)                             */
+
 /* ============================================================================ */
 
 .header__nav {
@@ -237,7 +271,9 @@ body.body--index .header__capsule {
 }
 
 /* ============================================================================ */
+
 /* NAVIGATION LIST                                                              */
+
 /* ============================================================================ */
 
 .header__nav-list {
@@ -252,7 +288,9 @@ body.body--index .header__capsule {
 }
 
 /* ============================================================================ */
+
 /* NAVIGATION ITEMS                                                             */
+
 /* ============================================================================ */
 
 .header__nav-item {
@@ -260,25 +298,24 @@ body.body--index .header__capsule {
 }
 
 /* ============================================================================ */
+
 /* NAVIGATION LINKS                                                             */
+
 /* ============================================================================ */
 
 .header__nav-link {
   display: block;
   padding: var(--spacing-sm) var(--spacing-md);
-  
   color: var(--color-text-light);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.9rem;
-  
-  border-radius: var(--border-radius);
+  border-radius: 0.75rem; /* Більш заокруглені кути в стилі сайту */
   border: 1px solid transparent; /* Прозорий border за замовчуванням */
   
   /* Hover animation - ТІЛЬКИ transform і border-color */
   transition: transform var(--transition-base, 0.3s),
-              border-color var(--transition-fast, 0.15s);
-  
+              opacity var(--transition-fast, 0.15s);
   white-space: nowrap;
 }
 
@@ -300,7 +337,9 @@ body.body--index .header__capsule {
 }
 
 /* ============================================================================ */
+
 /* ACCESSIBILITY                                                                */
+
 /* ============================================================================ */
 
 /* Reduced motion */
@@ -330,7 +369,6 @@ body.body--index .header__capsule {
 /* iOS specific optimization */
 @supports (-webkit-touch-callout: none) {
   .header__toggle {
-    -webkit-user-select: none;
     user-select: none;
   }
   

@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
     <title>{% block title %}PolygraphNew{% endblock %}</title>
 
     <!-- ============================================================================ -->
@@ -100,7 +100,8 @@
     </footer>
 
     <!-- 4. ВЛАСНІ JS ФАЙЛИ (ПІСЛЯ HTMX, З DEFER) -->
-    <!-- Порядок КРИТИЧНО ВАЖЛИВИЙ: модулі → app-init → hero → main-sync -->
+    <!-- Порядок КРИТИЧНО ВАЖЛИВИЙ: утиліти → модулі → app-init → hero -->
+    <script src="{% static 'js/utils/htmx-check.js' %}" defer></script>
     <script src="{% static 'js/header.js' %}" defer></script>
     <script src="{% static 'js/accordion.js' %}" defer></script>
     <script src="{% static 'js/why-us.js' %}" defer></script>

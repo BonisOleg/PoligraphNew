@@ -69,16 +69,16 @@
 }
 
 .cta__container {
-  max-width: 267px;
-  width: 267px;
-  height: 267px;
+  max-width: 227px;
+  width: 227px;
+  height: 227px;
   aspect-ratio: 1;
-  padding: 1.33rem 1.17rem;
+  padding: 1.13rem 1rem;
   background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
   border: 2px solid #FFFFFF;
   border-radius: 11px;
   box-shadow: 0 3px 16px rgba(255, 255, 255, 0.2), inset 0 0 40px rgba(255, 255, 255, 0.05), 0 0 13px rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-width 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -114,7 +114,7 @@
   font-family: var(--font-family-base);
   color: #FFFFFF;
   background-color: rgba(255, 255, 255, 0.1);
-  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+  transition: opacity var(--transition-speed);
 }
 
 .cta__form-input:focus,
@@ -141,7 +141,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
   margin-top: calc(var(--spacing-sm) / 1.5);
 }
 
@@ -196,7 +196,7 @@
 }
 
 /* Desktop: форма зліва, зображення справа */
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .cta__wrapper {
     flex-direction: row;
     align-items: flex-end;
@@ -212,31 +212,58 @@
   }
 }
 
-/* Mobile: форма зверху, зображення знизу */
-@media (max-width: 767px) {
+/* Mobile: зображення→заголовок→форма */
+@media (width <= 767px) {
   .cta {
     min-height: auto;
+    padding: 0;
   }
 
   .cta__wrapper {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     min-height: auto;
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: 0;
+    gap: 0;
   }
 
+  /* ПОРЯДОК 1: Зображення зверху */
+  .cta__image-wrapper {
+    order: 1;
+    width: 100%;
+    padding: 0;
+    min-height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cta__image {
+    width: 70%;
+    height: 70%;
+    max-width: 420px;
+    max-height: none;
+    object-fit: contain;
+  }
+
+  /* ПОРЯДОК 2: Заголовок */
   .cta__form-section {
+    order: 2;
     width: 100%;
     max-width: 100%;
-    margin-left: 0;
+    padding: var(--spacing-md) var(--spacing-md) 0 var(--spacing-md);
+    box-sizing: border-box;
   }
 
   .cta__header {
     max-width: 100%;
+    margin-bottom: var(--spacing-md);
   }
 
+  /* ПОРЯДОК 3: Форма */
   .cta__form-container {
     width: 100%;
+    padding: 0 0 var(--spacing-md) 0;
   }
 
   .cta__container {
@@ -244,16 +271,6 @@
     width: 100%;
     height: auto;
     aspect-ratio: auto;
-  }
-
-  .cta__image-wrapper {
-    min-height: 50vh;
-    width: 100%;
-    padding: var(--spacing-lg) 0;
-  }
-
-  .cta__image {
-    max-width: 100%;
-    max-height: 35vh;
+    box-sizing: border-box;
   }
 }

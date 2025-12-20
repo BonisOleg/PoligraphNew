@@ -1,0 +1,63 @@
+{
+  "name": "polygraphnew-linters",
+  "version": "1.0.0",
+  "description": "Automated code quality checks for Django + HTMX project",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "scripts": {
+    "lint": "npm run lint:css && npm run lint:js && npm run lint:html",
+    "lint:css": "stylelint \"static/css/**/*.css\"",
+    "lint:js": "eslint \"static/js/**/*.js\"",
+    "lint:html": "htmlhint \"templates/**/*.html\"",
+    "lint:fix": "npm run lint:css -- --fix && npm run lint:js -- --fix",
+    "check:rules": "bash scripts/check-all-rules.sh",
+    "check:html": "bash scripts/check-html-rules.sh",
+    "check:css": "bash scripts/check-css-rules.sh",
+    "check:js": "bash scripts/check-js-rules.sh",
+    "check:django": "bash scripts/check_template_tags.sh",
+    "check:a11y": "bash scripts/check-accessibility-rules.sh",
+    "check:perf": "bash scripts/check-performance-rules.sh",
+    "fix:rules": "bash scripts/fix-rules.sh",
+    "prepare": "husky",
+    "update-browsers": "npx update-browserslist-db"
+  },
+  "devDependencies": {
+    "stylelint": "^16.0.0",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
+    "stylelint-high-performance-animation": "^1.10.0",
+    "stylelint-no-unsupported-browser-features": "^8.0.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-compat": "^4.2.0",
+    "htmlhint": "^1.1.4",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.2.0"
+  },
+  "browserslist": [
+    "Chrome >= 90",
+    "Firefox >= 88",
+    "Safari >= 14",
+    "Edge >= 90",
+    "iOS >= 14",
+    "Android >= 90"
+  ],
+  "lint-staged": {
+    "*.css": [
+      "stylelint --fix",
+      "bash scripts/check-css-rules.sh"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "bash scripts/check-js-rules.sh"
+    ],
+    "*.html": [
+      "htmlhint",
+      "bash scripts/check-html-rules.sh",
+      "bash scripts/check_template_tags.sh"
+    ]
+  }
+}
