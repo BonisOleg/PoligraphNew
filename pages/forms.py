@@ -46,3 +46,50 @@ class ConsultationForm(forms.Form):
         })
     )
 
+
+class CTAContactForm(forms.Form):
+    """Форма для CTA секції на головній сторінці"""
+    
+    name = forms.CharField(
+        label="Ім'я",
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'cta__form-input',
+            'aria-required': 'true',
+        })
+    )
+    
+    phone = forms.CharField(
+        label="Телефон",
+        max_length=20,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'cta__form-input',
+            'type': 'tel',
+            'inputmode': 'tel',
+            'autocomplete': 'tel',
+            'aria-required': 'true',
+        })
+    )
+    
+    email = forms.EmailField(
+        label="Email",
+        max_length=254,
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'class': 'cta__form-input',
+            'autocomplete': 'email',
+            'aria-required': 'true',
+        })
+    )
+    
+    message = forms.CharField(
+        label="Повідомлення",
+        required=False,
+        widget=forms.Textarea(attrs={
+            'class': 'cta__form-textarea',
+            'rows': 4,
+        })
+    )
+

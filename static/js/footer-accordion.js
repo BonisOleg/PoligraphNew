@@ -92,6 +92,11 @@ window.FooterAccordionModule = (function() {
         return;
       }
 
+      const formColumn = accordion.closest('.footer__form-column');
+      if (formColumn) {
+        return;
+      }
+
       updateAccordionState(accordion);
 
       const clickHandler = createClickHandler(accordion, header);

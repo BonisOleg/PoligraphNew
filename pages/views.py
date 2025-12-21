@@ -3,9 +3,17 @@ Views для сторінок сайту.
 Кожен view перевіряє HX-Request header для підтримки HTMX навігації.
 """
 
+import logging
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import ConsultationForm
+from .forms import ConsultationForm, CTAContactForm
+from .utils.telegram import (
+    send_telegram_message,
+    format_consultation_message,
+    format_cta_message,
+)
+
+logger = logging.getLogger(__name__)
 
 
 def index_view(request):
@@ -30,7 +38,42 @@ def index_view(request):
         ],
     }
     
-    # Перевірка HTMX запиту
+    # Обробка POST запиту від CTA форми
+    if request.method == 'POST':
+        form = CTAContactForm(request.POST)
+        
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            phone = form.cleaned_data['phone']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data.get('message', '')
+            
+            # Форматуємо та відправляємо повідомлення в Telegram
+            telegram_text = format_cta_message(name, phone, email, message)
+            telegram_sent = send_telegram_message(telegram_text)
+            
+            if telegram_sent:
+                logger.info(f'CTA форма відправлена: {name}, {phone}, {email}')
+            else:
+                logger.warning(f'Не вдалося відправити CTA форму в Telegram: {name}, {phone}, {email}')
+            
+            # Повертаємо успішне повідомлення (незалежно від результату Telegram)
+            success_html = '''
+            <div class="cta__form-success">
+                <strong>Дякуємо!</strong> Ваша заявка прийнята. Ми зв'яжемося з вами найближчим часом.
+            </div>
+            '''
+            return HttpResponse(success_html, status=200)
+        else:
+            # Повертаємо помилки валідації
+            errors_html = '<div class="cta__form-errors">'
+            for field, errors in form.errors.items():
+                for error in errors:
+                    errors_html += f'<p>{error}</p>'
+            errors_html += '</div>'
+            return HttpResponse(errors_html, status=422)
+    
+    # Перевірка HTMX запиту для навігації
     if request.headers.get('HX-Request'):
         return render(request, 'partials/index_content.html', context)
     
@@ -260,8 +303,20 @@ def consultation_view(request):
     form = ConsultationForm(request.POST)
     
     if form.is_valid():
-        # Тут можна додати логіку збереження в БД або відправки email
-        # Поки що просто повертаємо успішне повідомлення
+        name = form.cleaned_data['name']
+        contact = form.cleaned_data['contact']
+        comment = form.cleaned_data.get('comment', '')
+        
+        # Форматуємо та відправляємо повідомлення в Telegram
+        telegram_text = format_consultation_message(name, contact, comment)
+        telegram_sent = send_telegram_message(telegram_text)
+        
+        if telegram_sent:
+            logger.info(f'Консультація відправлена: {name}, {contact}')
+        else:
+            logger.warning(f'Не вдалося відправити консультацію в Telegram: {name}, {contact}')
+        
+        # Повертаємо успішне повідомлення (незалежно від результату Telegram)
         success_html = '''
         <div class="footer__form-success">
             <strong>Дякуємо!</strong> Ваша заявка прийнята. Ми зв'яжемося з вами найближчим часом.

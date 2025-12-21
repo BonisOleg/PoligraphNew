@@ -108,3 +108,4 @@ echo ""
 echo "⚠️  IMPORTANT: Review changes before committing!"
 echo "   Some fixes may need manual review (e.g. alt text)"
 
+

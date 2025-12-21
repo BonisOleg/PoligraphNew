@@ -28,6 +28,7 @@
   align-items: center;
   gap: var(--spacing-lg);
   flex: 0 0 auto;
+  justify-content: flex-end;
 }
 
 .cta__header {
@@ -38,12 +39,13 @@
   font-family: var(--font-family-display);
   font-weight: 700;
   line-height: 1.5;
-  margin: 0 0 var(--spacing-lg) 0;
+  margin: 0;
   width: 100%;
   max-width: 267px;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+  flex: 0 0 auto;
 }
 
 .cta__price-old {
@@ -173,12 +175,6 @@
   color: var(--color-bg);
 }
 
-.cta__container:hover {
-  transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 13px 32px rgba(255, 255, 255, 0.35), inset 0 0 47px rgba(255, 255, 255, 0.08), 0 4px 16px rgba(255, 255, 255, 0.15);
-  border-width: 3px;
-}
-
 .cta__image-wrapper {
   flex: 0 0 auto;
   display: flex;
@@ -195,20 +191,41 @@
   max-width: 420px;
 }
 
-/* Desktop: форма зліва, зображення справа */
+/* Desktop: заголовок → форма → фото (горизонтально) */
 @media (width >= 768px) {
   .cta__wrapper {
     flex-direction: row;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cta__header {
+    flex: 0 0 auto;
+    margin-bottom: 0;
   }
 
   .cta__form-section {
     flex: 0 0 auto;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   .cta__image-wrapper {
     flex: 0 0 auto;
+    align-items: center;
+  }
+
+  .cta__container {
+    max-width: 400px;
+    width: 400px;
+    height: auto;
+    min-height: 400px;
+    aspect-ratio: auto;
+    padding: var(--spacing-lg);
+  }
+
+  .cta__form {
+    height: auto;
+    overflow-y: visible;
   }
 }
 
@@ -247,17 +264,21 @@
   }
 
   /* ПОРЯДОК 2: Заголовок */
-  .cta__form-section {
+  .cta__header {
     order: 2;
     width: 100%;
     max-width: 100%;
     padding: var(--spacing-md) var(--spacing-md) 0 var(--spacing-md);
     box-sizing: border-box;
+    margin-bottom: var(--spacing-md);
   }
 
-  .cta__header {
+  .cta__form-section {
+    order: 3;
+    width: 100%;
     max-width: 100%;
-    margin-bottom: var(--spacing-md);
+    padding: 0 var(--spacing-md);
+    box-sizing: border-box;
   }
 
   /* ПОРЯДОК 3: Форма */

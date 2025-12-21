@@ -86,3 +86,4 @@ echo "Hints: $WARNING_COUNT"
 echo "✅ Performance check complete"
 exit 0
 
+

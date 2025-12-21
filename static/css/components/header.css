@@ -25,7 +25,8 @@
   top: 0;
   right: 0;
   z-index: var(--z-index-header, 300);
-  pointer-events: none; /* Дозволяє кліки "through" header */
+  pointer-events: none;
+  /* Дозволяє кліки "through" header */
 }
 
 /* ============================================================================ */
@@ -38,33 +39,34 @@
   position: fixed;
   top: calc(5vh);
   right: calc(10vw);
-  
+
   /* Початковий розмір: круг 120×120px */
   width: 120px;
   height: 120px;
-  border-radius: 60px; /* Залишається 60px при розтягуванні - магія CSS! */
-  
+  border-radius: 60px;
+  /* Залишається 60px при розтягуванні - магія CSS! */
+
   /* Чорний фон */
   background-color: var(--color-bg-dark);
-  
-  /* Без border за замовчуванням */
-  border: 1px solid transparent;
-  
+
+  /* Білий border завжди */
+  border: 1px solid #ffffff;
+
   /* КРИТИЧНО для iOS Safari: ізоляція layout shifts */
   contain: layout style;
   overflow: hidden;
-  
+
   /* Z-index для фіксованого позиціонування */
   z-index: var(--z-index-header, 300);
   pointer-events: auto;
-  
+
   /* Accessibility */
   isolation: isolate;
-  
+
   /* GPU оптимізація */
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
-  
+
   /* Анімація ширини через width для кращої продуктивності */
   /* transform-origin: right center - розтягування вліво від правого краю */
   transform-origin: right center;
@@ -77,15 +79,17 @@ body.body--index .header__capsule {
 }
 
 /* Desktop: розтягується на 30vw */
-@media (width >= 768px) {
+@media (width >=768px) {
   .header__capsule[data-open="true"] {
     width: var(--header-capsule-desktop-open-width, 30vw);
-    will-change: width; /* Только при відкритті */
+    will-change: width;
+    /* Только при відкритті */
   }
 }
 
 /* Mobile: адаптивний розмір капсули та розтягування */
-@media (width <= 767px) {
+@media (width <=767px) {
+
   /* Базовий розмір капсули */
   .header .header__capsule {
     width: 20vw;
@@ -94,20 +98,20 @@ body.body--index .header__capsule {
     top: calc(3vh);
     right: calc(5vw);
   }
-  
+
   /* Розтягування при відкритті - правий край залишається на місці */
   .header__capsule[data-open="true"] {
     width: var(--header-capsule-mobile-open-width, 90vw);
     /* right залишається calc(5vw) - не змінюється */
     will-change: width;
   }
-  
+
   /* Розмір кнопки */
   .header .header__toggle {
     width: 20vw;
     height: 20vw;
   }
-  
+
   /* Розмір навігації */
   .header .header__nav {
     height: 20vw;
@@ -117,16 +121,18 @@ body.body--index .header__capsule {
 
 /* Fallback для браузерів без calc() - використовуємо width замість transform */
 @supports not (width: calc(1vw)) {
-  @media (width >= 768px) {
+  @media (width >=768px) {
     .header__capsule[data-open="true"] {
-      width: 576px; /* ~30vw при 1920px */
+      width: 576px;
+      /* ~30vw при 1920px */
       /* right залишається calc(10vw) - не змінюється */
     }
   }
-  
-  @media (width <= 767px) {
+
+  @media (width <=767px) {
     .header__capsule[data-open="true"] {
-      width: 90vw; /* 90% viewport width (100vw - 10%) */
+      width: 90vw;
+      /* 90% viewport width (100vw - 10%) */
       /* right залишається calc(5vw) - не змінюється */
     }
   }
@@ -142,30 +148,30 @@ body.body--index .header__capsule {
   position: absolute;
   top: 0;
   right: 0;
-  
+
   /* Розмір: круг 120px */
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  
+
   /* Reset button styles */
   background: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
-  
+
   /* Центруємо вміст */
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   /* Z-index: над контентом (навігацією) */
   z-index: 10;
-  
+
   /* Accessibility для мобільних */
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
-  
+
   /* Hover effect */
   transition: opacity var(--transition-fast, 0.15s);
 }
@@ -193,7 +199,7 @@ body.body--index .header__capsule {
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  
+
   /* Видимий за замовчуванням */
   opacity: 1;
   transition: opacity var(--transition-base, 0.3s);
@@ -215,14 +221,14 @@ body.body--index .header__capsule {
   position: absolute;
   width: 24px;
   height: 24px;
-  
+
   /* Прихований за замовчуванням */
   opacity: 0;
   transform: rotate(0deg);
   transition: opacity var(--transition-base, 0.3s),
-              transform var(--transition-base, 0.3s);
+    transform var(--transition-base, 0.3s);
   pointer-events: none;
-  
+
   /* X символ: два перехрещених рядки */
   font-size: 1.5rem;
   color: var(--color-text-light);
@@ -235,6 +241,14 @@ body.body--index .header__capsule {
   transform: rotate(90deg);
 }
 
+/* Приховуємо хрестик на мобільних при відкритті меню */
+@media (width <=767px) {
+  .header__capsule[data-open="true"] .header__close {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 /* ============================================================================ */
 
 /* NAVIGATION: посилання (приховуються в капсулі)                             */
@@ -245,20 +259,21 @@ body.body--index .header__capsule {
   position: absolute;
   left: 0;
   top: 0;
-  
+
   /* Розмір: висота капсули */
   height: 120px;
-  width: calc(100% - 120px); /* Мінус ширина кнопки справа */
-  
+  width: calc(100% - 120px);
+  /* Мінус ширина кнопки справа */
+
   /* Центруємо вміст вертикально */
   display: flex;
   align-items: center;
   padding-left: var(--spacing-lg);
-  
+
   /* Приховане за замовчуванням */
   opacity: 0;
   pointer-events: none;
-  
+
   /* Базовий transition без затримки (для закриття) */
   transition: opacity var(--transition-base, 0.3s);
 }
@@ -282,7 +297,7 @@ body.body--index .header__capsule {
   list-style: none;
   margin: 0;
   padding: 0;
-  
+
   /* Горизонтально (на desktop і mobile) */
   flex-direction: row;
 }
@@ -310,19 +325,23 @@ body.body--index .header__capsule {
   text-decoration: none;
   font-weight: 500;
   font-size: 0.9rem;
-  border-radius: 0.75rem; /* Більш заокруглені кути в стилі сайту */
-  border: 1px solid transparent; /* Прозорий border за замовчуванням */
-  
+  border-radius: 0.75rem;
+  /* Більш заокруглені кути в стилі сайту */
+  border: 1px solid transparent;
+  /* Прозорий border за замовчуванням */
+
   /* Hover animation - ТІЛЬКИ transform і border-color */
   transition: transform var(--transition-base, 0.3s),
-              opacity var(--transition-fast, 0.15s);
+    opacity var(--transition-fast, 0.15s);
   white-space: nowrap;
 }
 
 .header__nav-link:hover,
 .header__nav-link:focus-visible {
-  transform: translateY(-5px); /* Підняття при hover */
-  border-color: #ffffff; /* Білий border при hover */
+  transform: translateY(-5px);
+  /* Підняття при hover */
+  border-color: #ffffff;
+  /* Білий border при hover */
 }
 
 .header__nav-link:focus-visible {
@@ -332,7 +351,8 @@ body.body--index .header__capsule {
 
 /* Active link (поточна сторінка) - білий border завжди */
 .header__nav-link[aria-current="page"] {
-  border-color: #ffffff; /* Білий border для обраної сторінки */
+  border-color: #ffffff;
+  /* Білий border для обраної сторінки */
   font-weight: 600;
 }
 
@@ -344,6 +364,7 @@ body.body--index .header__capsule {
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
+
   .header__capsule,
   .header__toggle,
   .header__label,
@@ -359,7 +380,7 @@ body.body--index .header__capsule {
   .header__capsule {
     outline: 2px solid currentColor;
   }
-  
+
   .header__nav-link:hover,
   .header__nav-link:focus-visible {
     outline: 3px solid currentColor;
@@ -371,7 +392,7 @@ body.body--index .header__capsule {
   .header__toggle {
     user-select: none;
   }
-  
+
   .header__capsule {
     -webkit-font-smoothing: subpixel-antialiased;
   }
