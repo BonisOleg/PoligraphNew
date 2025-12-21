@@ -30,6 +30,7 @@
       rafId: null,
       scrollTicking: false,
       initAttempts: 0,
+      visibilityTimeout: null,
 
       // Ініціалізація з retry
       init: function () {
@@ -60,8 +61,24 @@
           el.classList.remove('hero__text--error');
         });
 
-        // Відео видиме одразу після init (без затримки на canplay)
-        this.video.classList.add('hero__video--visible');
+        // Чекаємо поки відео готове до відтворення перед показом
+        const self = this;
+        this.video.addEventListener('canplay', () => {
+          self.video.classList.add('hero__video--visible');
+          // Очистити timeout якщо canplay спрацював
+          if (self.visibilityTimeout) {
+            clearTimeout(self.visibilityTimeout);
+            self.visibilityTimeout = null;
+          }
+        }, { once: true });
+
+        // Fallback: якщо canplay не спрацює протягом 2 секунд
+        this.visibilityTimeout = setTimeout(() => {
+          if (!self.video.classList.contains('hero__video--visible')) {
+            self.video.classList.add('hero__video--visible');
+          }
+          self.visibilityTimeout = null;
+        }, 2000);
 
         // Заборонити controls та loop
         this.video.controls = false;
@@ -214,6 +231,11 @@
         if (this.rafId) {
           cancelAnimationFrame(this.rafId);
           this.rafId = null;
+        }
+
+        if (this.visibilityTimeout) {
+          clearTimeout(this.visibilityTimeout);
+          this.visibilityTimeout = null;
         }
 
         if (this.video) {
