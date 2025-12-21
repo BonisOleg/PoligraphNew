@@ -81,7 +81,9 @@ MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 MIDDLEWARE.insert(0, 'PolygraphNew.middleware.DiagnosticMiddleware')
 MIDDLEWARE.append('PolygraphNew.middleware.ErrorLoggingMiddleware')
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Використовуємо CompressedStaticFilesStorage без manifest
+# Це виключає потребу в manifest файлі, але все ще компресує файли
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Security settings for production
 if not DEBUG:
