@@ -17,9 +17,16 @@ if render_external_hostname:
     allowed_hosts.append(render_external_hostname)
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts if host.strip()]
 
-# Якщо ALLOWED_HOSTS порожній, додаємо localhost для розробки
-if not ALLOWED_HOSTS and DEBUG:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+# Додаємо стандартні домени для Render
+if not ALLOWED_HOSTS:
+    # Якщо ALLOWED_HOSTS порожній, додаємо стандартні значення
+    default_hosts = ['polygraph.website', 'www.polygraph.website']
+    # Додаємо render.com домен якщо є
+    if render_external_hostname:
+        default_hosts.append(render_external_hostname)
+    ALLOWED_HOSTS = default_hosts
+    if DEBUG:
+        ALLOWED_HOSTS.extend(['localhost', '127.0.0.1'])
 
 # Database configuration
 USE_SQLITE = os.environ.get('USE_SQLITE', 'False') == 'True'
