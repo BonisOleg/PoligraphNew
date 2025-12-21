@@ -18,9 +18,15 @@ services:
         value: PolygraphNew.settings.production
       - key: RENDER
         value: true
-      - key: DEBUG_RENDER
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: polygraph.website,www.polygraph.website
+      - key: USE_SQLITE
         value: true
+      - key: DEBUG
+        value: false
       - key: WEB_CONCURRENCY
         value: 4
-    healthCheckPath: /
+    healthCheckPath: /health/
 

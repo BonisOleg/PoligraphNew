@@ -13,6 +13,10 @@ urlpatterns = [
     path('contacts/', views.contacts_view, name='contacts'),
     path('consultation/', views.consultation_view, name='consultation'),
     path('legal/<slug:slug>/', views.legal_document_view, name='legal'),
+    path('health/', views.health_check, name='health'),
+    path('favicon.ico', views.favicon_view, name='favicon'),
+    path('robots.txt', views.robots_txt, name='robots'),
+    path('sw.js', views.sw_js, name='sw'),
 ]
 
 

@@ -4,8 +4,9 @@ Views для сторінок сайту.
 """
 
 import logging
+import traceback
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseServerError
 from .forms import ConsultationForm, CTAContactForm
 from .utils.telegram import (
     send_telegram_message,
@@ -18,71 +19,78 @@ logger = logging.getLogger(__name__)
 
 def index_view(request):
     """Ознайомча сторінка"""
-    context = {
-        'title': 'Головна',
-        'hero_title': 'Поліграф - Професійна перевірка на детекторі брехні',
-        'hero_description': 'Сертифікований поліграфолог з багаторічним досвідом. Сучасне обладнання та науковий підхід.',
-        'features': [
-            {
-                'title': 'Професіоналізм',
-                'description': 'Досвід роботи понад 10 років',
-            },
-            {
-                'title': 'Сучасне обладнання',
-                'description': 'Новітні поліграфи світового стандарту',
-            },
-            {
-                'title': 'Конфіденційність',
-                'description': 'Повна анонімність та захист даних',
-            },
-        ],
-    }
-    
-    # Обробка POST запиту від CTA форми
-    if request.method == 'POST':
-        form = CTAContactForm(request.POST)
+    try:
+        context = {
+            'title': 'Головна',
+            'hero_title': 'Поліграф - Професійна перевірка на детекторі брехні',
+            'hero_description': 'Сертифікований поліграфолог з багаторічним досвідом. Сучасне обладнання та науковий підхід.',
+            'features': [
+                {
+                    'title': 'Професіоналізм',
+                    'description': 'Досвід роботи понад 10 років',
+                },
+                {
+                    'title': 'Сучасне обладнання',
+                    'description': 'Новітні поліграфи світового стандарту',
+                },
+                {
+                    'title': 'Конфіденційність',
+                    'description': 'Повна анонімність та захист даних',
+                },
+            ],
+        }
         
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            phone = form.cleaned_data['phone']
-            email = form.cleaned_data['email']
-            message = form.cleaned_data.get('message', '')
+        # Обробка POST запиту від CTA форми
+        if request.method == 'POST':
+            form = CTAContactForm(request.POST)
             
-            # Форматуємо та відправляємо повідомлення в Telegram
-            telegram_text = format_cta_message(name, phone, email, message)
-            telegram_sent = send_telegram_message(telegram_text)
-            
-            if telegram_sent:
-                logger.info(f'CTA форма відправлена: {name}, {phone}, {email}')
+            if form.is_valid():
+                name = form.cleaned_data['name']
+                phone = form.cleaned_data['phone']
+                email = form.cleaned_data['email']
+                message = form.cleaned_data.get('message', '')
+                
+                # Форматуємо та відправляємо повідомлення в Telegram
+                telegram_text = format_cta_message(name, phone, email, message)
+                telegram_sent = send_telegram_message(telegram_text)
+                
+                if telegram_sent:
+                    logger.info(f'CTA форма відправлена: {name}, {phone}, {email}')
+                else:
+                    logger.warning(f'Не вдалося відправити CTA форму в Telegram: {name}, {phone}, {email}')
+                
+                # Повертаємо успішне повідомлення (незалежно від результату Telegram)
+                success_html = '''
+                <div class="cta__form-success">
+                    <strong>Дякуємо!</strong> Ваша заявка прийнята. Ми зв'яжемося з вами найближчим часом.
+                </div>
+                '''
+                return HttpResponse(success_html, status=200)
             else:
-                logger.warning(f'Не вдалося відправити CTA форму в Telegram: {name}, {phone}, {email}')
-            
-            # Повертаємо успішне повідомлення (незалежно від результату Telegram)
-            success_html = '''
-            <div class="cta__form-success">
-                <strong>Дякуємо!</strong> Ваша заявка прийнята. Ми зв'яжемося з вами найближчим часом.
-            </div>
-            '''
-            return HttpResponse(success_html, status=200)
-        else:
-            # Повертаємо помилки валідації
-            errors_html = '<div class="cta__form-errors">'
-            for field, errors in form.errors.items():
-                for error in errors:
-                    errors_html += f'<p>{error}</p>'
-            errors_html += '</div>'
-            return HttpResponse(errors_html, status=422)
-    
-    # Перевірка HTMX запиту для навігації
-    if request.headers.get('HX-Request'):
-        return render(request, 'partials/index_content.html', context)
-    
-    return render(request, 'index.html', context)
+                # Повертаємо помилки валідації
+                errors_html = '<div class="cta__form-errors">'
+                for field, errors in form.errors.items():
+                    for error in errors:
+                        errors_html += f'<p>{error}</p>'
+                errors_html += '</div>'
+                return HttpResponse(errors_html, status=422)
+        
+        # Перевірка HTMX запиту для навігації
+        if request.headers.get('HX-Request'):
+            return render(request, 'partials/index_content.html', context)
+        
+        return render(request, 'index.html', context)
+    except Exception as e:
+        logger.error(f'Error in index_view: {e}')
+        logger.error(traceback.format_exc())
+        # Повертаємо просту помилку замість 500
+        return HttpResponseServerError(f'Server error: {str(e)}')
 
 
 def about_view(request):
     """Сторінка про нас з 3 акордеон-блоками: Послуги, Поліграфолог, Обладнання"""
-    context = {
+    try:
+        context = {
         'title': 'Про нас',
         
         # БЛОК 1: Послуги
@@ -250,16 +258,21 @@ def about_view(request):
         ],
     }
     
-    # Перевірка HTMX запиту
-    if request.headers.get('HX-Request'):
-        return render(request, 'partials/about_content.html', context)
-    
-    return render(request, 'about.html', context)
+        # Перевірка HTMX запиту
+        if request.headers.get('HX-Request'):
+            return render(request, 'partials/about_content.html', context)
+        
+        return render(request, 'about.html', context)
+    except Exception as e:
+        logger.error(f'Error in about_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
 
 
 def contacts_view(request):
     """Сторінка контактів з контактною інформацією та Google картою (sticky overlay)"""
-    context = {
+    try:
+        context = {
         'title': 'Контакти',
         
         # Контактна інформація
@@ -288,11 +301,15 @@ def contacts_view(request):
         ],
     }
     
-    # Перевірка HTMX запиту
-    if request.headers.get('HX-Request'):
-        return render(request, 'partials/contacts_content.html', context)
-    
-    return render(request, 'contacts.html', context)
+        # Перевірка HTMX запиту
+        if request.headers.get('HX-Request'):
+            return render(request, 'partials/contacts_content.html', context)
+        
+        return render(request, 'contacts.html', context)
+    except Exception as e:
+        logger.error(f'Error in contacts_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
 
 
 def consultation_view(request):
@@ -335,27 +352,56 @@ def consultation_view(request):
 
 def legal_document_view(request, slug):
     """Універсальний view для правових документів (заглушки)"""
-    # Мапінг slug → назва документа
-    documents = {
-        'public-offer': 'Публічна оферта',
-        'privacy-policy': 'Політика конфіденційності',
-        'cookie-policy': 'Політика використання cookies',
-        'consent-pd': 'Згода на обробку персональних даних',
-        'disclaimer': 'Відмова від відповідальності',
-    }
-    
-    document_title = documents.get(slug, 'Правовий документ')
-    
-    context = {
-        'title': document_title,
-        'document_title': document_title,
-        'slug': slug,
-    }
-    
-    # Перевірка HTMX запиту
-    if request.headers.get('HX-Request'):
-        return render(request, 'partials/legal_document.html', context)
-    
-    return render(request, 'legal_document.html', context)
+    try:
+        # Мапінг slug → назва документа
+        documents = {
+            'public-offer': 'Публічна оферта',
+            'privacy-policy': 'Політика конфіденційності',
+            'cookie-policy': 'Політика використання cookies',
+            'consent-pd': 'Згода на обробку персональних даних',
+            'disclaimer': 'Відмова від відповідальності',
+        }
+        
+        document_title = documents.get(slug, 'Правовий документ')
+        
+        context = {
+            'title': document_title,
+            'document_title': document_title,
+            'slug': slug,
+        }
+        
+        # Перевірка HTMX запиту
+        if request.headers.get('HX-Request'):
+            return render(request, 'partials/legal_document.html', context)
+        
+        return render(request, 'legal_document.html', context)
+    except Exception as e:
+        logger.error(f'Error in legal_document_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
+
+
+def health_check(request):
+    """Простий health check для Render"""
+    from django.http import JsonResponse
+    return JsonResponse({'status': 'ok'}, status=200)
+
+
+def favicon_view(request):
+    """Редірект на іконку або порожня відповідь"""
+    from django.http import HttpResponseRedirect
+    return HttpResponseRedirect('/static/img/poli.png')
+
+
+def robots_txt(request):
+    """Повертає 404 для robots.txt (немає файлу)"""
+    from django.http import HttpResponseNotFound
+    return HttpResponseNotFound()
+
+
+def sw_js(request):
+    """Повертає 404 для sw.js (немає service worker)"""
+    from django.http import HttpResponseNotFound
+    return HttpResponseNotFound()
 
 

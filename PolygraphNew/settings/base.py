@@ -10,7 +10,12 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-development-key-change-in-production')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    if os.environ.get('RENDER'):
+        raise ValueError('SECRET_KEY environment variable must be set in production (Render)')
+    else:
+        SECRET_KEY = 'django-insecure-development-key-change-in-production'
 
 # Application definition
 INSTALLED_APPS = [
