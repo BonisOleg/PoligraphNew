@@ -552,9 +552,13 @@
 
 .accordion__hero-image {
   width: 60%;
+  max-width: 400px;
+  max-height: 500px;
   margin: 0 auto var(--spacing-md);
   display: block;
   height: auto;
+  object-fit: contain;
+  object-position: center;
   border-radius: 8px;
 }
 
@@ -973,6 +977,8 @@
   
   .accordion__hero-image {
     width: 70%;
+    max-width: 350px;
+    max-height: 450px;
   }
 }
 
@@ -1039,10 +1045,18 @@
   .service-card {
     padding: 2rem 1.5rem;
     min-height: auto;
+    overflow: visible;
+    contain: layout style;
+  }
+  
+  .service-card--dark {
+    min-height: auto;
   }
   
   .accordion__hero-image {
     width: 80%;
+    max-width: 300px;
+    max-height: 400px;
   }
   
   .accordion__stat-item {
@@ -1132,6 +1146,8 @@
   
   .accordion__hero-image {
     width: 95%;
+    max-width: 280px;
+    max-height: 350px;
   }
 }
 
