@@ -551,7 +551,7 @@
 }
 
 .accordion__hero-image {
-  width: 30%;
+  width: 60%;
   margin: 0 auto var(--spacing-md);
   display: block;
   height: auto;
@@ -970,6 +970,10 @@
   .accordion--closing .accordion__content {
     transition-duration: 300ms, 300ms, 180ms, 300ms;
   }
+  
+  .accordion__hero-image {
+    width: 70%;
+  }
 }
 
 /* Mobile - ще швидше для touch UX (350ms) */
@@ -1034,6 +1038,11 @@
   
   .service-card {
     padding: 2rem 1.5rem;
+    min-height: auto;
+  }
+  
+  .accordion__hero-image {
+    width: 80%;
   }
   
   .accordion__stat-item {
@@ -1119,6 +1128,10 @@
   
   .accordion__hero-name {
     font-size: 1.75rem;
+  }
+  
+  .accordion__hero-image {
+    width: 95%;
   }
 }
 
