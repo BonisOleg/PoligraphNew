@@ -155,6 +155,7 @@
   padding: var(--spacing-xl);
   opacity: 1;
   transform: scaleY(1);
+  overflow: visible;
 }
 
 /* Анімація закриття (швидша за відкриття) */
@@ -1023,6 +1024,8 @@
   .accordion__services-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    max-width: 100%;
+    contain: layout style;
   }
   
   .accordion__stats {
@@ -1051,6 +1054,10 @@
   
   .service-card--dark {
     min-height: auto;
+  }
+  
+  .accordion[aria-expanded="true"] {
+    overflow: visible;
   }
   
   .accordion__hero-image {
