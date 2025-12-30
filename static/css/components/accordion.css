@@ -268,6 +268,7 @@
   padding: 0;
   contain: layout style paint;
   content-visibility: auto;
+  box-sizing: border-box;
 }
 
 .service-card {
@@ -282,6 +283,7 @@
   min-height: 450px;
   position: relative;
   contain: layout style paint;
+  box-sizing: border-box;
 }
 
 .service-card:hover {
@@ -303,6 +305,7 @@
               inset 0 0 60px rgba(255, 255, 255, 0.05),
               0 0 20px rgba(255, 255, 255, 0.1);
   min-height: 450px;
+  box-sizing: border-box;
 }
 
 .service-card--dark:hover {
@@ -1155,6 +1158,22 @@
     width: 95%;
     max-width: 280px;
     max-height: 350px;
+  }
+}
+
+/* Дуже вузькі екрани (iPhone 15 Pro та інші ≤400px) */
+@media (width <= 400px) {
+  .about-accordions {
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+  }
+  
+  .accordion[aria-expanded="true"] .accordion__content {
+    padding: var(--spacing-md);
+  }
+  
+  .service-card {
+    padding: 1.5rem 1rem;
   }
 }
 
