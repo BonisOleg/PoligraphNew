@@ -110,3 +110,22 @@ def format_infidelity_message(name: str, phone: str, promo: str = '') -> str:
     return text
 
 
+def format_corporate_message(name: str, phone: str) -> str:
+    """
+    Форматує повідомлення для корпоративного лендінгу - професійні послуги.
+    
+    Args:
+        name: Ім'я клієнта
+        phone: Телефон
+        
+    Returns:
+        Відформатований текст повідомлення
+    """
+    text = f'🏢 <b>КОРПОРАТИВНИЙ ЛЕНДІНГ - Послуги</b> 🏢\n\n'
+    text += f'<b>Ім\'я:</b> {name}\n'
+    text += f'<b>Телефон:</b> {phone}\n\n'
+    text += f'<b>Джерело:</b> /korporatyvni-poslugy/'
+    
+    return text
+
+

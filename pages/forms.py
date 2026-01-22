@@ -152,3 +152,52 @@ class InfidelityCheckForm(forms.Form):
         
         return cleaned_data
 
+
+class CorporateServicesForm(forms.Form):
+    """Форма для корпоративного лендінгу - професійні послуги"""
+    
+    name = forms.CharField(
+        label="Ім'я",
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'corporate-form__input',
+            'placeholder': 'Введіть ваше ім\'я',
+            'aria-required': 'true',
+        })
+    )
+    
+    phone = forms.CharField(
+        label="Номер телефону",
+        max_length=20,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'corporate-form__input',
+            'type': 'tel',
+            'placeholder': '+380',
+            'inputmode': 'tel',
+            'autocomplete': 'tel',
+            'aria-required': 'true',
+        })
+    )
+    
+    honeypot = forms.CharField(
+        label="",
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'style': 'display:none !important;',
+            'tabindex': '-1',
+            'autocomplete': 'off',
+        })
+    )
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        # Перевірка honeypot
+        if cleaned_data.get('honeypot'):
+            raise forms.ValidationError('Помилка валідації')
+        
+        return cleaned_data
+

@@ -8,12 +8,13 @@ import traceback
 import json
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseServerError, JsonResponse
-from .forms import ConsultationForm, CTAContactForm, InfidelityCheckForm
+from .forms import ConsultationForm, CTAContactForm, InfidelityCheckForm, CorporateServicesForm
 from .utils.telegram import (
     send_telegram_message,
     format_consultation_message,
     format_cta_message,
     format_infidelity_message,
+    format_corporate_message,
 )
 
 logger = logging.getLogger(__name__)
@@ -458,6 +459,60 @@ def infidelity_form_submit(request):
     
     except Exception as e:
         logger.error(f'Error in infidelity_form_submit: {e}')
+        logger.error(traceback.format_exc())
+        return JsonResponse({'success': False, 'error': 'Server error'}, status=500)
+
+
+def corporate_landing_view(request):
+    """Корпоративний лендінг - професійні послуги"""
+    try:
+        context = {
+            'title': 'Поліграф Львів - Корпоративні послуги | Професійна перевірка',
+            'phone': '+38 (067) 524-33-54',
+            'specialist_name': 'Керезвас Юліана Георгіївна',
+            'specialist_title': 'Поліграфолог, керівник представництва НАПУ',
+        }
+        return render(request, 'corporate_landing.html', context)
+    except Exception as e:
+        logger.error(f'Error in corporate_landing_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
+
+
+def corporate_form_submit(request):
+    """Обробка форми з корпоративного лендінгу"""
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
+    
+    try:
+        form = CorporateServicesForm(request.POST)
+        
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            phone = form.cleaned_data['phone']
+            
+            # Форматуємо та відправляємо повідомлення в Telegram
+            telegram_text = format_corporate_message(name, phone)
+            telegram_sent = send_telegram_message(telegram_text)
+            
+            if telegram_sent:
+                logger.info(f'Заявка з корпоративного лендінгу отримана: {name}, {phone}')
+            else:
+                logger.warning(f'Не вдалося відправити корпоративну заявку в Telegram: {name}, {phone}')
+            
+            # Повертаємо успішне повідомлення (незалежно від результату Telegram)
+            return JsonResponse({'success': True, 'message': 'Дякуємо! Ваша заявка успішно відправлена.'}, status=200)
+        else:
+            # Повертаємо помилки валідації
+            errors = {}
+            for field, field_errors in form.errors.items():
+                if field != 'honeypot':
+                    errors[field] = field_errors[0] if field_errors else 'Помилка валідації'
+            
+            return JsonResponse({'success': False, 'errors': errors}, status=422)
+    
+    except Exception as e:
+        logger.error(f'Error in corporate_form_submit: {e}')
         logger.error(traceback.format_exc())
         return JsonResponse({'success': False, 'error': 'Server error'}, status=500)
 

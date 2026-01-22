@@ -1,0 +1,1093 @@
+/* ============================================================================
+   Corporate Landing Page - Standalone CSS
+   Елегантний корпоративний лендінг з синіми та золотими акцентами
+   БЕЗ inline styles, БЕЗ !important, БЕЗ normalize.css
+   ============================================================================ */
+
+/* CSS Reset & Base */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: #f8fafc;
+    color: #1e293b;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Display Font */
+.corporate-display {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Main Container */
+.corporate-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* ============================================================================
+   Top Bar
+   ============================================================================ */
+
+.corporate-topbar {
+    background: linear-gradient(135deg, #0f2847 0%, #1a3a5c 50%, #0f2847 100%);
+    color: #ffffff;
+    padding: 12px 24px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.corporate-topbar__container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.corporate-topbar__label {
+    font-weight: 600;
+}
+
+.corporate-topbar__old-price {
+    opacity: 0.7;
+    text-decoration: line-through;
+}
+
+.corporate-topbar__new-price {
+    color: #d4af37;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.corporate-topbar__code {
+    background-color: #c19a1f;
+    color: #ffffff;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+/* ============================================================================
+   Navigation
+   ============================================================================ */
+
+.corporate-nav {
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+}
+
+.corporate-nav__container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+}
+
+.corporate-nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.corporate-nav__logo {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #0f2847 0%, #1a3a5c 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.corporate-nav__logo-icon {
+    width: 32px;
+    height: 32px;
+    color: #f4e5a1;
+    stroke-width: 2;
+}
+
+.corporate-nav__title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #1e293b;
+    line-height: 1.2;
+}
+
+.corporate-nav__subtitle {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.corporate-nav__cta {
+    background: linear-gradient(135deg, #0f2847 0%, #1a3a5c 100%);
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.corporate-nav__cta:hover {
+    opacity: 0.9;
+}
+
+/* ============================================================================
+   Hero Section
+   ============================================================================ */
+
+.corporate-hero {
+    position: relative;
+    background-color: #f8fafc;
+    padding: 80px 24px 120px;
+    overflow: hidden;
+}
+
+.corporate-hero__bg-glow {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.corporate-hero__glow-1 {
+    width: 384px;
+    height: 384px;
+    background-color: #d4af37;
+    top: 0;
+    left: 5%;
+    filter: blur(120px);
+}
+
+.corporate-hero__glow-2 {
+    width: 512px;
+    height: 512px;
+    background-color: #d4af37;
+    bottom: 10%;
+    right: 5%;
+    filter: blur(150px);
+}
+
+.corporate-hero__glow-3 {
+    width: 384px;
+    height: 384px;
+    background-color: #0f2847;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: blur(100px);
+}
+
+.corporate-hero__container {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.corporate-hero__content {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.corporate-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(15, 40, 71, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    color: #0f2847;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+.corporate-hero__badge-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #d4af37;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.corporate-hero__title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 8vw, 56px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 32px;
+    color: #0f2847;
+    letter-spacing: -0.02em;
+}
+
+.corporate-hero__description {
+    font-size: 20px;
+    line-height: 1.6;
+    color: #475569;
+    margin-bottom: 48px;
+}
+
+.corporate-hero__cta {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 64px;
+    justify-content: center;
+    align-items: center;
+}
+
+.corporate-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 40px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.corporate-button--primary {
+    background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 100%);
+    color: #0f2847;
+}
+
+.corporate-button--primary:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+}
+
+.corporate-button--secondary {
+    background-color: transparent;
+    color: #0f2847;
+    border: 3px solid rgba(15, 40, 71, 0.2);
+}
+
+.corporate-button--secondary:hover {
+    background-color: rgba(15, 40, 71, 0.05);
+    border-color: #0f2847;
+}
+
+.corporate-hero__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 32px;
+}
+
+.corporate-hero__stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #d4af37;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+.corporate-hero__stat-label {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* ============================================================================
+   About / Expert Card Section
+   ============================================================================ */
+
+.corporate-about {
+    background-color: #ffffff;
+    padding: 80px 24px;
+}
+
+.corporate-about__container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.corporate-about__card {
+    background: #ffffff;
+    border: 2px solid rgba(212, 175, 55, 0.2);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.corporate-about__header {
+    background: linear-gradient(to right, #f0f4f8, #f8f9fb);
+    border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+    padding: 32px;
+    text-align: center;
+}
+
+.corporate-about__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #c19a1f;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.corporate-about__badge svg {
+    width: 16px;
+    height: 16px;
+}
+
+.corporate-about__name {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.corporate-about__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0f2847;
+    margin-bottom: 0;
+}
+
+.corporate-about__content {
+    padding: 32px;
+}
+
+.corporate-about__credentials {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+.corporate-about__credential {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.corporate-about__credential-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #0f2847 0%, #1a3a5c 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.corporate-about__credential-icon svg {
+    width: 24px;
+    height: 24px;
+    color: #f4e5a1;
+}
+
+.corporate-about__credential-title {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.corporate-about__credential-text {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* ============================================================================
+   Process Timeline
+   ============================================================================ */
+
+.corporate-process {
+    background-color: #f8fafc;
+    padding: 80px 24px;
+}
+
+.corporate-process__container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.corporate-process__header {
+    text-align: center;
+    margin-bottom: 64px;
+}
+
+.corporate-process__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: #0f2847;
+    margin-bottom: 16px;
+}
+
+.corporate-process__subtitle {
+    font-size: 18px;
+    color: #64748b;
+}
+
+.corporate-process__timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+    position: relative;
+}
+
+.corporate-process__step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.corporate-process__dot {
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 100%);
+    border: 4px solid #0f2847;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+    margin-bottom: 24px;
+    flex-shrink: 0;
+}
+
+.corporate-process__card {
+    background: #ffffff;
+    border: 2px solid rgba(212, 175, 55, 0.2);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    flex-grow: 1;
+}
+
+.corporate-process__card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    border-color: rgba(212, 175, 55, 0.5);
+}
+
+.corporate-process__number {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+}
+
+.corporate-process__step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.corporate-process__step-text {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.corporate-process__badge {
+    display: inline-block;
+    background-color: #dcfce7;
+    color: #166534;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.corporate-process__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.corporate-process__tag {
+    background-color: #f0f4f8;
+    color: #475569;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* ============================================================================
+   CTA Section
+   ============================================================================ */
+
+.corporate-cta {
+    background: linear-gradient(135deg, #0f2847 0%, #1a3a5c 100%);
+    padding: 80px 24px;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.corporate-cta::before,
+.corporate-cta::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.corporate-cta::before {
+    width: 384px;
+    height: 384px;
+    background-color: rgba(212, 175, 55, 0.1);
+    top: -192px;
+    left: -192px;
+    filter: blur(120px);
+}
+
+.corporate-cta::after {
+    width: 384px;
+    height: 384px;
+    background-color: rgba(212, 175, 55, 0.1);
+    bottom: -192px;
+    right: -192px;
+    filter: blur(120px);
+}
+
+.corporate-cta__container {
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.corporate-cta__header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.corporate-cta__badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 100%);
+    color: #0f2847;
+    padding: 8px 20px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.corporate-cta__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    line-height: 1.2;
+}
+
+.corporate-cta__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.corporate-cta__old-price {
+    font-size: 24px;
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.corporate-cta__new-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: #d4af37;
+}
+
+.corporate-cta__discount {
+    background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 100%);
+    color: #0f2847;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.corporate-cta__promo {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 16px 24px;
+    margin-bottom: 32px;
+}
+
+.corporate-cta__promo-label {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.corporate-cta__promo-code {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #d4af37;
+}
+
+.corporate-cta__promo-copy {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 0;
+}
+
+.corporate-cta__promo-copy:hover {
+    color: #d4af37;
+}
+
+.corporate-cta__promo-copy svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* ============================================================================
+   Form
+   ============================================================================ */
+
+.corporate-form__wrapper {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.corporate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.corporate-form__messages {
+    min-height: 24px;
+}
+
+.corporate-form__message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.corporate-form__message--error {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-left: 4px solid #ef4444;
+    color: #991b1b;
+}
+
+.corporate-form__message--success {
+    background-color: rgba(34, 197, 94, 0.1);
+    border-left: 4px solid #22c55e;
+    color: #166534;
+}
+
+.corporate-form__group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.corporate-form__label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1e293b;
+}
+
+.corporate-form__input {
+    padding: 16px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #1e293b;
+    transition: all 0.3s ease;
+}
+
+.corporate-form__input::placeholder {
+    color: #94a3b8;
+}
+
+.corporate-form__input:focus {
+    outline: none;
+    border-color: #d4af37;
+    background-color: rgba(212, 175, 55, 0.02);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+}
+
+.corporate-honeypot {
+    display: none;
+}
+
+.corporate-form__submit {
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #0f2847 0%, #1a3a5c 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+}
+
+.corporate-form__submit:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(15, 40, 71, 0.3);
+}
+
+.corporate-form__success {
+    text-align: center;
+    padding: 40px;
+}
+
+.corporate-form__success-icon {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background-color: rgba(34, 197, 94, 0.1);
+    border: 4px solid #22c55e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: #22c55e;
+    font-weight: 700;
+}
+
+.corporate-form__success-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.corporate-form__success-text {
+    font-size: 18px;
+    color: #64748b;
+}
+
+.corporate-form__note {
+    text-align: center;
+    font-size: 14px;
+    color: #64748b;
+    margin-top: 16px;
+}
+
+/* ============================================================================
+   Notification Toast
+   ============================================================================ */
+
+.corporate-notification {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 50;
+    animation: slideIn 0.3s ease-out;
+}
+
+.corporate-notification svg {
+    width: 20px;
+    height: 20px;
+    color: #22c55e;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ============================================================================
+   Footer
+   ============================================================================ */
+
+.corporate-footer {
+    background-color: #0f2847;
+    color: #ffffff;
+    padding: 48px 24px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.corporate-footer__container {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.corporate-footer__brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.corporate-footer__text {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 4px;
+}
+
+.corporate-footer__copyright {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+/* ============================================================================
+   Responsive Design
+   ============================================================================ */
+
+@media (max-width: 768px) {
+    .corporate-hero {
+        padding: 60px 24px 80px;
+    }
+
+    .corporate-hero__title {
+        font-size: 32px;
+    }
+
+    .corporate-hero__description {
+        font-size: 16px;
+    }
+
+    .corporate-hero__cta {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .corporate-button {
+        width: 100%;
+    }
+
+    .corporate-about {
+        padding: 60px 24px;
+    }
+
+    .corporate-about__header {
+        padding: 24px;
+    }
+
+    .corporate-about__content {
+        padding: 24px;
+    }
+
+    .corporate-process {
+        padding: 60px 24px;
+    }
+
+    .corporate-process__title {
+        font-size: 32px;
+    }
+
+    .corporate-cta {
+        padding: 60px 24px;
+    }
+
+    .corporate-cta__title {
+        font-size: 32px;
+    }
+
+    .corporate-cta__new-price {
+        font-size: 40px;
+    }
+
+    .corporate-form__wrapper {
+        padding: 24px;
+    }
+
+    .corporate-nav__cta {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 640px) {
+    .corporate-topbar__container {
+        flex-direction: column;
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    .corporate-nav__container {
+        padding: 0 16px;
+        height: 64px;
+    }
+
+    .corporate-nav__logo {
+        width: 44px;
+        height: 44px;
+    }
+
+    .corporate-nav__title {
+        font-size: 16px;
+    }
+
+    .corporate-nav__subtitle {
+        font-size: 10px;
+    }
+
+    .corporate-hero {
+        padding: 40px 16px 60px;
+    }
+
+    .corporate-hero__title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .corporate-hero__description {
+        font-size: 14px;
+        margin-bottom: 32px;
+    }
+
+    .corporate-hero__stats {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .corporate-about {
+        padding: 40px 16px;
+    }
+
+    .corporate-about__name {
+        font-size: 22px;
+    }
+
+    .corporate-about__credentials {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .corporate-process {
+        padding: 40px 16px;
+    }
+
+    .corporate-process__title {
+        font-size: 24px;
+    }
+
+    .corporate-process__timeline {
+        gap: 20px;
+    }
+
+    .corporate-cta {
+        padding: 40px 16px;
+    }
+
+    .corporate-cta__title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .corporate-cta__new-price {
+        font-size: 32px;
+    }
+
+    .corporate-cta__promo {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px 16px;
+    }
+
+    .corporate-form__wrapper {
+        padding: 16px;
+    }
+
+    .corporate-form {
+        gap: 16px;
+    }
+
+    .corporate-notification {
+        top: 16px;
+        right: 16px;
+        left: 16px;
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+}
