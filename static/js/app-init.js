@@ -19,7 +19,6 @@
   const moduleRegistry = {
     header: null,
     accordion: null,
-    whyUs: null,
     footerAccordion: null
   };
 
@@ -40,12 +39,6 @@
     const accordions = document.querySelectorAll('.accordion');
     if (accordions.length > 0 && window.AccordionModule) {
       moduleRegistry.accordion = window.AccordionModule.init();
-    }
-
-    // Перевіряємо чи є секція "Чому ми" (для головної)
-    const whyUsSection = document.querySelector('.why-us');
-    if (whyUsSection && window.WhyUsModule) {
-      moduleRegistry.whyUs = window.WhyUsModule.init();
     }
 
     // Footer акордеони є на всіх сторінках
@@ -167,25 +160,10 @@
       if (event.detail.target && event.detail.target.id === 'main') {
         console.log('[AppInit] beforeSwap - cleaning up modules');
         
-        // КРОК 1: Синхронізуємо класи main ПЕРЕД очищенням модулів
-        try {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(event.detail.xhr.responseText, 'text/html');
-          const newMain = doc.querySelector('main');
-          const currentMain = document.getElementById('main');
-          
-          if (newMain && currentMain) {
-            currentMain.className = newMain.className;
-            console.log('[AppInit] Main classes synced:', currentMain.className);
-          }
-        } catch (err) {
-          console.warn('[AppInit] Error syncing main classes:', err);
-        }
-        
-        // КРОК 2: Очищаємо всі модулі (включаючи hero)
+        // КРОК 1: Очищаємо всі модулі
         cleanupAllModules();
         
-        // КРОК 3: Hero cleanup (якщо існує)
+        // КРОК 2: Hero cleanup (якщо існує)
         if (window.heroInstance) {
           if (typeof window.heroInstance.destroy === 'function') {
             window.heroInstance.destroy();
