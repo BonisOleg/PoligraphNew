@@ -1,0 +1,287 @@
+{% load static %}<!DOCTYPE html>
+<html lang="uk" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перевірка на зраду | Детектор брехні Львів - 2500 грн</title>
+    <meta name="description" content="Професійна перевірка на поліграфі у Львові. Підозри на зраду? Дізнайтесь правду. Акція: 2500 грн з промокодом PRAVDA. Конфіденційно.">
+    <meta name="keywords" content="поліграф львів, детектор брехні, перевірка на зраду, поліграф ціна">
+    <meta name="author" content="Керезвас Юліана Георгіївна">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/infidelity-landing.css' %}">
+    
+    {% csrf_token %}
+</head>
+<body class="infidelity-body">
+    <div class="infidelity-wrapper">
+        <!-- Фонові елементи -->
+        <div class="infidelity-background">
+            <div class="infidelity-background__glow infidelity-background__glow--1"></div>
+            <div class="infidelity-background__glow infidelity-background__glow--2"></div>
+            <div class="infidelity-background__glow infidelity-background__glow--3"></div>
+        </div>
+
+        <!-- Навігація / Header -->
+        <nav class="infidelity-nav">
+            <div class="infidelity-nav__container">
+                <div class="infidelity-nav__brand">
+                    <span class="infidelity-nav__emoji">💔</span>
+                    <div>
+                        <span class="infidelity-nav__title">ДЕТЕКТОР ПРАВДИ</span>
+                        <span class="infidelity-nav__subtitle">ПЕРЕВІРКА НА ЗРАДУ</span>
+                    </div>
+                </div>
+                <a href="tel:{{ phone }}" class="infidelity-nav__phone">
+                    <svg class="infidelity-nav__phone-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    <span>Зателефонувати</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Hero секція -->
+        <section class="infidelity-hero">
+            <div class="infidelity-hero__content">
+                <!-- Promo banner -->
+                <div class="infidelity-promo">
+                    <div class="infidelity-promo__glow"></div>
+                    <div class="infidelity-promo__inner">
+                        <div class="infidelity-promo__left">
+                            <span class="infidelity-promo__emoji">💔</span>
+                            <div>
+                                <p class="infidelity-promo__label">Акція: Перевірка на зраду</p>
+                                <div class="infidelity-promo__price">
+                                    <span class="infidelity-promo__old-price">5000 грн</span>
+                                    <span class="infidelity-promo__new-price">2500 грн</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infidelity-promo__code">
+                            <span class="infidelity-promo__code-label">Промокод:</span>
+                            <span class="infidelity-promo__code-value">PRAVDA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Основний текст -->
+                <div class="infidelity-hero__text">
+                    <div class="infidelity-hero__badge">🔒 ПОВНА КОНФІДЕНЦІЙНІСТЬ</div>
+                    <h1 class="infidelity-hero__title">Дізнайся правду про <span class="infidelity-hero__highlight">зраду</span> в стосунках</h1>
+                    <p class="infidelity-hero__description">Підозри не дають спокою? Перевірка на поліграфі допоможе розставити всі крапки над "і". Конфіденційно, професійно, чесно.</p>
+                </div>
+
+                <!-- CTA кнопки -->
+                <div class="infidelity-hero__cta">
+                    <button class="infidelity-button infidelity-button--primary" onclick="scrollToForm()">
+                        💬 Дізнатись правду зараз
+                        <svg class="infidelity-button__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </button>
+                    <a href="tel:{{ phone }}" class="infidelity-button infidelity-button--secondary">
+                        <svg class="infidelity-button__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        Консультація
+                    </a>
+                </div>
+
+                <!-- Trust badges -->
+                <div class="infidelity-badges">
+                    <div class="infidelity-badge">
+                        <svg class="infidelity-badge__icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span>100% Конфіденційно</span>
+                    </div>
+                    <div class="infidelity-badge">
+                        <svg class="infidelity-badge__icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Точні результати</span>
+                    </div>
+                    <div class="infidelity-badge">
+                        <svg class="infidelity-badge__icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Офіційний висновок</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Картка спеціаліста -->
+        <section class="infidelity-specialist">
+            <div class="infidelity-specialist__glow"></div>
+            <div class="infidelity-specialist__card">
+                <div class="infidelity-specialist__photo">
+                    <svg class="infidelity-specialist__avatar" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                    </svg>
+                    <div class="infidelity-specialist__badge">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="infidelity-specialist__info">
+                    <h2 class="infidelity-specialist__name">{{ specialist_name }}</h2>
+                    <p class="infidelity-specialist__title">{{ specialist_title }}</p>
+                    <div class="infidelity-specialist__credentials">
+                        <div class="infidelity-credential">
+                            <span class="infidelity-credential__emoji">🎓</span>
+                            <div>
+                                <p class="infidelity-credential__text">Юрист-магістр з відзнакою</p>
+                            </div>
+                        </div>
+                        <div class="infidelity-credential">
+                            <span class="infidelity-credential__emoji">🏛️</span>
+                            <div>
+                                <p class="infidelity-credential__text">Магістр публічного управління</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Емоційна секція -->
+        <section class="infidelity-emotional">
+            <div class="infidelity-emotional__content">
+                <h2 class="infidelity-emotional__title">Коли потрібна перевірка на поліграфі?</h2>
+                <p class="infidelity-emotional__subtitle">Зрада руйнує довіру. Поліграф допоможе встановити правду.</p>
+                
+                <div class="infidelity-emotional__grid">
+                    <div class="infidelity-emotional__card">
+                        <span class="infidelity-emotional__emoji">😔</span>
+                        <h3 class="infidelity-emotional__card-title">Постійні підозри</h3>
+                        <p class="infidelity-emotional__card-text">Відчуваєте, що вас обманюють, але немає доказів</p>
+                    </div>
+                    <div class="infidelity-emotional__card">
+                        <span class="infidelity-emotional__emoji">📱</span>
+                        <h3 class="infidelity-emotional__card-title">Приховування</h3>
+                        <p class="infidelity-emotional__card-text">Партнер ховає телефон, змінює паролі</p>
+                    </div>
+                    <div class="infidelity-emotional__card">
+                        <span class="infidelity-emotional__emoji">🕒</span>
+                        <h3 class="infidelity-emotional__card-title">Зміна поведінки</h3>
+                        <p class="infidelity-emotional__card-text">Часті затримки, нові звички, холодність</p>
+                    </div>
+                    <div class="infidelity-emotional__card">
+                        <span class="infidelity-emotional__emoji">💬</span>
+                        <h3 class="infidelity-emotional__card-title">Заперечення</h3>
+                        <p class="infidelity-emotional__card-text">Відмовляється відповідати на прямі питання</p>
+                    </div>
+                </div>
+
+                <div class="infidelity-emotional__warning">
+                    <span class="infidelity-emotional__warning-emoji">⚠️</span>
+                    <div>
+                        <h3 class="infidelity-emotional__warning-title">Не живіть з підозрами</h3>
+                        <p class="infidelity-emotional__warning-text">Невизначеність гірша за правду. Перевірка на поліграфі — це шанс розставити всі крапки над "і" і прийняти правильне рішення про майбутнє стосунків.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Процес роботи -->
+        <section class="infidelity-process">
+            <div class="infidelity-process__content">
+                <div class="infidelity-process__header">
+                    <span class="infidelity-process__badge">🔍 Процес роботи</span>
+                    <h2 class="infidelity-process__title">Як проходить тестування</h2>
+                </div>
+
+                <div class="infidelity-process__steps">
+                    <div class="infidelity-process__step">
+                        <div class="infidelity-process__step-number">01</div>
+                        <h3 class="infidelity-process__step-title">Консультація</h3>
+                        <p class="infidelity-process__step-text">Безкоштовно обговорюємо вашу ситуацію, відповідаю на всі питання</p>
+                    </div>
+                    <div class="infidelity-process__step">
+                        <div class="infidelity-process__step-number">02</div>
+                        <h3 class="infidelity-process__step-title">Підготовка</h3>
+                        <p class="infidelity-process__step-text">Складаємо питання, пояснюю процедуру, створюю комфортну атмосферу</p>
+                    </div>
+                    <div class="infidelity-process__step">
+                        <div class="infidelity-process__step-number">03</div>
+                        <h3 class="infidelity-process__step-title">Тестування</h3>
+                        <p class="infidelity-process__step-text">Обладнання Rubicon, 1-2 години, можливість відеофіксації</p>
+                    </div>
+                    <div class="infidelity-process__step">
+                        <div class="infidelity-process__step-number">04</div>
+                        <h3 class="infidelity-process__step-title">Результат</h3>
+                        <p class="infidelity-process__step-text">Детальний аналіз, письмовий висновок з рекомендаціями</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Форма CTA -->
+        <section class="infidelity-form-section" id="form-section">
+            <div class="infidelity-form-container">
+                <div class="infidelity-form-glow"></div>
+                <div class="infidelity-form__card">
+                    <div class="infidelity-form__header">
+                        <div class="infidelity-form__icon">💬</div>
+                        <h2 class="infidelity-form__title">Готові дізнатись правду?</h2>
+                        <p class="infidelity-form__subtitle">Залиште заявку — зв'яжусь протягом 30 хвилин</p>
+                    </div>
+
+                    <form id="infidelity-form" class="infidelity-form">
+                        <div id="form-messages" class="infidelity-form__messages"></div>
+
+                        <div class="infidelity-form__group">
+                            <label for="form-name" class="infidelity-form__label">Ваше ім'я</label>
+                            <input type="text" id="form-name" name="name" required class="infidelity-form__input" placeholder="Введіть ваше ім'я" autocomplete="name">
+                        </div>
+
+                        <div class="infidelity-form__group">
+                            <label for="form-phone" class="infidelity-form__label">Номер телефону</label>
+                            <input type="tel" id="form-phone" name="phone" required class="infidelity-form__input" placeholder="+38 (0__) ___-__-__" inputmode="tel" autocomplete="tel">
+                        </div>
+
+                        <div class="infidelity-form__group">
+                            <label for="form-promo" class="infidelity-form__label">Промокод (опціонально)</label>
+                            <input type="text" id="form-promo" name="promo" class="infidelity-form__input" placeholder="Введіть промокод PRAVDA" autocomplete="off">
+                        </div>
+
+                        <input type="hidden" name="honeypot" class="infidelity-honeypot">
+
+                        <button type="submit" class="infidelity-button infidelity-button--primary infidelity-form__submit">
+                            💔 Дізнатись правду зараз
+                        </button>
+                    </form>
+
+                    <div id="form-success" class="infidelity-form__success" style="display: none;">
+                        <div class="infidelity-form__success-icon">✓</div>
+                        <h3 class="infidelity-form__success-title">Заявку отримано!</h3>
+                        <p class="infidelity-form__success-text">Зв'яжусь з вами найближчим часом</p>
+                    </div>
+
+                    <p class="infidelity-form__consent">🔒 Натискаючи кнопку, ви погоджуєтесь з політикою конфіденційності</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="infidelity-footer">
+            <div class="infidelity-footer__content">
+                <div class="infidelity-footer__brand">
+                    <span class="infidelity-footer__emoji">💔</span>
+                    <span class="infidelity-footer__text">ДЕТЕКТОР ПРАВДИ</span>
+                </div>
+                <p class="infidelity-footer__copyright">© 2024 Поліграф Львів. Всі права захищено.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{% static 'js/infidelity-landing.js' %}" defer></script>
+</body>
+</html>

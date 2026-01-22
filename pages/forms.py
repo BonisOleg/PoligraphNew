@@ -93,3 +93,62 @@ class CTAContactForm(forms.Form):
         })
     )
 
+
+class InfidelityCheckForm(forms.Form):
+    """Форма для рекламного лендінгу - перевірка на зраду"""
+    
+    name = forms.CharField(
+        label="Ім'я",
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'infidelity-form__input',
+            'placeholder': 'Введіть ваше ім\'я',
+            'aria-required': 'true',
+        })
+    )
+    
+    phone = forms.CharField(
+        label="Номер телефону",
+        max_length=20,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'infidelity-form__input',
+            'type': 'tel',
+            'placeholder': '+38 (0__) ___-__-__',
+            'inputmode': 'tel',
+            'autocomplete': 'tel',
+            'aria-required': 'true',
+        })
+    )
+    
+    promo = forms.CharField(
+        label="Промокод (опціонально)",
+        max_length=50,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'infidelity-form__input',
+            'placeholder': 'Введіть промокод PRAVDA',
+        })
+    )
+    
+    honeypot = forms.CharField(
+        label="",
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'style': 'display:none !important;',
+            'tabindex': '-1',
+            'autocomplete': 'off',
+        })
+    )
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        # Перевірка honeypot
+        if cleaned_data.get('honeypot'):
+            raise forms.ValidationError('Помилка валідації')
+        
+        return cleaned_data
+

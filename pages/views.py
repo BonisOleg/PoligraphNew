@@ -5,13 +5,15 @@ Views для сторінок сайту.
 
 import logging
 import traceback
+import json
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseServerError
-from .forms import ConsultationForm, CTAContactForm
+from django.http import HttpResponse, HttpResponseServerError, JsonResponse
+from .forms import ConsultationForm, CTAContactForm, InfidelityCheckForm
 from .utils.telegram import (
     send_telegram_message,
     format_consultation_message,
     format_cta_message,
+    format_infidelity_message,
 )
 
 logger = logging.getLogger(__name__)
@@ -403,5 +405,60 @@ def sw_js(request):
     """Повертає 404 для sw.js (немає service worker)"""
     from django.http import HttpResponseNotFound
     return HttpResponseNotFound()
+
+
+def infidelity_landing_view(request):
+    """Рекламний лендінг - перевірка на зраду"""
+    try:
+        context = {
+            'title': 'Перевірка на зраду | Детектор брехні Львів',
+            'phone': '+38 (067) 524-33-54',
+            'specialist_name': 'Керезвас Юліана Георгіївна',
+            'specialist_title': 'Керівниця представництва Національної асоціації поліграфологів України у Львівській області',
+        }
+        return render(request, 'infidelity_landing.html', context)
+    except Exception as e:
+        logger.error(f'Error in infidelity_landing_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
+
+
+def infidelity_form_submit(request):
+    """Обробка форми з рекламного лендінгу - перевірка на зраду"""
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
+    
+    try:
+        form = InfidelityCheckForm(request.POST)
+        
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            phone = form.cleaned_data['phone']
+            promo = form.cleaned_data.get('promo', '')
+            
+            # Форматуємо та відправляємо повідомлення в Telegram
+            telegram_text = format_infidelity_message(name, phone, promo)
+            telegram_sent = send_telegram_message(telegram_text)
+            
+            if telegram_sent:
+                logger.info(f'Заявка з лендінгу зради отримана: {name}, {phone}')
+            else:
+                logger.warning(f'Не вдалося відправити заявку з лендінгу в Telegram: {name}, {phone}')
+            
+            # Повертаємо успішне повідомлення (незалежно від результату Telegram)
+            return JsonResponse({'success': True, 'message': 'Заявку отримано!'}, status=200)
+        else:
+            # Повертаємо помилки валідації
+            errors = {}
+            for field, field_errors in form.errors.items():
+                if field != 'honeypot':
+                    errors[field] = field_errors[0] if field_errors else 'Помилка валідації'
+            
+            return JsonResponse({'success': False, 'errors': errors}, status=422)
+    
+    except Exception as e:
+        logger.error(f'Error in infidelity_form_submit: {e}')
+        logger.error(traceback.format_exc())
+        return JsonResponse({'success': False, 'error': 'Server error'}, status=500)
 
 

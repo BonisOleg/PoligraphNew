@@ -1,0 +1,1071 @@
+/* ============================================================================
+   Infidelity Landing Page - Standalone CSS
+   Окремий файл стилів для рекламного лендінгу "Перевірка на зраду"
+   БЕЗ normalize.css, БЕЗ inline styles, БЕЗ !important
+   ============================================================================ */
+
+/* CSS Reset & Base */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Основні контейнери */
+.infidelity-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a14 50%, #0a0a0a 100%);
+    overflow: hidden;
+}
+
+.infidelity-background {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+.infidelity-background__glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+}
+
+.infidelity-background__glow--1 {
+    width: 384px;
+    height: 384px;
+    background-color: rgba(220, 38, 38, 0.3);
+    top: 0;
+    left: 25%;
+}
+
+.infidelity-background__glow--2 {
+    width: 600px;
+    height: 600px;
+    background-color: rgba(244, 114, 182, 0.2);
+    bottom: 25%;
+    right: 25%;
+    filter: blur(150px);
+}
+
+.infidelity-background__glow--3 {
+    width: 400px;
+    height: 400px;
+    background-color: rgba(153, 27, 27, 0.25);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: blur(100px);
+}
+
+/* Navigation */
+.infidelity-nav {
+    position: relative;
+    z-index: 10;
+    padding: 24px 24px;
+    border-bottom: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.infidelity-nav__container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.infidelity-nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.infidelity-nav__emoji {
+    font-size: 24px;
+    display: inline-block;
+    animation: infidelity-heartbeat 2s ease-in-out infinite;
+}
+
+.infidelity-nav__title {
+    display: block;
+    font-weight: 700;
+    font-size: 20px;
+    color: #ffffff;
+    letter-spacing: 0.05em;
+}
+
+.infidelity-nav__subtitle {
+    display: block;
+    font-weight: 600;
+    font-size: 12px;
+    color: #f87171;
+    letter-spacing: 0.1em;
+}
+
+.infidelity-nav__phone {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 9999px;
+    background-color: #dc2626;
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.infidelity-nav__phone:hover {
+    background-color: #b91c1c;
+}
+
+.infidelity-nav__phone-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Hero Section */
+.infidelity-hero {
+    position: relative;
+    z-index: 10;
+    padding: 48px 24px 80px;
+}
+
+.infidelity-hero__content {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* Promo Banner */
+.infidelity-promo {
+    position: relative;
+    margin-bottom: 64px;
+}
+
+.infidelity-promo__glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(220, 38, 38, 0.4), rgba(244, 114, 182, 0.4), rgba(220, 38, 38, 0.4));
+    border-radius: 16px;
+    filter: blur(24px);
+}
+
+.infidelity-promo__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px 32px;
+    border-radius: 16px;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border: 3px solid #dc2626;
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.6), inset 0 0 20px rgba(220, 38, 38, 0.2);
+    animation: infidelity-pulsing-glow 3s ease-in-out infinite;
+}
+
+.infidelity-promo__left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.infidelity-promo__emoji {
+    font-size: 48px;
+    display: block;
+    animation: infidelity-heartbeat 2s ease-in-out infinite;
+}
+
+.infidelity-promo__label {
+    margin-bottom: 8px;
+    font-weight: 700;
+    font-size: 24px;
+    color: #f87171;
+}
+
+.infidelity-promo__price {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.infidelity-promo__old-price {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: line-through;
+}
+
+.infidelity-promo__new-price {
+    font-size: 36px;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 30px rgba(220, 38, 38, 0.5), 0 0 60px rgba(220, 38, 38, 0.3);
+}
+
+.infidelity-promo__code {
+    padding: 12px 24px;
+    border-radius: 12px;
+    background-color: rgba(220, 38, 38, 0.2);
+    border: 2px solid rgba(220, 38, 38, 0.8);
+}
+
+.infidelity-promo__code-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f87171;
+}
+
+.infidelity-promo__code-value {
+    font-weight: 900;
+    font-size: 20px;
+    color: #ffffff;
+    margin-left: 8px;
+}
+
+/* Hero Text */
+.infidelity-hero__text {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 48px;
+}
+
+.infidelity-hero__badge {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 9999px;
+    background-color: rgba(220, 38, 38, 0.2);
+    border: 1px solid rgba(220, 38, 38, 0.5);
+    color: #f87171;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+}
+
+.infidelity-hero__title {
+    font-size: clamp(32px, 8vw, 56px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 32px;
+    letter-spacing: -0.02em;
+}
+
+.infidelity-hero__highlight {
+    color: #dc2626;
+    text-shadow: 0 0 30px rgba(220, 38, 38, 0.5), 0 0 60px rgba(220, 38, 38, 0.3);
+    font-weight: 900;
+}
+
+.infidelity-hero__description {
+    font-size: 20px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 48px;
+}
+
+/* CTA Buttons */
+.infidelity-hero__cta {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 48px;
+    justify-content: center;
+    align-items: center;
+}
+
+.infidelity-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 40px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 18px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.infidelity-button--primary {
+    background-color: #dc2626;
+    color: #ffffff;
+    box-shadow: 0 20px 60px rgba(220, 38, 38, 0.4), 0 0 100px rgba(220, 38, 38, 0.2);
+    border: 2px solid #dc2626;
+}
+
+.infidelity-button--primary:hover {
+    background-color: #b91c1c;
+    transform: scale(1.05);
+}
+
+.infidelity-button--secondary {
+    background-color: transparent;
+    color: #ffffff;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.infidelity-button--secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.infidelity-button__arrow {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.infidelity-button--primary:hover .infidelity-button__arrow {
+    transform: translateX(8px);
+}
+
+.infidelity-button__icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Trust Badges */
+.infidelity-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.infidelity-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.infidelity-badge__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(34, 197, 94, 0.2);
+    border: 2px solid rgba(34, 197, 94, 1);
+    padding: 8px;
+    flex-shrink: 0;
+    color: rgba(134, 239, 172, 1);
+}
+
+.infidelity-badge span {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Specialist Card */
+.infidelity-specialist {
+    position: relative;
+    z-index: 10;
+    padding: 80px 24px;
+}
+
+.infidelity-specialist__glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom-right, rgba(220, 38, 38, 0.3), rgba(244, 114, 182, 0.2));
+    border-radius: 48px;
+    filter: blur(64px);
+    transform: translateY(-50px);
+}
+
+.infidelity-specialist__card {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 48px;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.infidelity-specialist__photo {
+    position: relative;
+    justify-self: center;
+}
+
+.infidelity-specialist__avatar {
+    width: 192px;
+    height: 192px;
+    border-radius: 16px;
+    background: linear-gradient(to bottom-right, rgba(139, 0, 0, 0.5), rgba(120, 53, 15, 0.5));
+    border: 4px solid rgba(220, 38, 38, 0.5);
+    padding: 24px;
+    color: rgba(220, 38, 38, 0.3);
+}
+
+.infidelity-specialist__badge {
+    position: absolute;
+    bottom: -12px;
+    right: -12px;
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgb(34, 197, 94), rgb(22, 163, 74));
+    border: 4px solid #000a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.infidelity-specialist__badge svg {
+    width: 32px;
+    height: 32px;
+    color: #ffffff;
+}
+
+.infidelity-specialist__info {
+    text-align: left;
+}
+
+.infidelity-specialist__name {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+.infidelity-specialist__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f87171;
+    margin-bottom: 24px;
+    line-height: 1.4;
+}
+
+.infidelity-specialist__credentials {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.infidelity-credential {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: rgba(220, 38, 38, 0.1);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.infidelity-credential__emoji {
+    font-size: 24px;
+    display: block;
+}
+
+.infidelity-credential__text {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+/* Emotional Section */
+.infidelity-emotional {
+    position: relative;
+    z-index: 10;
+    padding: 80px 24px;
+    border-top: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.infidelity-emotional__content {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.infidelity-emotional__title {
+    font-size: 40px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+    color: #ffffff;
+}
+
+.infidelity-emotional__subtitle {
+    font-size: 20px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 48px;
+}
+
+.infidelity-emotional__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+.infidelity-emotional__card {
+    padding: 24px;
+    border-radius: 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(220, 38, 38, 0.2);
+    transition: all 0.3s ease;
+}
+
+.infidelity-emotional__card:hover {
+    border-color: rgba(220, 38, 38, 0.5);
+}
+
+.infidelity-emotional__emoji {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.infidelity-emotional__card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.infidelity-emotional__card-text {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+}
+
+.infidelity-emotional__warning {
+    padding: 32px;
+    border-radius: 16px;
+    background: linear-gradient(to right, rgba(220, 38, 38, 0.1), rgba(244, 114, 182, 0.1));
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.infidelity-emotional__warning-emoji {
+    font-size: 36px;
+    display: block;
+    flex-shrink: 0;
+}
+
+.infidelity-emotional__warning-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.infidelity-emotional__warning-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Process Section */
+.infidelity-process {
+    position: relative;
+    z-index: 10;
+    padding: 80px 24px;
+    border-top: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.infidelity-process__content {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.infidelity-process__header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.infidelity-process__badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    background-color: rgba(220, 38, 38, 0.2);
+    color: #f87171;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.infidelity-process__title {
+    font-size: 40px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.infidelity-process__steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+.infidelity-process__step {
+    padding: 24px;
+    border-radius: 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(220, 38, 38, 0.2);
+    transition: all 0.3s ease;
+}
+
+.infidelity-process__step:hover {
+    border-color: rgba(220, 38, 38, 0.5);
+}
+
+.infidelity-process__step-number {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    background-color: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 16px;
+    transition: transform 0.3s ease;
+}
+
+.infidelity-process__step:hover .infidelity-process__step-number {
+    transform: scale(1.1);
+}
+
+.infidelity-process__step-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.infidelity-process__step-text {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+}
+
+/* Form Section */
+.infidelity-form-section {
+    position: relative;
+    z-index: 10;
+    padding: 80px 24px;
+}
+
+.infidelity-form-container {
+    position: relative;
+    max-width: 512px;
+    margin: 0 auto;
+}
+
+.infidelity-form-glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom-right, rgba(220, 38, 38, 0.4), rgba(244, 114, 182, 0.3));
+    border-radius: 48px;
+    filter: blur(64px);
+}
+
+.infidelity-form__card {
+    position: relative;
+    padding: 40px 32px;
+    border-radius: 32px;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    border: 3px solid #dc2626;
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.6), inset 0 0 20px rgba(220, 38, 38, 0.2);
+}
+
+.infidelity-form__header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.infidelity-form__icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 16px;
+    animation: infidelity-heartbeat 2s ease-in-out infinite;
+}
+
+.infidelity-form__title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.infidelity-form__subtitle {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.infidelity-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.infidelity-form__messages {
+    min-height: 24px;
+}
+
+.infidelity-form__group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.infidelity-form__label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.infidelity-form__input {
+    padding: 16px 24px;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    color: #ffffff;
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.infidelity-form__input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.infidelity-form__input:focus {
+    outline: none;
+    border-color: #dc2626;
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 16px rgba(220, 38, 38, 0.2);
+}
+
+.infidelity-honeypot {
+    display: none;
+}
+
+.infidelity-form__submit {
+    margin-top: 8px;
+    width: 100%;
+    padding: 16px 24px;
+}
+
+.infidelity-form__success {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.infidelity-form__success-icon {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background-color: rgba(34, 197, 94, 0.2);
+    border: 4px solid rgba(34, 197, 94, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: rgba(134, 239, 172, 1);
+    font-weight: 700;
+}
+
+.infidelity-form__success-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.infidelity-form__success-text {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.infidelity-form__consent {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 16px;
+}
+
+/* Error & Success Messages */
+.infidelity-message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.infidelity-message--error {
+    background-color: rgba(220, 38, 38, 0.2);
+    border-left: 4px solid #dc2626;
+    color: #fca5a5;
+}
+
+.infidelity-message--success {
+    background-color: rgba(34, 197, 94, 0.2);
+    border-left: 4px solid #22c55e;
+    color: #86efac;
+}
+
+/* Footer */
+.infidelity-footer {
+    position: relative;
+    z-index: 10;
+    padding: 32px 24px;
+    border-top: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.infidelity-footer__content {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.infidelity-footer__brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.infidelity-footer__emoji {
+    font-size: 24px;
+}
+
+.infidelity-footer__text {
+    font-weight: 700;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.infidelity-footer__copyright {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Animations */
+@keyframes infidelity-heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    10%, 30% {
+        transform: scale(1.1);
+    }
+    20%, 40% {
+        transform: scale(1);
+    }
+}
+
+@keyframes infidelity-pulsing-glow {
+    0%, 100% {
+        box-shadow: 0 0 30px rgba(220, 38, 38, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 60px rgba(220, 38, 38, 0.8), 0 0 100px rgba(220, 38, 38, 0.4);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .infidelity-nav__phone {
+        display: none;
+    }
+
+    .infidelity-specialist__card {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .infidelity-specialist__info {
+        text-align: center;
+    }
+
+    .infidelity-specialist__credentials {
+        grid-template-columns: 1fr;
+    }
+
+    .infidelity-emotional__warning {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .infidelity-hero__title {
+        font-size: 28px;
+    }
+
+    .infidelity-hero__description {
+        font-size: 16px;
+    }
+
+    .infidelity-promo__inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .infidelity-promo__left {
+        justify-content: center;
+    }
+
+    .infidelity-process__title {
+        font-size: 28px;
+    }
+
+    .infidelity-form__title {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 640px) {
+    .infidelity-nav {
+        padding: 16px 16px;
+    }
+
+    .infidelity-nav__title {
+        font-size: 16px;
+    }
+
+    .infidelity-nav__subtitle {
+        font-size: 10px;
+    }
+
+    .infidelity-hero {
+        padding: 32px 16px 60px;
+    }
+
+    .infidelity-hero__title {
+        font-size: 24px;
+    }
+
+    .infidelity-hero__description {
+        font-size: 14px;
+    }
+
+    .infidelity-promo {
+        margin-bottom: 48px;
+    }
+
+    .infidelity-promo__inner {
+        padding: 16px 20px;
+        border-radius: 12px;
+    }
+
+    .infidelity-promo__emoji {
+        font-size: 32px;
+    }
+
+    .infidelity-promo__label {
+        font-size: 16px;
+    }
+
+    .infidelity-promo__new-price {
+        font-size: 28px;
+    }
+
+    .infidelity-specialist {
+        padding: 48px 16px;
+    }
+
+    .infidelity-specialist__card {
+        padding: 24px 16px;
+        border-radius: 24px;
+    }
+
+    .infidelity-specialist__name {
+        font-size: 20px;
+    }
+
+    .infidelity-specialist__title {
+        font-size: 14px;
+    }
+
+    .infidelity-specialist__avatar {
+        width: 128px;
+        height: 128px;
+        padding: 16px;
+    }
+
+    .infidelity-emotional {
+        padding: 48px 16px;
+    }
+
+    .infidelity-emotional__title {
+        font-size: 24px;
+    }
+
+    .infidelity-emotional__subtitle {
+        font-size: 14px;
+    }
+
+    .infidelity-process {
+        padding: 48px 16px;
+    }
+
+    .infidelity-form-section {
+        padding: 48px 16px;
+    }
+
+    .infidelity-form__card {
+        padding: 24px 16px;
+    }
+
+    .infidelity-form__title {
+        font-size: 20px;
+    }
+
+    .infidelity-form__submit {
+        padding: 14px 16px;
+        font-size: 16px;
+    }
+
+    .infidelity-badges {
+        gap: 16px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .infidelity-hero__cta {
+        gap: 12px;
+    }
+
+    .infidelity-button {
+        padding: 12px 24px;
+        font-size: 16px;
+        width: 100%;
+    }
+}
