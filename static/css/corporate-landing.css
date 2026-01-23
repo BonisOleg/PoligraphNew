@@ -420,7 +420,7 @@ body {
 
 .corporate-about__credentials {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
 }
 
@@ -492,7 +492,7 @@ body {
 
 .corporate-process__timeline {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 32px;
     position: relative;
 }
@@ -505,14 +505,7 @@ body {
 }
 
 .corporate-process__dot {
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 100%);
-    border: 4px solid #0f2847;
-    border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
-    margin-bottom: 24px;
-    flex-shrink: 0;
+    display: none;
 }
 
 .corporate-process__card {
