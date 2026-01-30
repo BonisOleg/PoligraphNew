@@ -517,3 +517,34 @@ def corporate_form_submit(request):
         return JsonResponse({'success': False, 'error': 'Server error'}, status=500)
 
 
+def corporate_thanks_view(request):
+    """Thank You сторінка після відправки форми з корпоративного лендінгу (для Google Analytics)."""
+    try:
+        context = {
+            'title': 'Дякуємо за заявку | Поліграф Львів - Корпоративні послуги',
+            'phone': '+38 (067) 524-33-54',
+            'specialist_name': 'Керезвас Юліана Георгіївна',
+            'specialist_title': 'Поліграфолог, керівник представництва НАПУ',
+        }
+        return render(request, 'corporate_thanks.html', context)
+    except Exception as e:
+        logger.error(f'Error in corporate_thanks_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
+
+
+def infidelity_thanks_view(request):
+    """Thank You сторінка після відправки форми з лендінгу перевірки на зраду (для Google Analytics)."""
+    try:
+        context = {
+            'title': 'Дякуємо за заявку | Перевірка на зраду | Детектор брехні Львів',
+            'phone': '+38 (067) 524-33-54',
+            'specialist_name': 'Керезвас Юліана Георгіївна',
+            'specialist_title': 'Керівниця представництва Національної асоціації поліграфологів України у Львівській області',
+        }
+        return render(request, 'infidelity_thanks.html', context)
+    except Exception as e:
+        logger.error(f'Error in infidelity_thanks_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
+

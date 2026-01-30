@@ -59,9 +59,8 @@ async function handleFormSubmit(event) {
         const data = await response.json();
 
         if (data.success) {
-            // Успіх!
-            hideForm();
-            showSuccessMessage();
+            window.location.href = '/perevirka-na-zradu/thank-you/';
+            return;
         } else {
             // Помилка валідації або серверна помилка
             if (data.errors) {

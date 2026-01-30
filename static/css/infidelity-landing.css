@@ -1076,3 +1076,20 @@ body {
         width: 100%;
     }
 }
+
+/* ============================================================================
+   Thank You page (infidelity)
+   ============================================================================ */
+.infidelity-form-section--thanks {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+}
+.infidelity-form__success--page {
+    margin: 2rem 0;
+}
+.infidelity-form__success-back {
+    display: inline-block;
+    margin-top: 1.5rem;
+    text-decoration: none;
+}

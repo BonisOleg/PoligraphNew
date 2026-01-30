@@ -1,0 +1,63 @@
+{% load static %}<!DOCTYPE html>
+<html lang="uk" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <meta name="description" content="Дякуємо за заявку. Ми зв'яжемося з вами найближчим часом. Поліграф Львів - корпоративні послуги.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/corporate-landing.css' %}">
+    {% csrf_token %}
+</head>
+<body class="corporate-body">
+    <div class="corporate-wrapper">
+        <div class="corporate-topbar">
+            <div class="corporate-topbar__container">
+                <span class="corporate-topbar__label">🔥 СПЕЦІАЛЬНА ПРОПОЗИЦІЯ:</span>
+                <span class="corporate-topbar__old-price">5000 грн</span>
+                <span class="corporate-topbar__new-price">2500 грн</span>
+                <span class="corporate-topbar__code">PRAVDA</span>
+            </div>
+        </div>
+
+        <nav class="corporate-nav">
+            <div class="corporate-nav__container">
+                <div class="corporate-nav__brand">
+                    <div class="corporate-nav__logo">
+                        <svg class="corporate-nav__logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="corporate-nav__title">Polygraph Expert</div>
+                        <div class="corporate-nav__subtitle">Професійний сервіс</div>
+                    </div>
+                </div>
+                <a href="{% url 'pages:corporate_landing' %}#contact" class="corporate-nav__cta">Зв'язатися</a>
+            </div>
+        </nav>
+
+        <section class="corporate-cta corporate-cta--thanks">
+            <div class="corporate-cta__container">
+                <div class="corporate-form__success corporate-form__success--page">
+                    <div class="corporate-form__success-icon">✓</div>
+                    <h1 class="corporate-form__success-title">Дякуємо за заявку!</h1>
+                    <p class="corporate-form__success-text">Ваша заявка успішно відправлена. Ми зв'яжемося з вами найближчим часом.</p>
+                    <a href="{% url 'pages:corporate_landing' %}" class="corporate-button corporate-button--secondary corporate-form__success-back">Повернутися на сторінку</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="corporate-footer">
+            <div class="corporate-footer__container">
+                <div class="corporate-footer__brand">{{ specialist_name }}</div>
+                <p class="corporate-footer__text">Національна асоціація поліграфологів України</p>
+                <p class="corporate-footer__copyright">© 2024 Всі права захищені</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

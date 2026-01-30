@@ -54,9 +54,8 @@ async function handleFormSubmit(event) {
         const data = await response.json();
 
         if (data.success) {
-            // Успіх!
-            hideForm();
-            showSuccessMessage();
+            window.location.href = '/korporatyvni-poslugy/thank-you/';
+            return;
         } else {
             // Помилка валідації або серверна помилка
             if (data.errors) {

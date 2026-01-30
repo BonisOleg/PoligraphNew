@@ -1107,3 +1107,20 @@ body {
         font-size: 14px;
     }
 }
+
+/* ============================================================================
+   Thank You page (corporate)
+   ============================================================================ */
+.corporate-cta--thanks {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+}
+.corporate-form__success--page {
+    margin: 2rem 0;
+}
+.corporate-form__success-back {
+    display: inline-block;
+    margin-top: 1.5rem;
+    text-decoration: none;
+}
