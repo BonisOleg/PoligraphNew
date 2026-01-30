@@ -4,6 +4,13 @@
 <html lang="uk">
 
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WHRVL87G');</script>
+    <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
     <title>{% block title %}PolygraphNew{% endblock %}</title>
@@ -61,6 +68,10 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body{% if request.resolver_match and request.resolver_match.url_name == 'index' %} class="body--index"{% elif request.resolver_match and request.resolver_match.url_name == 'about' %} class="body--about"{% endif %}>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHRVL87G"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <header class="header" role="banner">
         <!-- КАПСУЛА: один контейнер що розтягується -->
         <div class="header__capsule" data-open="false">
