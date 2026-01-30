@@ -1110,11 +1110,18 @@ body {
 
 /* ============================================================================
    Thank You page (corporate)
+   Контраст тексту на темному фоні .corporate-cta
    ============================================================================ */
 .corporate-cta--thanks {
     min-height: 60vh;
     display: flex;
     align-items: center;
+}
+.corporate-cta--thanks .corporate-form__success-title {
+    color: #ffffff;
+}
+.corporate-cta--thanks .corporate-form__success-text {
+    color: rgba(255, 255, 255, 0.92);
 }
 .corporate-form__success--page {
     margin: 2rem 0;
@@ -1123,4 +1130,14 @@ body {
     display: inline-block;
     margin-top: 1.5rem;
     text-decoration: none;
+}
+.corporate-cta--thanks .corporate-form__success-back {
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #0f2847;
+    border-color: rgba(255, 255, 255, 0.95);
+}
+.corporate-cta--thanks .corporate-form__success-back:hover {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #0f2847;
 }
