@@ -8,7 +8,7 @@ import os
 import dj_database_url
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 # ALLOWED_HOSTS для Render - максимальний fallback
 ALLOWED_HOSTS = []
@@ -54,7 +54,9 @@ if DEBUG:
 ALLOWED_HOSTS = [h for h in list(set(ALLOWED_HOSTS)) if h and h.strip()]
 
 # Database configuration
-USE_SQLITE = os.environ.get('USE_SQLITE', 'False') == 'True'
+# Case-insensitive check for environment variables
+# Render sets environment values as lowercase 'true'/'false'
+USE_SQLITE = os.environ.get('USE_SQLITE', 'False').lower() == 'true'
 
 if USE_SQLITE:
     # Використовуємо SQLite
@@ -66,12 +68,21 @@ if USE_SQLITE:
     }
 else:
     # Використовуємо PostgreSQL через DATABASE_URL
+    # Render requires ssl_require=True for database connections
+    database_config = dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+    
+    # Add SSL requirement for Render (production PostgreSQL)
+    if database_config:
+        database_config['OPTIONS'] = {
+            'sslmode': 'require',
+        }
+    
     DATABASES = {
-        'default': dj_database_url.config(
-            default=os.environ.get('DATABASE_URL'),
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
+        'default': database_config
     }
 
 # WhiteNoise для статичних файлів
