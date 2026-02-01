@@ -83,43 +83,43 @@ function initializePhoneFormatting() {
 /**
  * Форматування номера телефону
  * Формат: +38(0XX) XXX-XX-XX
- * Префікс +38(0 завжди фіксований, користувач вводить 9 цифр
+ * НЕ видаляємо "0", просто додаємо "38" перед ним
  * @param {Event} event - подія input
  */
 function formatPhoneInput(event) {
     let value = event.target.value.replace(/\D/g, '');
     
-    // Видаляємо лідируючий 8 або 0 якщо вже є 38
-    if (value.startsWith('8')) {
-        value = value.substring(1);
+    if (value.length === 0) {
+        event.target.value = '';
+        return;
     }
     
-    // Перевіряємо, чи починається з 38
+    // Якщо почав з "8" - замінюємо на "0"
+    if (value.startsWith('8')) {
+        value = '0' + value.substring(1);
+    }
+    
+    // Додаємо "38" ПЕРЕД номером (НЕ видаляючи "0")
     if (!value.startsWith('38')) {
-        if (value.startsWith('0')) {
-            value = value.substring(1);
-        }
         value = '38' + value;
     }
     
-    // Обмежуємо до 12 цифр (38 + 0 + 9 цифр)
+    // Обмежуємо до 12 цифр (38 + 0XX + 9 цифр)
     if (value.length > 12) {
         value = value.substring(0, 12);
     }
-
-    // Форматуємо +38(0XX) XXX-XX-XX
-    if (value.length === 0) {
-        event.target.value = '';
-    } else if (value.length <= 2) {
-        event.target.value = '+38(0';
-    } else if (value.length <= 4) {
-        event.target.value = '+38(0' + value.substring(2);
-    } else if (value.length <= 7) {
-        event.target.value = '+38(0' + value.substring(2, 4) + ') ' + value.substring(4);
-    } else if (value.length <= 9) {
-        event.target.value = '+38(0' + value.substring(2, 4) + ') ' + value.substring(4, 7) + '-' + value.substring(7);
+    
+    // Форматуємо: +38(0XX) XXX-XX-XX (3-2-2)
+    if (value.length <= 2) {
+        event.target.value = '+38(';
+    } else if (value.length <= 5) {
+        event.target.value = '+38(' + value.substring(2);
+    } else if (value.length <= 8) {
+        event.target.value = '+38(' + value.substring(2, 5) + ') ' + value.substring(5);
+    } else if (value.length <= 10) {
+        event.target.value = '+38(' + value.substring(2, 5) + ') ' + value.substring(5, 8) + '-' + value.substring(8);
     } else {
-        event.target.value = '+38(0' + value.substring(2, 4) + ') ' + value.substring(4, 7) + '-' + value.substring(7, 9) + '-' + value.substring(9);
+        event.target.value = '+38(' + value.substring(2, 5) + ') ' + value.substring(5, 8) + '-' + value.substring(8, 10) + '-' + value.substring(10);
     }
 }
 
