@@ -82,29 +82,44 @@ function initializePhoneFormatting() {
 
 /**
  * Форматування номера телефону
+ * Формат: +38(0XX) XXX-XX-XX
+ * Префікс +38(0 завжди фіксований, користувач вводить 9 цифр
  * @param {Event} event - подія input
  */
 function formatPhoneInput(event) {
     let value = event.target.value.replace(/\D/g, '');
     
-    // Обмежуємо до 12 цифр (38 + 10 цифр)
+    // Видаляємо лідируючий 8 або 0 якщо вже є 38
+    if (value.startsWith('8')) {
+        value = value.substring(1);
+    }
+    
+    // Перевіряємо, чи починається з 38
+    if (!value.startsWith('38')) {
+        if (value.startsWith('0')) {
+            value = value.substring(1);
+        }
+        value = '38' + value;
+    }
+    
+    // Обмежуємо до 12 цифр (38 + 0 + 9 цифр)
     if (value.length > 12) {
         value = value.substring(0, 12);
     }
 
-    // Форматуємо
+    // Форматуємо +38(0XX) XXX-XX-XX
     if (value.length === 0) {
         event.target.value = '';
     } else if (value.length <= 2) {
-        event.target.value = '+' + value;
+        event.target.value = '+38(0';
     } else if (value.length <= 4) {
-        event.target.value = '+' + value.substring(0, 2) + ' (' + value.substring(2);
-    } else if (value.length <= 6) {
-        event.target.value = '+' + value.substring(0, 2) + ' (' + value.substring(2, 4) + ') ' + value.substring(4);
+        event.target.value = '+38(0' + value.substring(2);
+    } else if (value.length <= 7) {
+        event.target.value = '+38(0' + value.substring(2, 4) + ') ' + value.substring(4);
     } else if (value.length <= 9) {
-        event.target.value = '+' + value.substring(0, 2) + ' (' + value.substring(2, 4) + ') ' + value.substring(4, 7) + '-' + value.substring(7);
+        event.target.value = '+38(0' + value.substring(2, 4) + ') ' + value.substring(4, 7) + '-' + value.substring(7);
     } else {
-        event.target.value = '+' + value.substring(0, 2) + ' (' + value.substring(2, 4) + ') ' + value.substring(4, 7) + '-' + value.substring(7, 9) + '-' + value.substring(9);
+        event.target.value = '+38(0' + value.substring(2, 4) + ') ' + value.substring(4, 7) + '-' + value.substring(7, 9) + '-' + value.substring(9);
     }
 }
 

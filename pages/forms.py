@@ -2,6 +2,7 @@
 Форми для сторінок сайту.
 """
 
+import re
 from django import forms
 
 
@@ -115,7 +116,7 @@ class InfidelityCheckForm(forms.Form):
         widget=forms.TextInput(attrs={
             'class': 'infidelity-form__input',
             'type': 'tel',
-            'placeholder': '+38 (0__) ___-__-__',
+            'placeholder': '+38(0__) ___-__-__',
             'inputmode': 'tel',
             'autocomplete': 'tel',
             'aria-required': 'true',
@@ -139,6 +140,16 @@ class InfidelityCheckForm(forms.Form):
         # Перевірка honeypot
         if cleaned_data.get('honeypot'):
             raise forms.ValidationError('Помилка валідації')
+        
+        # Валідація телефону
+        phone = cleaned_data.get('phone', '')
+        digits = re.sub(r'\D', '', phone)
+        
+        if not digits.startswith('38'):
+            raise forms.ValidationError('Телефон повинен починатися з +38')
+        
+        if len(digits) != 12:
+            raise forms.ValidationError('Невірний формат телефону. Очікується +38(0XX) XXX-XX-XX (всього 12 цифр)')
         
         return cleaned_data
 
@@ -164,7 +175,7 @@ class CorporateServicesForm(forms.Form):
         widget=forms.TextInput(attrs={
             'class': 'corporate-form__input',
             'type': 'tel',
-            'placeholder': '+380',
+            'placeholder': '+38(0__) ___-__-__',
             'inputmode': 'tel',
             'autocomplete': 'tel',
             'aria-required': 'true',
@@ -188,6 +199,16 @@ class CorporateServicesForm(forms.Form):
         # Перевірка honeypot
         if cleaned_data.get('honeypot'):
             raise forms.ValidationError('Помилка валідації')
+        
+        # Валідація телефону
+        phone = cleaned_data.get('phone', '')
+        digits = re.sub(r'\D', '', phone)
+        
+        if not digits.startswith('38'):
+            raise forms.ValidationError('Телефон повинен починатися з +38')
+        
+        if len(digits) != 12:
+            raise forms.ValidationError('Невірний формат телефону. Очікується +38(0XX) XXX-XX-XX (всього 12 цифр)')
         
         return cleaned_data
 
