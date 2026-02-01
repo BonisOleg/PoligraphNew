@@ -8,7 +8,10 @@ import traceback
 import json
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseServerError, JsonResponse
+from django.utils import timezone
 from .forms import ConsultationForm, CTAContactForm, InfidelityCheckForm, CorporateServicesForm
+from .models import LeadSubmission
+from .utils import get_client_ip
 from .utils.telegram import (
     send_telegram_message,
     format_consultation_message,
@@ -53,12 +56,26 @@ def index_view(request):
                 email = form.cleaned_data['email']
                 message = form.cleaned_data.get('message', '')
                 
+                # Створюємо запис у БД
+                lead = LeadSubmission.objects.create(
+                    form_type='cta',
+                    name=name,
+                    phone=phone,
+                    email=email,
+                    message=message,
+                    ip_address=get_client_ip(request),
+                    user_agent=request.META.get('HTTP_USER_AGENT', '')[:500],
+                )
+                
                 # Форматуємо та відправляємо повідомлення в Telegram
                 telegram_text = format_cta_message(name, phone, email, message)
                 telegram_sent = send_telegram_message(telegram_text)
                 
                 if telegram_sent:
-                    logger.info(f'CTA форма відправлена: {name}, {phone}, {email}')
+                    lead.telegram_sent = True
+                    lead.telegram_sent_at = timezone.now()
+                    lead.save()
+                    logger.info(f'CTA форма отримана і відправлена в Telegram: {name}, {phone}, {email}')
                 else:
                     logger.warning(f'Не вдалося відправити CTA форму в Telegram: {name}, {phone}, {email}')
                 
@@ -327,12 +344,25 @@ def consultation_view(request):
         contact = form.cleaned_data['contact']
         comment = form.cleaned_data.get('comment', '')
         
+        # Створюємо запис у БД
+        lead = LeadSubmission.objects.create(
+            form_type='consultation',
+            name=name,
+            contact=contact,
+            message=comment,
+            ip_address=get_client_ip(request),
+            user_agent=request.META.get('HTTP_USER_AGENT', '')[:500],
+        )
+        
         # Форматуємо та відправляємо повідомлення в Telegram
         telegram_text = format_consultation_message(name, contact, comment)
         telegram_sent = send_telegram_message(telegram_text)
         
         if telegram_sent:
-            logger.info(f'Консультація відправлена: {name}, {contact}')
+            lead.telegram_sent = True
+            lead.telegram_sent_at = timezone.now()
+            lead.save()
+            logger.info(f'Консультація отримана і відправлена в Telegram: {name}, {contact}')
         else:
             logger.warning(f'Не вдалося відправити консультацію в Telegram: {name}, {contact}')
         
@@ -435,14 +465,25 @@ def infidelity_form_submit(request):
         if form.is_valid():
             name = form.cleaned_data['name']
             phone = form.cleaned_data['phone']
-            promo = form.cleaned_data.get('promo', '')
+            
+            # Створюємо запис у БД
+            lead = LeadSubmission.objects.create(
+                form_type='infidelity',
+                name=name,
+                phone=phone,
+                ip_address=get_client_ip(request),
+                user_agent=request.META.get('HTTP_USER_AGENT', '')[:500],
+            )
             
             # Форматуємо та відправляємо повідомлення в Telegram
-            telegram_text = format_infidelity_message(name, phone, promo)
+            telegram_text = format_infidelity_message(name, phone)
             telegram_sent = send_telegram_message(telegram_text)
             
             if telegram_sent:
-                logger.info(f'Заявка з лендінгу зради отримана: {name}, {phone}')
+                lead.telegram_sent = True
+                lead.telegram_sent_at = timezone.now()
+                lead.save()
+                logger.info(f'Заявка з лендінгу зради отримана і відправлена в Telegram: {name}, {phone}')
             else:
                 logger.warning(f'Не вдалося відправити заявку з лендінгу в Telegram: {name}, {phone}')
             
@@ -491,12 +532,24 @@ def corporate_form_submit(request):
             name = form.cleaned_data['name']
             phone = form.cleaned_data['phone']
             
+            # Створюємо запис у БД
+            lead = LeadSubmission.objects.create(
+                form_type='corporate',
+                name=name,
+                phone=phone,
+                ip_address=get_client_ip(request),
+                user_agent=request.META.get('HTTP_USER_AGENT', '')[:500],
+            )
+            
             # Форматуємо та відправляємо повідомлення в Telegram
             telegram_text = format_corporate_message(name, phone)
             telegram_sent = send_telegram_message(telegram_text)
             
             if telegram_sent:
-                logger.info(f'Заявка з корпоративного лендінгу отримана: {name}, {phone}')
+                lead.telegram_sent = True
+                lead.telegram_sent_at = timezone.now()
+                lead.save()
+                logger.info(f'Заявка з корпоративного лендінгу отримана і відправлена в Telegram: {name}, {phone}')
             else:
                 logger.warning(f'Не вдалося відправити корпоративну заявку в Telegram: {name}, {phone}')
             

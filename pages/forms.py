@@ -122,16 +122,6 @@ class InfidelityCheckForm(forms.Form):
         })
     )
     
-    promo = forms.CharField(
-        label="Промокод (опціонально)",
-        max_length=50,
-        required=False,
-        widget=forms.TextInput(attrs={
-            'class': 'infidelity-form__input',
-            'placeholder': 'Введіть промокод PRAVDA',
-        })
-    )
-    
     honeypot = forms.CharField(
         label="",
         max_length=100,
