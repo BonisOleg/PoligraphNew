@@ -30,6 +30,9 @@ def send_telegram_message(text: str) -> bool:
     bot_token = raw_bot_token.strip().replace('"', '').replace("'", "")
     chat_id = raw_chat_id.strip().replace('"', '').replace("'", "")
     
+    # Додаткове логування для діагностики (тільки довжина та наявність дефіса)
+    logger.info(f"DEBUG: Chat ID length: {len(chat_id)}, starts with '-': {chat_id.startswith('-')}")
+    
     # Маскування для логів (показуємо перші 5 та останні 2 символи)
     masked_chat = f"{chat_id[:5]}***{chat_id[-2:]}" if len(chat_id) > 7 else "***"
     logger.info(f"Спроба відправки в Telegram. Chat ID: {masked_chat}")
