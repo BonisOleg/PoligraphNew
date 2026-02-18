@@ -1,11 +1,12 @@
 """
 Django management command для автоматичного створення суперюзера.
-Команда не видаляється при редеплоях на Render, оскільки користувач зберігається в БД.
+Команда використовує змінні оточення для налаштування облікових даних.
 
 Використання:
     python manage.py create_superuser
 """
 
+import os
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 
@@ -17,20 +18,20 @@ class Command(BaseCommand):
         parser.add_argument(
             '--username',
             type=str,
-            default='Poliboss',
-            help='Ім\'я користувача (за замовчуванням: Poliboss)',
+            default=os.environ.get('DJANGO_SUPERUSER_USERNAME', 'Poliboss'),
+            help='Ім\'я користувача (за замовчуванням: з ENV або Poliboss)',
         )
         parser.add_argument(
             '--password',
             type=str,
-            default='Polizvas123',
-            help='Пароль (за замовчуванням: Polizvas123)',
+            default=os.environ.get('DJANGO_SUPERUSER_PASSWORD', 'Polizvas123'),
+            help='Пароль (за замовчуванням: з ENV або Polizvas123)',
         )
         parser.add_argument(
             '--email',
             type=str,
-            default='admin@polygraph.local',
-            help='Email адреса (за замовчуванням: admin@polygraph.local)',
+            default=os.environ.get('DJANGO_SUPERUSER_EMAIL', 'admin@polygraph.local'),
+            help='Email адреса (за замовчуванням: з ENV або admin@polygraph.local)',
         )
 
     def handle(self, *args, **options):
