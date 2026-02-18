@@ -19,12 +19,20 @@ def send_telegram_message(text: str) -> bool:
     Returns:
         True якщо повідомлення відправлено успішно, False інакше
     """
-    bot_token = os.environ.get('TELEGRAM_BOT_TOKEN')
-    chat_id = os.environ.get('TELEGRAM_CHAT_ID')
+    raw_bot_token = os.environ.get('TELEGRAM_BOT_TOKEN')
+    raw_chat_id = os.environ.get('TELEGRAM_CHAT_ID')
     
-    if not bot_token or not chat_id:
+    if not raw_bot_token or not raw_chat_id:
         logger.warning('TELEGRAM_BOT_TOKEN або TELEGRAM_CHAT_ID не налаштовані')
         return False
+
+    # Очищення від пробілів та лапок, які можуть потрапити з env
+    bot_token = raw_bot_token.strip().replace('"', '').replace("'", "")
+    chat_id = raw_chat_id.strip().replace('"', '').replace("'", "")
+    
+    # Маскування для логів (показуємо перші 5 та останні 2 символи)
+    masked_chat = f"{chat_id[:5]}***{chat_id[-2:]}" if len(chat_id) > 7 else "***"
+    logger.info(f"Спроба відправки в Telegram. Chat ID: {masked_chat}")
     
     url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
     
