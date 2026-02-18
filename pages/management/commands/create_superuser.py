@@ -39,29 +39,40 @@ class Command(BaseCommand):
         password = options['password']
         email = options['email']
 
-        # Перевіряємо, чи користувач вже існує
-        if User.objects.filter(username=username).exists():
-            self.stdout.write(
-                self.style.SUCCESS(
-                    f'✓ Суперюзер "{username}" вже існує. Пропускаємо створення.'
-                )
-            )
-            return
-
         try:
-            # Створюємо суперюзера
-            User.objects.create_superuser(
-                username=username,
-                email=email,
-                password=password,
-            )
-            self.stdout.write(
-                self.style.SUCCESS(
-                    f'✓ Суперюзер "{username}" успішно створений!\n'
-                    f'  URL адміністрування: /admin/\n'
-                    f'  Логін: {username}\n'
-                    f'  Email: {email}'
+            # Перевіряємо, чи користувач вже існує
+            user = User.objects.filter(username=username).first()
+            
+            if user:
+                # Оновлюємо пароль та email для існуючого користувача
+                user.email = email
+                user.set_password(password)
+                user.is_superuser = True
+                user.is_staff = True
+                user.save()
+                
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f'✓ Суперюзер "{username}" оновлено!\n'
+                        f'  URL адміністрування: /admin/\n'
+                        f'  Логін: {username}\n'
+                        f'  Email: {email}'
+                    )
                 )
-            )
+            else:
+                # Створюємо нового суперюзера
+                User.objects.create_superuser(
+                    username=username,
+                    email=email,
+                    password=password,
+                )
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f'✓ Суперюзер "{username}" успішно створений!\n'
+                        f'  URL адміністрування: /admin/\n'
+                        f'  Логін: {username}\n'
+                        f'  Email: {email}'
+                    )
+                )
         except Exception as e:
-            raise CommandError(f'Помилка при створенні суперюзера: {str(e)}')
+            raise CommandError(f'Помилка при створенні/оновленні суперюзера: {str(e)}')
