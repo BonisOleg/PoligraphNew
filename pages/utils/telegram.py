@@ -4,6 +4,7 @@
 import os
 import logging
 import requests
+import html
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +40,10 @@ def send_telegram_message(text: str) -> bool:
         logger.info('Повідомлення успішно відправлено в Telegram')
         return True
     except requests.exceptions.RequestException as e:
-        logger.error(f'Помилка відправки повідомлення в Telegram: {e}')
+        error_msg = f'Помилка відправки повідомлення в Telegram: {e}'
+        if hasattr(e, 'response') and e.response is not None:
+            error_msg += f' Response: {e.response.text}'
+        logger.error(error_msg)
         return False
 
 
@@ -55,12 +59,17 @@ def format_consultation_message(name: str, contact: str, comment: str = '') -> s
     Returns:
         Відформатований текст повідомлення
     """
+    # Екранування HTML тегів у вхідних даних
+    safe_name = html.escape(name)
+    safe_contact = html.escape(contact)
+    
     message = f'<b>Нова заявка на консультацію</b>\n\n'
-    message += f'<b>Ім\'я:</b> {name}\n'
-    message += f'<b>Контакт:</b> {contact}\n'
+    message += f'<b>Ім\'я:</b> {safe_name}\n'
+    message += f'<b>Контакт:</b> {safe_contact}\n'
     
     if comment:
-        message += f'\n<b>Питання:</b>\n{comment}'
+        safe_comment = html.escape(comment)
+        message += f'\n<b>Питання:</b>\n{safe_comment}'
     
     return message
 
@@ -78,13 +87,19 @@ def format_cta_message(name: str, phone: str, email: str, message: str = '') -> 
     Returns:
         Відформатований текст повідомлення
     """
+    # Екранування HTML тегів у вхідних даних
+    safe_name = html.escape(name)
+    safe_phone = html.escape(phone)
+    safe_email = html.escape(email)
+    
     text = f'<b>Нова заявка з головної сторінки</b>\n\n'
-    text += f'<b>Ім\'я:</b> {name}\n'
-    text += f'<b>Телефон:</b> {phone}\n'
-    text += f'<b>Email:</b> {email}\n'
+    text += f'<b>Ім\'я:</b> {safe_name}\n'
+    text += f'<b>Телефон:</b> {safe_phone}\n'
+    text += f'<b>Email:</b> {safe_email}\n'
     
     if message:
-        text += f'\n<b>Повідомлення:</b>\n{message}'
+        safe_message = html.escape(message)
+        text += f'\n<b>Повідомлення:</b>\n{safe_message}'
     
     return text
 
@@ -100,9 +115,13 @@ def format_infidelity_message(name: str, phone: str) -> str:
     Returns:
         Відформатований текст повідомлення
     """
+    # Екранування HTML тегів у вхідних даних
+    safe_name = html.escape(name)
+    safe_phone = html.escape(phone)
+    
     text = f'🚨 <b>РЕКЛАМНИЙ ЛЕНДІНГ - Зрада</b> 🚨\n\n'
-    text += f'<b>Ім\'я:</b> {name}\n'
-    text += f'<b>Телефон:</b> {phone}\n\n'
+    text += f'<b>Ім\'я:</b> {safe_name}\n'
+    text += f'<b>Телефон:</b> {safe_phone}\n\n'
     text += f'<b>Джерело:</b> /perevirka-na-zradu/'
     
     return text
@@ -119,11 +138,13 @@ def format_corporate_message(name: str, phone: str) -> str:
     Returns:
         Відформатований текст повідомлення
     """
+    # Екранування HTML тегів у вхідних даних
+    safe_name = html.escape(name)
+    safe_phone = html.escape(phone)
+    
     text = f'🏢 <b>КОРПОРАТИВНИЙ ЛЕНДІНГ - Послуги</b> 🏢\n\n'
-    text += f'<b>Ім\'я:</b> {name}\n'
-    text += f'<b>Телефон:</b> {phone}\n\n'
+    text += f'<b>Ім\'я:</b> {safe_name}\n'
+    text += f'<b>Телефон:</b> {safe_phone}\n\n'
     text += f'<b>Джерело:</b> /korporatyvni-poslugy/'
     
     return text
-
-
