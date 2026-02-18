@@ -7,6 +7,7 @@ from .base import *
 import os
 import dj_database_url
 import logging
+import sys
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
@@ -74,8 +75,18 @@ else:
     
     if not database_url and os.environ.get('RENDER'):
         # Якщо ми на Render, але немає DATABASE_URL - це критична помилка
-        # Але щоб не впасти, спробуємо SQLite і виведемо помилку в лог
-        print("CRITICAL WARNING: DATABASE_URL is missing on Render! Falling back to SQLite (DATA WILL BE LOST ON DEPLOY). Please set DATABASE_URL in Render Dashboard.")
+        # Ми ПОВИННІ впасти, щоб користувач побачив помилку і виправив її
+        error_msg = (
+            "CRITICAL ERROR: DATABASE_URL is missing on Render!\n"
+            "You MUST set DATABASE_URL in Render Dashboard to use PostgreSQL.\n"
+            "If you want to use ephemeral SQLite (NOT RECOMMENDED), set USE_SQLITE=true."
+        )
+        print(error_msg)
+        # Якщо це не collectstatic, падаємо
+        if 'collectstatic' not in sys.argv:
+            raise ValueError(error_msg)
+            
+        # Для collectstatic можна тимчасово використати sqlite, щоб білд пройшов
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
