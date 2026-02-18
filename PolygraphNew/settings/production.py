@@ -6,6 +6,7 @@ For deployment on Render.
 from .base import *
 import os
 import dj_database_url
+import logging
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
@@ -59,7 +60,7 @@ ALLOWED_HOSTS = [h for h in list(set(ALLOWED_HOSTS)) if h and h.strip()]
 USE_SQLITE = os.environ.get('USE_SQLITE', 'False').lower() == 'true'
 
 if USE_SQLITE:
-    # Використовуємо SQLite
+    # Використовуємо SQLite (ТІЛЬКИ ЯКЩО ЯВНО ВКАЗАНО)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -69,21 +70,34 @@ if USE_SQLITE:
 else:
     # Використовуємо PostgreSQL через DATABASE_URL
     # Render requires ssl_require=True for database connections
-    database_config = dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+    database_url = os.environ.get('DATABASE_URL')
     
-    # Add SSL requirement for Render (production PostgreSQL)
-    if database_config:
-        database_config['OPTIONS'] = {
-            'sslmode': 'require',
+    if not database_url and os.environ.get('RENDER'):
+        # Якщо ми на Render, але немає DATABASE_URL - це критична помилка
+        # Але щоб не впасти, спробуємо SQLite і виведемо помилку в лог
+        print("CRITICAL WARNING: DATABASE_URL is missing on Render! Falling back to SQLite (DATA WILL BE LOST ON DEPLOY). Please set DATABASE_URL in Render Dashboard.")
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': BASE_DIR / 'db.sqlite3',
+            }
         }
-    
-    DATABASES = {
-        'default': database_config
-    }
+    else:
+        database_config = dj_database_url.config(
+            default=database_url,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+        
+        # Add SSL requirement for Render (production PostgreSQL)
+        if database_config:
+            database_config['OPTIONS'] = {
+                'sslmode': 'require',
+            }
+        
+        DATABASES = {
+            'default': database_config
+        }
 
 # WhiteNoise для статичних файлів
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
@@ -220,4 +234,3 @@ except Exception as e:
     # Якщо логування викликає помилку, не падаємо
     print(f'❌ Error in logging: {e}')
     print(traceback.format_exc())
-
