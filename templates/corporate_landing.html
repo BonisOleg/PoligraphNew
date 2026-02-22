@@ -59,7 +59,7 @@
         </nav>
 
         <!-- Hero Section -->
-        <section class="corporate-hero">
+        <section class="corporate-hero" id="ad-hero-corporate">
             <div class="corporate-hero__bg-glow corporate-hero__glow-1"></div>
             <div class="corporate-hero__bg-glow corporate-hero__glow-2"></div>
             <div class="corporate-hero__bg-glow corporate-hero__glow-3"></div>
@@ -76,7 +76,7 @@
                     <p class="corporate-hero__description">Професійне психофізіологічне дослідження з використанням обладнання Rubicon. Точність 99%, повна конфіденційність.</p>
                     
                     <div class="corporate-hero__cta">
-                        <a href="#contact" class="corporate-button corporate-button--primary">Замовити перевірку</a>
+                        <a href="#contact" class="corporate-button corporate-button--primary" id="ad-cta-hero-corporate">Замовити перевірку</a>
                         <a href="#about" class="corporate-button corporate-button--secondary">Про послугу</a>
                     </div>
 
@@ -99,7 +99,7 @@
         </section>
 
         <!-- Expert Card Section -->
-        <section id="about" class="corporate-about">
+        <section id="about" class="corporate-about" id="ad-about-corporate">
             <div class="corporate-about__container">
                 <div class="corporate-about__photo-wrapper">
                     <img src="{% static 'img/landing.png' %}" alt="Керезвас Юліана Георгіївна" class="corporate-about__photo">
@@ -173,7 +173,7 @@
         </section>
 
         <!-- Process Timeline -->
-        <section class="corporate-process">
+        <section class="corporate-process" id="ad-process-corporate">
             <div class="corporate-process__container">
                 <div class="corporate-process__header">
                     <h2 class="corporate-process__title">Як проходить перевірка</h2>
@@ -227,7 +227,7 @@
         </section>
 
         <!-- CTA Section -->
-        <section id="contact" class="corporate-cta">
+        <section id="contact" class="corporate-cta" id="ad-cta-section-corporate">
             <div class="corporate-cta__container">
                 <div class="corporate-cta__header">
                     <div class="corporate-cta__badge">⚡ АКЦІЙНА ПРОПОЗИЦІЯ</div>
@@ -249,7 +249,7 @@
                 </div>
 
                 <div class="corporate-form__wrapper">
-                    <form id="corporate-form" class="corporate-form">
+                    <form id="corporate-form" class="corporate-form" id="ad-form-corporate">
                         <div id="form-messages" class="corporate-form__messages"></div>
 
                         <div class="corporate-form__group">
@@ -264,7 +264,7 @@
 
                         <input type="hidden" name="honeypot" class="corporate-honeypot">
 
-                        <button type="submit" class="corporate-form__submit">Відправити заявку</button>
+                        <button type="submit" class="corporate-form__submit" id="ad-submit-corporate">Відправити заявку</button>
                     </form>
 
                     <div id="success-message" class="corporate-form__success" style="display: none;">
@@ -297,7 +297,7 @@
     </div>
 
     <!-- Phone Button -->
-    <a href="tel:+380675243354" class="corporate-phone-button" aria-label="Зателефонувати">
+    <a href="tel:+380675243354" class="corporate-phone-button" aria-label="Зателевонувати" id="ad-phone-float-corporate">
         <svg class="corporate-phone-button__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
         </svg>
