@@ -233,9 +233,9 @@
     font-size: clamp(3.6rem, 12vw, 6rem);
   }
 
-  /* ПОГЛЯНЬТЕ - над відео на мобільній */
+  /* ПОГЛЯНЬТЕ - під капсулою хедера на мобільній (3vh top + 20vw height + 1.5rem margin) */
   .hero__text--center {
-    top: calc(2rem + var(--safe-area-top));
+    top: calc(3vh + 20vw + 1.5rem + var(--safe-area-top));
     bottom: auto;
     left: 50%;
     /* transform та правила для модифікаторів (--visible, --static, --error) 

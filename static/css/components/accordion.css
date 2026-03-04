@@ -35,14 +35,14 @@
 /* Мобільні пристрої - зменшені відступи */
 @media (width <= 767px) {
   .about-accordions {
-    padding-top: calc(10vh + 120px);
+    padding-top: calc(13vh + 20vw);
     padding-left: var(--spacing-md);
     padding-right: var(--spacing-md);
   }
   
   @media (height <= 600px) {
     .about-accordions {
-      padding-top: calc(5vh + 120px + 1.5rem);
+      padding-top: calc(5vh + 20vw + 1.5rem);
     }
   }
 }

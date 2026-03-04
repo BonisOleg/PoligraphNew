@@ -33,7 +33,7 @@ def index_view(request):
             'features': [
                 {
                     'title': 'Професіоналізм',
-                    'description': 'Досвід роботи понад 10 років',
+                    'description': 'Досвід роботи понад 2 роки',
                 },
                 {
                     'title': 'Сучасне обладнання',
