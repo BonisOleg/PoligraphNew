@@ -150,7 +150,7 @@ gunicorn>=20.1.0
 
 Всі мок дані знаходяться в `pages/views.py`:
 - Ім'я поліграфолога: Іванов Іван Іванович
-- Обладнання: Lafayette LX5000, Stoelting CPS
+- Обладнання: Rubicon, Stoelting CPS
 - Контакти: +380 (67) 123-45-67, info@polygraph.example.com
 - Сертифікати: 4 сертифікати та ліцензії
 
