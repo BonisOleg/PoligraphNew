@@ -13,9 +13,11 @@ except ImportError:
 def test_telegram_connection():
     bot_token = os.environ.get('TELEGRAM_BOT_TOKEN')
     chat_id = os.environ.get('TELEGRAM_CHAT_ID')
+    chat_id_2 = os.environ.get('TELEGRAM_CHAT_ID_2')
 
     print(f"DEBUG: TELEGRAM_BOT_TOKEN present: {bool(bot_token)}")
     print(f"DEBUG: TELEGRAM_CHAT_ID present: {bool(chat_id)}")
+    print(f"DEBUG: TELEGRAM_CHAT_ID_2 present: {bool(chat_id_2)}")
 
     if not bot_token or not chat_id:
         print("ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not found in environment variables.")
@@ -34,22 +36,28 @@ def test_telegram_connection():
              print(f"Response content: {e.response.text}")
         return
 
+    chat_ids = [chat_id]
+    if chat_id_2:
+        chat_ids.append(chat_id_2)
+
     url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
-    payload = {
-        'chat_id': chat_id,
-        'text': 'Test message from PoligraphNew diagnostic script',
-        'parse_mode': 'HTML',
-    }
     
-    print(f"Testing sendMessage to chat_id: {chat_id}...")
-    try:
-        response = requests.post(url, json=payload, timeout=10)
-        response.raise_for_status()
-        print("SUCCESS: Test message sent successfully!")
-    except requests.exceptions.RequestException as e:
-        print(f"ERROR: Failed to send message: {e}")
-        if hasattr(e, 'response') and e.response is not None:
-             print(f"Response content: {e.response.text}")
+    for cid in chat_ids:
+        payload = {
+            'chat_id': cid,
+            'text': 'Test message from PoligraphNew diagnostic script',
+            'parse_mode': 'HTML',
+        }
+        
+        print(f"\nTesting sendMessage to chat_id: {cid}...")
+        try:
+            response = requests.post(url, json=payload, timeout=10)
+            response.raise_for_status()
+            print(f"SUCCESS: Test message sent successfully to {cid}!")
+        except requests.exceptions.RequestException as e:
+            print(f"ERROR: Failed to send message to {cid}: {e}")
+            if hasattr(e, 'response') and e.response is not None:
+                 print(f"Response content: {e.response.text}")
 
 def get_chat_id_updates():
     """Helper to find chat ID by checking bot updates"""

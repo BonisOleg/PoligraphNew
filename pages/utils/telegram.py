@@ -21,6 +21,7 @@ def send_telegram_message(text: str) -> bool:
     """
     raw_bot_token = os.environ.get('TELEGRAM_BOT_TOKEN')
     raw_chat_id = os.environ.get('TELEGRAM_CHAT_ID')
+    raw_chat_id_2 = os.environ.get('TELEGRAM_CHAT_ID_2')
     
     if not raw_bot_token or not raw_chat_id:
         logger.warning('TELEGRAM_BOT_TOKEN або TELEGRAM_CHAT_ID не налаштовані')
@@ -30,32 +31,42 @@ def send_telegram_message(text: str) -> bool:
     bot_token = raw_bot_token.strip().replace('"', '').replace("'", "")
     chat_id = raw_chat_id.strip().replace('"', '').replace("'", "")
     
-    # Додаткове логування для діагностики (тільки довжина та наявність дефіса)
-    logger.info(f"DEBUG: Chat ID length: {len(chat_id)}, starts with '-': {chat_id.startswith('-')}")
+    chat_ids = [chat_id]
+    if raw_chat_id_2:
+        chat_id_2 = raw_chat_id_2.strip().replace('"', '').replace("'", "")
+        if chat_id_2:
+            chat_ids.append(chat_id_2)
     
-    # Маскування для логів (показуємо перші 5 та останні 2 символи)
-    masked_chat = f"{chat_id[:5]}***{chat_id[-2:]}" if len(chat_id) > 7 else "***"
-    logger.info(f"Спроба відправки в Telegram. Chat ID: {masked_chat}")
+    # Додаткове логування для діагностики
+    logger.info(f"DEBUG: Chat IDs count: {len(chat_ids)}")
     
     url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
     
-    payload = {
-        'chat_id': chat_id,
-        'text': text,
-        'parse_mode': 'HTML',
-    }
+    success = False
     
-    try:
-        response = requests.post(url, json=payload, timeout=10)
-        response.raise_for_status()
-        logger.info('Повідомлення успішно відправлено в Telegram')
-        return True
-    except requests.exceptions.RequestException as e:
-        error_msg = f'Помилка відправки повідомлення в Telegram: {e}'
-        if hasattr(e, 'response') and e.response is not None:
-            error_msg += f' Response: {e.response.text}'
-        logger.error(error_msg)
-        return False
+    for current_chat_id in chat_ids:
+        # Маскування для логів (показуємо перші 5 та останні 2 символи)
+        masked_chat = f"{current_chat_id[:5]}***{current_chat_id[-2:]}" if len(current_chat_id) > 7 else "***"
+        logger.info(f"Спроба відправки в Telegram. Chat ID: {masked_chat}")
+        
+        payload = {
+            'chat_id': current_chat_id,
+            'text': text,
+            'parse_mode': 'HTML',
+        }
+        
+        try:
+            response = requests.post(url, json=payload, timeout=10)
+            response.raise_for_status()
+            logger.info(f'Повідомлення успішно відправлено в Telegram (Chat ID: {masked_chat})')
+            success = True
+        except requests.exceptions.RequestException as e:
+            error_msg = f'Помилка відправки повідомлення в Telegram (Chat ID: {masked_chat}): {e}'
+            if hasattr(e, 'response') and e.response is not None:
+                error_msg += f' Response: {e.response.text}'
+            logger.error(error_msg)
+            
+    return success
 
 
 def format_consultation_message(name: str, contact: str, comment: str = '') -> str:
