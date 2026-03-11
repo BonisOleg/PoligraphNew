@@ -19,7 +19,8 @@
   const moduleRegistry = {
     header: null,
     accordion: null,
-    footerAccordion: null
+    footerAccordion: null,
+    phoneMask: null
   };
 
   // ============================================================================
@@ -44,6 +45,11 @@
     // Footer акордеони є на всіх сторінках
     if (window.FooterAccordionModule) {
       moduleRegistry.footerAccordion = window.FooterAccordionModule.init();
+    }
+
+    // Маска телефону для всіх tel-інпутів
+    if (window.PhoneMaskModule) {
+      moduleRegistry.phoneMask = window.PhoneMaskModule.init();
     }
 
     console.log('[AppInit] Modules initialized:', Object.keys(moduleRegistry).filter(k => moduleRegistry[k]));

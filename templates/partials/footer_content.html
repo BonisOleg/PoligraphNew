@@ -12,6 +12,9 @@
                       hx-target="#footer-consultation-result"
                       hx-swap="innerHTML">
                     {% csrf_token %}
+                    <div class="footer__form-honeypot" aria-hidden="true">
+                        <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
+                    </div>
                     <div class="footer__form-group">
                         <label class="footer__form-label" for="footer-name">
                             Ім'я

@@ -344,15 +344,22 @@ def consultation_view(request):
     """Обробка форми консультації з footer"""
     if request.method != 'POST':
         return HttpResponse('Method not allowed', status=405)
-    
+
     form = ConsultationForm(request.POST)
-    
+    success_html = '''
+    <div class="footer__form-success">
+        <strong>Дякуємо!</strong> Ваша заявка прийнята. Ми зв'яжемося з вами найближчим часом.
+    </div>
+    '''
+
     if form.is_valid():
+        if form.cleaned_data.get('honeypot'):
+            return HttpResponse(success_html, status=200)
+
         name = form.cleaned_data['name']
         contact = form.cleaned_data['contact']
         comment = form.cleaned_data.get('comment', '')
-        
-        # Створюємо запис у БД
+
         lead = LeadSubmission.objects.create(
             form_type='consultation',
             name=name,
@@ -361,11 +368,10 @@ def consultation_view(request):
             ip_address=get_client_ip(request),
             user_agent=request.META.get('HTTP_USER_AGENT', '')[:500],
         )
-        
-        # Форматуємо та відправляємо повідомлення в Telegram
+
         telegram_text = format_consultation_message(name, contact, comment)
         telegram_sent = send_telegram_message(telegram_text)
-        
+
         if telegram_sent:
             lead.telegram_sent = True
             lead.telegram_sent_at = timezone.now()
@@ -373,20 +379,14 @@ def consultation_view(request):
             logger.info(f'Консультація отримана і відправлена в Telegram: {name}, {contact}')
         else:
             logger.warning(f'Не вдалося відправити консультацію в Telegram: {name}, {contact}')
-        
-        # Повертаємо успішне повідомлення (незалежно від результату Telegram)
-        success_html = '''
-        <div class="footer__form-success">
-            <strong>Дякуємо!</strong> Ваша заявка прийнята. Ми зв'яжемося з вами найближчим часом.
-        </div>
-        '''
+
         return HttpResponse(success_html, status=200)
     else:
-        # Повертаємо помилки валідації
         errors_html = '<div class="footer__form-errors">'
         for field, errors in form.errors.items():
-            for error in errors:
-                errors_html += f'<p>{error}</p>'
+            if field != 'honeypot':
+                for error in errors:
+                    errors_html += f'<p>{error}</p>'
         errors_html += '</div>'
         return HttpResponse(errors_html, status=422)
 
@@ -469,12 +469,14 @@ def infidelity_form_submit(request):
     
     try:
         form = InfidelityCheckForm(request.POST)
-        
+
         if form.is_valid():
+            if form.cleaned_data.get('honeypot'):
+                return JsonResponse({'success': True, 'message': 'Заявку отримано!'}, status=200)
+
             name = form.cleaned_data['name']
             phone = form.cleaned_data['phone']
-            
-            # Створюємо запис у БД
+
             lead = LeadSubmission.objects.create(
                 form_type='infidelity',
                 name=name,
@@ -535,12 +537,14 @@ def corporate_form_submit(request):
     
     try:
         form = CorporateServicesForm(request.POST)
-        
+
         if form.is_valid():
+            if form.cleaned_data.get('honeypot'):
+                return JsonResponse({'success': True, 'message': 'Дякуємо! Ваша заявка успішно відправлена.'}, status=200)
+
             name = form.cleaned_data['name']
             phone = form.cleaned_data['phone']
-            
-            # Створюємо запис у БД
+
             lead = LeadSubmission.objects.create(
                 form_type='corporate',
                 name=name,
