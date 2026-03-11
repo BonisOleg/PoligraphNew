@@ -5,6 +5,16 @@
 import re
 from django import forms
 
+_URL_RE = re.compile(r'https?://|www\.', re.IGNORECASE)
+_HTML_RE = re.compile(r'<[a-zA-Z/]')
+
+
+def _validate_no_spam(value):
+    if _URL_RE.search(value):
+        raise forms.ValidationError('Повідомлення не може містити посилання.')
+    if _HTML_RE.search(value):
+        raise forms.ValidationError('Повідомлення не може містити HTML.')
+
 
 class ConsultationForm(forms.Form):
     """Форма для запиту консультації в footer"""
@@ -50,17 +60,18 @@ class ConsultationForm(forms.Form):
 
 class CTAContactForm(forms.Form):
     """Форма для CTA секції на головній сторінці"""
-    
+
     name = forms.CharField(
         label="Ім'я",
         max_length=100,
         required=True,
+        validators=[_validate_no_spam],
         widget=forms.TextInput(attrs={
             'class': 'cta__form-input',
             'aria-required': 'true',
         })
     )
-    
+
     phone = forms.CharField(
         label="Телефон",
         max_length=20,
@@ -73,7 +84,7 @@ class CTAContactForm(forms.Form):
             'aria-required': 'true',
         })
     )
-    
+
     email = forms.EmailField(
         label="Email",
         max_length=254,
@@ -84,15 +95,47 @@ class CTAContactForm(forms.Form):
             'aria-required': 'true',
         })
     )
-    
+
     message = forms.CharField(
         label="Повідомлення",
         required=False,
+        validators=[_validate_no_spam],
         widget=forms.Textarea(attrs={
             'class': 'cta__form-textarea',
             'rows': 4,
         })
     )
+
+    honeypot = forms.CharField(
+        label="",
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'cta__form-honeypot',
+            'tabindex': '-1',
+            'autocomplete': 'off',
+            'aria-hidden': 'true',
+        })
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if cleaned_data.get('honeypot'):
+            return cleaned_data
+
+        phone = cleaned_data.get('phone', '')
+        digits = re.sub(r'\D', '', phone)
+
+        if len(digits) == 10 and digits.startswith('0'):
+            digits = '38' + digits
+
+        if not digits.startswith('380') or len(digits) != 12:
+            raise forms.ValidationError(
+                'Введіть коректний номер телефону: +38(0XX) XXX-XX-XX'
+            )
+
+        return cleaned_data
 
 
 class InfidelityCheckForm(forms.Form):

@@ -49,8 +49,16 @@ def index_view(request):
         # Обробка POST запиту від CTA форми
         if request.method == 'POST':
             form = CTAContactForm(request.POST)
-            
+
             if form.is_valid():
+                if form.cleaned_data.get('honeypot'):
+                    success_html = '''
+                <div class="cta__form-success">
+                    <strong>Дякуємо!</strong> Ваша заявка прийнята. Ми зв'яжемося з вами найближчим часом.
+                </div>
+                '''
+                    return HttpResponse(success_html, status=200)
+
                 name = form.cleaned_data['name']
                 phone = form.cleaned_data['phone']
                 email = form.cleaned_data['email']
