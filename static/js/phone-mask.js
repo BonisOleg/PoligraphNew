@@ -2,129 +2,110 @@
  * Маска телефону +38(0XX) XXX-XX-XX
  * Vanilla JS, без залежностей
  * Автоматично прив'язується до всіх input[type="tel"]
- * HTMX-ready: реініціалізація після swap
+ * HTMX-ready: реініціалізація через PhoneMaskModule
  */
 
 (function () {
   'use strict';
 
-  var PREFIX = '+38(0';
-  var MASK = '+38(0__) ___-__-__';
-  var MAX_DIGITS = 9;
-  var listeners = [];
-
-  function getDigits(value) {
-    var raw = value.replace(/\D/g, '');
-    if (raw.startsWith('380')) {
-      raw = raw.substring(3);
-    } else if (raw.startsWith('80')) {
-      raw = raw.substring(2);
-    } else if (raw.startsWith('0')) {
-      raw = raw.substring(1);
-    }
-    return raw.substring(0, MAX_DIGITS);
-  }
+  let listeners = [];
 
   function formatPhone(digits) {
-    if (!digits.length) return '';
-    var result = PREFIX;
-    for (var i = 0; i < digits.length && i < MAX_DIGITS; i++) {
-      if (i === 2) result += ') ';
-      if (i === 5) result += '-';
-      if (i === 7) result += '-';
-      result += digits[i];
+    if (!digits.length) {return '';}
+    let r = '+38(';
+    for (let i = 0; i < digits.length && i < 10; i++) {
+      if (i === 3) {r += ') ';}
+      if (i === 6) {r += '-';}
+      if (i === 8) {r += '-';}
+      r += digits[i];
     }
-    return result;
+    return r;
   }
 
-  function getCursorPosition(digits) {
-    return formatPhone(digits).length;
+  function extractDigits(value) {
+    let raw = value.replace(/\D/g, '');
+    if (raw.startsWith('38')) {raw = raw.substring(2);}
+    return raw.substring(0, 10);
+  }
+
+  function setCursorEnd(input) {
+    const len = input.value.length;
+    input.setSelectionRange(len, len);
   }
 
   function handleInput(e) {
-    var input = e.target;
-    var digits = getDigits(input.value);
-    var formatted = formatPhone(digits);
-    input.value = formatted;
-    var pos = getCursorPosition(digits);
-    input.setSelectionRange(pos, pos);
-  }
-
-  function handleFocus(e) {
-    var input = e.target;
-    if (!input.value) {
-      input.value = PREFIX;
-      var len = PREFIX.length;
-      setTimeout(function () {
-        input.setSelectionRange(len, len);
-      }, 0);
-    }
+    const input = e.target;
+    const digits = extractDigits(input.value);
+    input.value = formatPhone(digits);
+    setCursorEnd(input);
   }
 
   function handleKeydown(e) {
-    var input = e.target;
-    if (e.key === 'Backspace') {
-      var digits = getDigits(input.value);
-      if (digits.length === 0) {
-        e.preventDefault();
-        input.value = PREFIX;
-        var len = PREFIX.length;
-        input.setSelectionRange(len, len);
-        return;
-      }
-      e.preventDefault();
-      digits = digits.substring(0, digits.length - 1);
-      var formatted = digits.length ? formatPhone(digits) : PREFIX;
-      input.value = formatted;
-      var pos = formatted.length;
-      input.setSelectionRange(pos, pos);
+    if (e.ctrlKey || e.metaKey || e.keyCode === 229) {return;}
+
+    const nav = ['Backspace', 'Delete', 'Tab', 'Enter',
+               'ArrowLeft', 'ArrowRight', 'Home', 'End'];
+    if (nav.indexOf(e.key) !== -1) {return;}
+
+    if (e.key >= '0' && e.key <= '9') {
+      const digits = extractDigits(e.target.value);
+      if (digits.length >= 10) {e.preventDefault();}
+      return;
     }
+
+    e.preventDefault();
   }
 
   function handlePaste(e) {
     e.preventDefault();
-    var paste = (e.clipboardData || window.clipboardData).getData('text');
-    var digits = getDigits(paste);
-    var formatted = formatPhone(digits);
-    e.target.value = formatted;
-    var pos = getCursorPosition(digits);
-    e.target.setSelectionRange(pos, pos);
+    const text = (e.clipboardData || window.clipboardData).getData('text');
+    let raw = text.replace(/\D/g, '');
+    if (raw.startsWith('380')) {raw = raw.substring(2);}
+    else if (raw.startsWith('38')) {raw = raw.substring(2);}
+    if (raw.length === 9 && raw.charAt(0) !== '0') {raw = `0${  raw}`;}
+    raw = raw.substring(0, 10);
+    e.target.value = formatPhone(raw);
+    setCursorEnd(e.target);
+  }
+
+  function handleFocus(e) {
+    setCursorEnd(e.target);
   }
 
   function handleBlur(e) {
-    var input = e.target;
-    if (input.value === PREFIX || input.value === '+38(0') {
-      input.value = '';
-    }
+    const digits = extractDigits(e.target.value);
+    if (!digits.length) {e.target.value = '';}
   }
 
   function bindInput(input) {
     input.setAttribute('data-phone-mask', 'true');
-    input.setAttribute('placeholder', MASK);
-    input.setAttribute('maxlength', '18');
+    if (!input.getAttribute('placeholder')) {
+      input.setAttribute('placeholder', '+38(0__) ___-__-__');
+    }
 
-    var addListener = function (evt, fn) {
+    const add = function (evt, fn) {
       input.addEventListener(evt, fn);
       listeners.push({ el: input, event: evt, fn: fn });
     };
 
-    addListener('input', handleInput);
-    addListener('focus', handleFocus);
-    addListener('keydown', handleKeydown);
-    addListener('paste', handlePaste);
-    addListener('blur', handleBlur);
+    add('input', handleInput);
+    add('keydown', handleKeydown);
+    add('paste', handlePaste);
+    add('focus', handleFocus);
+    add('blur', handleBlur);
   }
 
   function initAll() {
-    var inputs = document.querySelectorAll('input[type="tel"]:not([data-phone-mask])');
-    inputs.forEach(bindInput);
+    const inputs = document.querySelectorAll('input[type="tel"]:not([data-phone-mask])');
+    for (let i = 0; i < inputs.length; i++) {bindInput(inputs[i]);}
   }
 
   function destroyAll() {
-    listeners.forEach(function (l) {
+    for (let i = 0; i < listeners.length; i++) {
+      const l = listeners[i];
       l.el.removeEventListener(l.event, l.fn);
       l.el.removeAttribute('data-phone-mask');
-    });
+    }
     listeners = [];
   }
 
@@ -135,13 +116,9 @@
     }
   };
 
-  function initOnLoad() {
-    initAll();
-  }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initOnLoad);
+    document.addEventListener('DOMContentLoaded', initAll);
   } else {
-    initOnLoad();
+    initAll();
   }
 })();
