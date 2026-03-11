@@ -62,8 +62,10 @@ window.HeaderModule = (function() {
    * 1. X → MENU (0.3s - opacity)
    * 2. Посилання зникають (0.3s - opacity)
    * 3. Капсула стискується (0.7s - width анімація)
+   * @param {Object} [options]
+   * @param {boolean} [options.returnFocus=true] — повернути фокус на toggle кнопку
    */
-  function closeMenu() {
+  function closeMenu(options) {
     if (!capsule || !toggleButton || !nav) { return; }
     
     // КРОК 1: Стискаємо капсулу (width 30vw/100vw → 120px)
@@ -78,8 +80,9 @@ window.HeaderModule = (function() {
       nav.setAttribute('hidden', '');
     }, 700);
     
-    // Focus повертаємо на кнопку
-    toggleButton.focus();
+    if (!options || options.returnFocus !== false) {
+      toggleButton.focus();
+    }
   }
 
   /**
@@ -123,6 +126,9 @@ window.HeaderModule = (function() {
     const handleDocumentClick = function(e) {
       if (!capsule) { return; }
       
+      const isOpen = capsule.getAttribute('data-open') === 'true';
+      if (!isOpen) { return; }
+      
       // Не закриваємо якщо клік всередині капсули
       if (capsule.contains(e.target)) { return; }
       
@@ -130,23 +136,19 @@ window.HeaderModule = (function() {
       const clickedLink = e.target.closest('a[hx-get], a[hx-post]');
       if (clickedLink) { return; }
       
-      // Не закриваємо якщо клік на інтерактивні елементи (кнопки, форми, тощо)
-      const interactiveElements = ['button', 'input', 'select', 'textarea', 'a'];
-      if (interactiveElements.includes(e.target.tagName.toLowerCase())) {
-        // Дозволяємо закрити тільки якщо це не важливий елемент
-        const isImportantElement = e.target.closest('.footer, .hero, .accordion');
-        if (isImportantElement) { return; }
-      }
-      
-      // Закриваємо меню
-      closeMenu();
+      // Закриваємо меню без повернення фокусу на toggle,
+      // щоб не красти фокус з елемента, по якому клікнули
+      closeMenu({ returnFocus: false });
     };
 
     // Close на Escape (клавіша Escape)
     const handleEscape = function(e) {
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        closeMenu();
-      }
+      if (e.key !== 'Escape' && e.key !== 'Esc') { return; }
+      
+      const isOpen = capsule && capsule.getAttribute('data-open') === 'true';
+      if (!isOpen) { return; }
+      
+      closeMenu();
     };
 
     // Close на link click (натискання на посилання у меню)
