@@ -613,3 +613,31 @@ def infidelity_thanks_view(request):
         logger.error(traceback.format_exc())
         return HttpResponseServerError(f'Server error: {str(e)}')
 
+
+def unified_landing_view(request):
+    """Єдиний преміум-лендінг — об'єднує перевірку на зраду та корпоративні послуги."""
+    try:
+        context = {
+            'title': 'Поліграф Львів | Детектор брехні — Перевірка на зраду та корпоративні послуги',
+            'phone': '+38 (067) 524-33-54',
+            'specialist_name': 'Керезвас Юліана Георгіївна',
+            'specialist_title': 'Керівниця представництва Національної асоціації поліграфологів України у Львівській області',
+        }
+        return render(request, 'unified_landing.html', context)
+    except Exception as e:
+        logger.error(f'Error in unified_landing_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
+
+
+def redirect_infidelity_landing(request):
+    """301 redirect з /perevirka-na-zradu/ на єдиний лендінг із anchor #infidelity."""
+    from django.http import HttpResponsePermanentRedirect
+    return HttpResponsePermanentRedirect('/poslugy/#infidelity')
+
+
+def redirect_corporate_landing(request):
+    """301 redirect з /korporatyvni-poslugy/ на єдиний лендінг із anchor #corporate."""
+    from django.http import HttpResponsePermanentRedirect
+    return HttpResponsePermanentRedirect('/poslugy/#corporate')
+
