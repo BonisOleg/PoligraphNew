@@ -655,6 +655,15 @@
   flex-shrink: 0;
 }
 
+/* ─── iOS Safari: sticky nav з динамічним address bar ───────────────── */
+@supports (-webkit-touch-callout: none) {
+  .ul-nav {
+    position: -webkit-sticky;
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+  }
+}
+
 /* ─── Responsive: Nav ────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .ul-nav__links { display: none; }

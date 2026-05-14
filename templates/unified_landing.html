@@ -151,161 +151,6 @@
     <!-- ═══════════════════════════════════════════════════════════════ -->
     <div class="ul-divider ul-divider--down" aria-hidden="true">
         <div class="ul-divider__line"></div>
-        <span class="ul-divider__label">Перевірка на зраду</span>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════════ -->
-    <!-- INFIDELITY SECTION                                              -->
-    <!-- ═══════════════════════════════════════════════════════════════ -->
-    <section id="infidelity" class="ul-infidelity" aria-label="Перевірка на зраду">
-        <div class="ul-container">
-            <div class="ul-split">
-                <!-- Left: Content -->
-                <div>
-                    <div class="ul-infidelity__header">
-                        <span class="ul-section-label ul-section-label--red ul-animate">💔 ПРИВАТНА ПОСЛУГА</span>
-                        <h2 class="ul-section-title ul-animate ul-animate--delay-1">Перевірка на зраду</h2>
-                        <p class="ul-section-sub ul-animate ul-animate--delay-2">Підозри не дають спокою? Поліграф допоможе розставити всі крапки. Конфіденційно, професійно, чесно.</p>
-                    </div>
-
-                    <div class="ul-triggers">
-                        <div class="ul-trigger-card ul-animate ul-animate--delay-1">
-                            <span class="ul-trigger-card__emoji" aria-hidden="true">😔</span>
-                            <h3 class="ul-trigger-card__title">Постійні підозри</h3>
-                            <p class="ul-trigger-card__text">Відчуваєте, що вас обманюють, але немає доказів</p>
-                        </div>
-                        <div class="ul-trigger-card ul-animate ul-animate--delay-2">
-                            <span class="ul-trigger-card__emoji" aria-hidden="true">📱</span>
-                            <h3 class="ul-trigger-card__title">Приховування</h3>
-                            <p class="ul-trigger-card__text">Партнер ховає телефон, змінює паролі</p>
-                        </div>
-                        <div class="ul-trigger-card ul-animate ul-animate--delay-3">
-                            <span class="ul-trigger-card__emoji" aria-hidden="true">🕒</span>
-                            <h3 class="ul-trigger-card__title">Зміна поведінки</h3>
-                            <p class="ul-trigger-card__text">Часті затримки, нові звички, холодність</p>
-                        </div>
-                        <div class="ul-trigger-card ul-animate ul-animate--delay-4">
-                            <span class="ul-trigger-card__emoji" aria-hidden="true">💬</span>
-                            <h3 class="ul-trigger-card__title">Заперечення</h3>
-                            <p class="ul-trigger-card__text">Відмовляється відповідати на прямі питання</p>
-                        </div>
-                    </div>
-
-                    <div class="ul-warning ul-animate">
-                        <span class="ul-warning__emoji" aria-hidden="true">⚠️</span>
-                        <div>
-                            <p class="ul-warning__title">Не живіть з підозрами</p>
-                            <p class="ul-warning__text">Невизначеність гірша за правду. Перевірка на поліграфі — це шанс розставити всі крапки над "і" і прийняти правильне рішення про майбутнє стосунків.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right: Form -->
-                <div class="ul-form-section ul-form-section--red ul-animate ul-animate--delay-1">
-                    <div class="ul-form-section__glow ul-form-section__glow--red" aria-hidden="true"></div>
-                    <span class="ul-form-section__icon" aria-hidden="true">💬</span>
-                    <h3 class="ul-form-section__title">Готові дізнатись правду?</h3>
-                    <p class="ul-form-section__sub">Залиште заявку — зв'яжусь протягом 30 хвилин</p>
-
-                    <form id="ul-form-infidelity" novalidate>
-                        <div id="ul-messages-infidelity" class="ul-form__messages" role="alert" aria-live="polite"></div>
-                        <div class="ul-form__group">
-                            <label for="inf-name" class="ul-form__label">Ваше ім'я</label>
-                            <input type="text" id="inf-name" name="name" required class="ul-form__input" placeholder="Введіть ваше ім'я" autocomplete="name">
-                        </div>
-                        <div class="ul-form__group">
-                            <label for="inf-phone" class="ul-form__label">Номер телефону</label>
-                            <input type="tel" id="inf-phone" name="phone" required class="ul-form__input" placeholder="+38 (0__) ___-__-__" inputmode="tel" autocomplete="tel">
-                        </div>
-                        <input type="text" name="honeypot" class="ul-form__honeypot" tabindex="-1" autocomplete="off">
-                        <button type="submit" class="ul-btn ul-btn--primary" style="width:100%;justify-content:center;border-radius:10px;">
-                            💔 Дізнатись правду зараз
-                        </button>
-                    </form>
-
-                    <div id="ul-success-infidelity" class="ul-form__success" style="display:none;" role="status">
-                        <div class="ul-form__success-icon" aria-hidden="true">✓</div>
-                        <h3 class="ul-form__success-title">Заявку отримано!</h3>
-                        <p class="ul-form__success-text">Зв'яжусь з вами найближчим часом</p>
-                    </div>
-
-                    <p class="ul-form__consent">🔒 Натискаючи кнопку, ви погоджуєтесь з обробкою персональних даних</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════ -->
-    <!-- SPECIALIST                                                      -->
-    <!-- ═══════════════════════════════════════════════════════════════ -->
-    <section id="specialist" class="ul-specialist" aria-label="Спеціаліст">
-        <div class="ul-specialist__inner">
-            <div class="ul-specialist__photo-wrap ul-animate">
-                <div class="ul-specialist__photo-glow" aria-hidden="true"></div>
-                <img src="{% static 'img/landing.png' %}" alt="{{ specialist_name }}" class="ul-specialist__photo" loading="lazy">
-                <span class="ul-specialist__badge">Сертифікований експерт</span>
-            </div>
-
-            <div class="ul-specialist__info">
-                <p class="ul-specialist__eyebrow ul-animate">Ваш поліграфолог</p>
-                <h2 class="ul-specialist__name ul-animate ul-animate--delay-1">{{ specialist_name }}</h2>
-                <p class="ul-specialist__title ul-animate ul-animate--delay-2">{{ specialist_title }}</p>
-
-                <div class="ul-specialist__creds">
-                    <div class="ul-specialist__cred ul-animate ul-animate--delay-1">
-                        <div class="ul-specialist__cred-icon">
-                            <svg fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="ul-specialist__cred-title">Освіта</p>
-                            <p class="ul-specialist__cred-text">Юрист-магістр з відзнакою, магістр публічного управління</p>
-                        </div>
-                    </div>
-                    <div class="ul-specialist__cred ul-animate ul-animate--delay-2">
-                        <div class="ul-specialist__cred-icon">
-                            <svg fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0110 1.944 11.954 11.954 0 0117.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="ul-specialist__cred-title">Сертифікація</p>
-                            <p class="ul-specialist__cred-text">Офіційний член Національної асоціації поліграфологів України</p>
-                        </div>
-                    </div>
-                    <div class="ul-specialist__cred ul-animate ul-animate--delay-3">
-                        <div class="ul-specialist__cred-icon">
-                            <svg fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="ul-specialist__cred-title">Обладнання</p>
-                            <p class="ul-specialist__cred-text">Поліграф Rubicon — точність 95–99%, сертифікований в Україні</p>
-                        </div>
-                    </div>
-                    <div class="ul-specialist__cred ul-animate ul-animate--delay-4">
-                        <div class="ul-specialist__cred-icon">
-                            <svg fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="ul-specialist__cred-title">Досвід</p>
-                            <p class="ul-specialist__cred-text">2 роки практики, 150+ успішних перевірок</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════════ -->
-    <!-- DIVIDER 2                                                       -->
-    <!-- ═══════════════════════════════════════════════════════════════ -->
-    <div class="ul-divider ul-divider--up" aria-hidden="true">
-        <div class="ul-divider__line"></div>
         <span class="ul-divider__label">Корпоративні послуги</span>
     </div>
 
@@ -440,6 +285,161 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SPECIALIST                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <section id="specialist" class="ul-specialist" aria-label="Спеціаліст">
+        <div class="ul-specialist__inner">
+            <div class="ul-specialist__photo-wrap ul-animate">
+                <div class="ul-specialist__photo-glow" aria-hidden="true"></div>
+                <img src="{% static 'img/landing.png' %}" alt="{{ specialist_name }}" class="ul-specialist__photo" loading="lazy">
+                <span class="ul-specialist__badge">Сертифікований експерт</span>
+            </div>
+
+            <div class="ul-specialist__info">
+                <p class="ul-specialist__eyebrow ul-animate">Ваш поліграфолог</p>
+                <h2 class="ul-specialist__name ul-animate ul-animate--delay-1">{{ specialist_name }}</h2>
+                <p class="ul-specialist__title ul-animate ul-animate--delay-2">{{ specialist_title }}</p>
+
+                <div class="ul-specialist__creds">
+                    <div class="ul-specialist__cred ul-animate ul-animate--delay-1">
+                        <div class="ul-specialist__cred-icon">
+                            <svg fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="ul-specialist__cred-title">Освіта</p>
+                            <p class="ul-specialist__cred-text">Юрист-магістр з відзнакою, магістр публічного управління</p>
+                        </div>
+                    </div>
+                    <div class="ul-specialist__cred ul-animate ul-animate--delay-2">
+                        <div class="ul-specialist__cred-icon">
+                            <svg fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0110 1.944 11.954 11.954 0 0117.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="ul-specialist__cred-title">Сертифікація</p>
+                            <p class="ul-specialist__cred-text">Офіційний член Національної асоціації поліграфологів України</p>
+                        </div>
+                    </div>
+                    <div class="ul-specialist__cred ul-animate ul-animate--delay-3">
+                        <div class="ul-specialist__cred-icon">
+                            <svg fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="ul-specialist__cred-title">Обладнання</p>
+                            <p class="ul-specialist__cred-text">Поліграф Rubicon — точність 95–99%, сертифікований в Україні</p>
+                        </div>
+                    </div>
+                    <div class="ul-specialist__cred ul-animate ul-animate--delay-4">
+                        <div class="ul-specialist__cred-icon">
+                            <svg fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="ul-specialist__cred-title">Досвід</p>
+                            <p class="ul-specialist__cred-text">2 роки практики, 150+ успішних перевірок</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- DIVIDER 2                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="ul-divider ul-divider--up" aria-hidden="true">
+        <div class="ul-divider__line"></div>
+        <span class="ul-divider__label">Перевірка на зраду</span>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- INFIDELITY SECTION                                              -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <section id="infidelity" class="ul-infidelity" aria-label="Перевірка на зраду">
+        <div class="ul-container">
+            <div class="ul-split">
+                <!-- Left: Content -->
+                <div>
+                    <div class="ul-infidelity__header">
+                        <span class="ul-section-label ul-section-label--red ul-animate">💔 ПРИВАТНА ПОСЛУГА</span>
+                        <h2 class="ul-section-title ul-animate ul-animate--delay-1">Перевірка на зраду</h2>
+                        <p class="ul-section-sub ul-animate ul-animate--delay-2">Підозри не дають спокою? Поліграф допоможе розставити всі крапки. Конфіденційно, професійно, чесно.</p>
+                    </div>
+
+                    <div class="ul-triggers">
+                        <div class="ul-trigger-card ul-animate ul-animate--delay-1">
+                            <span class="ul-trigger-card__emoji" aria-hidden="true">😔</span>
+                            <h3 class="ul-trigger-card__title">Постійні підозри</h3>
+                            <p class="ul-trigger-card__text">Відчуваєте, що вас обманюють, але немає доказів</p>
+                        </div>
+                        <div class="ul-trigger-card ul-animate ul-animate--delay-2">
+                            <span class="ul-trigger-card__emoji" aria-hidden="true">📱</span>
+                            <h3 class="ul-trigger-card__title">Приховування</h3>
+                            <p class="ul-trigger-card__text">Партнер ховає телефон, змінює паролі</p>
+                        </div>
+                        <div class="ul-trigger-card ul-animate ul-animate--delay-3">
+                            <span class="ul-trigger-card__emoji" aria-hidden="true">🕒</span>
+                            <h3 class="ul-trigger-card__title">Зміна поведінки</h3>
+                            <p class="ul-trigger-card__text">Часті затримки, нові звички, холодність</p>
+                        </div>
+                        <div class="ul-trigger-card ul-animate ul-animate--delay-4">
+                            <span class="ul-trigger-card__emoji" aria-hidden="true">💬</span>
+                            <h3 class="ul-trigger-card__title">Заперечення</h3>
+                            <p class="ul-trigger-card__text">Відмовляється відповідати на прямі питання</p>
+                        </div>
+                    </div>
+
+                    <div class="ul-warning ul-animate">
+                        <span class="ul-warning__emoji" aria-hidden="true">⚠️</span>
+                        <div>
+                            <p class="ul-warning__title">Не живіть з підозрами</p>
+                            <p class="ul-warning__text">Невизначеність гірша за правду. Перевірка на поліграфі — це шанс розставити всі крапки над "і" і прийняти правильне рішення про майбутнє стосунків.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Form -->
+                <div class="ul-form-section ul-form-section--red ul-animate ul-animate--delay-1">
+                    <div class="ul-form-section__glow ul-form-section__glow--red" aria-hidden="true"></div>
+                    <span class="ul-form-section__icon" aria-hidden="true">💬</span>
+                    <h3 class="ul-form-section__title">Готові дізнатись правду?</h3>
+                    <p class="ul-form-section__sub">Залиште заявку — зв'яжусь протягом 30 хвилин</p>
+
+                    <form id="ul-form-infidelity" novalidate>
+                        <div id="ul-messages-infidelity" class="ul-form__messages" role="alert" aria-live="polite"></div>
+                        <div class="ul-form__group">
+                            <label for="inf-name" class="ul-form__label">Ваше ім'я</label>
+                            <input type="text" id="inf-name" name="name" required class="ul-form__input" placeholder="Введіть ваше ім'я" autocomplete="name">
+                        </div>
+                        <div class="ul-form__group">
+                            <label for="inf-phone" class="ul-form__label">Номер телефону</label>
+                            <input type="tel" id="inf-phone" name="phone" required class="ul-form__input" placeholder="+38 (0__) ___-__-__" inputmode="tel" autocomplete="tel">
+                        </div>
+                        <input type="text" name="honeypot" class="ul-form__honeypot" tabindex="-1" autocomplete="off">
+                        <button type="submit" class="ul-btn ul-btn--primary" style="width:100%;justify-content:center;border-radius:10px;">
+                            💔 Дізнатись правду зараз
+                        </button>
+                    </form>
+
+                    <div id="ul-success-infidelity" class="ul-form__success" style="display:none;" role="status">
+                        <div class="ul-form__success-icon" aria-hidden="true">✓</div>
+                        <h3 class="ul-form__success-title">Заявку отримано!</h3>
+                        <p class="ul-form__success-text">Зв'яжусь з вами найближчим часом</p>
+                    </div>
+
+                    <p class="ul-form__consent">🔒 Натискаючи кнопку, ви погоджуєтесь з обробкою персональних даних</p>
                 </div>
             </div>
         </div>
