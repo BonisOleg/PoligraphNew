@@ -86,7 +86,14 @@ MIDDLEWARE.append('PolygraphNew.middleware.ErrorLoggingMiddleware')
 
 # Використовуємо CompressedStaticFilesStorage без manifest
 # Це виключає потребу в manifest файлі, але все ще компресує файли
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
 
 # Security settings for production
 if not DEBUG:
