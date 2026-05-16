@@ -615,3 +615,50 @@
 @supports (padding: env(safe-area-inset-bottom)) {
   .ul-footer { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
 }
+
+/* ─── Thank-you page ─────────────────────────────────────────────────── */
+
+/* На thank-you сторінці все одразу видиме — scroll-анімації не потрібні */
+.ul-page--thanks .ul-animate {
+  opacity: 1;
+  transform: none;
+}
+
+.ul-thanks__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.ul-thanks__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c63ff 0%, #a855f7 100%);
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.ul-thanks__check svg {
+  width: 40px;
+  height: 40px;
+}
+
+.ul-thanks__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ul-thanks__note {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 0.5rem;
+}
+

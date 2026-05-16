@@ -16,6 +16,7 @@ urlpatterns = [
     path('thank-you/', views.thank_you_view, name='thank_you'),
     # Unified landing (standalone, no cross-links with main site)
     path('poslugy/', views.unified_landing_view, name='unified_landing'),
+    path('poslugy/thank-you/', views.unified_thanks_view, name='unified_thanks'),
     path('perevirka-na-zradu/', views.redirect_infidelity_landing, name='infidelity_landing'),
     path('perevirka-na-zradu/submit/', views.infidelity_form_submit, name='infidelity_submit'),
     path('perevirka-na-zradu/thank-you/', views.infidelity_thanks_view, name='infidelity_thanks'),

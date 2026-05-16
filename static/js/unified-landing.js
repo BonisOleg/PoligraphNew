@@ -108,8 +108,7 @@
       .then(function (res) { return res.json().then(function (d) { return { ok: res.ok, data: d }; }); })
       .then(function (res) {
         if (res.ok && res.data.success) {
-          if (form) form.style.display = 'none';
-          if (successEl) successEl.style.display = 'block';
+          window.location.href = '/poslugy/thank-you/';
         } else {
           var errorMsg = '';
           if (res.data.errors) {
@@ -158,8 +157,7 @@
       .then(function (res) { return res.json().then(function (d) { return { ok: res.ok, data: d }; }); })
       .then(function (res) {
         if (res.ok && res.data.success) {
-          if (form) form.style.display = 'none';
-          if (successEl) successEl.style.display = 'block';
+          window.location.href = '/poslugy/thank-you/';
         } else {
           var errorMsg = '';
           if (res.data.errors) {

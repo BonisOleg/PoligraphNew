@@ -639,6 +639,16 @@ def unified_landing_view(request):
         return HttpResponseServerError(f'Server error: {str(e)}')
 
 
+def unified_thanks_view(request):
+    """Thank You сторінка після відправки форм з єдиного лендінгу /poslugy/."""
+    try:
+        return render(request, 'unified_thanks.html')
+    except Exception as e:
+        logger.error(f'Error in unified_thanks_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
+
+
 def thank_you_view(request):
     """Thank You сторінка для основного сайту після відправки CTA або консультаційної форми."""
     try:
