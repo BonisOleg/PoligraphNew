@@ -57,29 +57,6 @@
   if (counters[0]) observer.observe(counters[0]);
 })();
 
-/* ─── Phone Mask ────────────────────────────────────────────────────── */
-(function initPhoneMask() {
-  var inputs = document.querySelectorAll('input[type="tel"]');
-
-  inputs.forEach(function (input) {
-    input.addEventListener('input', function () {
-      var digits = input.value.replace(/\D/g, '');
-      if (digits.startsWith('380')) digits = digits.slice(3);
-      else if (digits.startsWith('0')) digits = digits.slice(1);
-      digits = digits.slice(0, 9);
-
-      var parts = [];
-      if (digits.length > 0) parts.push('+38 (0' + digits.slice(0, 2));
-      if (digits.length >= 2) parts[0] += ')';
-      if (digits.length > 2) parts.push(' ' + digits.slice(2, 5));
-      if (digits.length > 5) parts.push('-' + digits.slice(5, 7));
-      if (digits.length > 7) parts.push('-' + digits.slice(7, 9));
-
-      input.value = parts.join('');
-    });
-  });
-})();
-
 /* ─── Form Submit: Infidelity ────────────────────────────────────────── */
 (function initInfidelityForm() {
   var form = document.getElementById('ul-form-infidelity');
