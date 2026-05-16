@@ -69,18 +69,24 @@
   }
 
   function handleFocus(e) {
-    setCursorEnd(e.target);
+    const input = e.target;
+    const digits = extractDigits(input.value);
+    if (!digits.length) {
+      input.value = '+38(0';
+    }
+    setCursorEnd(input);
   }
 
   function handleBlur(e) {
     const digits = extractDigits(e.target.value);
-    if (!digits.length) {e.target.value = '';}
+    // Очищуємо якщо введено тільки автоматичний префікс "0" без решти номеру
+    if (digits.length <= 1) {e.target.value = '';}
   }
 
   function bindInput(input) {
     input.setAttribute('data-phone-mask', 'true');
     if (!input.getAttribute('placeholder')) {
-      input.setAttribute('placeholder', '+38(0__) ___-__-__');
+      input.setAttribute('placeholder', '+38(0XX) XXX-XX-XX');
     }
 
     const add = function (evt, fn) {
