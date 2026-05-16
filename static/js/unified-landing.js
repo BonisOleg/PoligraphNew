@@ -57,6 +57,61 @@
   if (counters[0]) observer.observe(counters[0]);
 })();
 
+/* ─── Phone Mask ────────────────────────────────────────────────────── */
+(function initPhoneMask() {
+  const inputs = document.querySelectorAll('input[type="tel"]');
+
+  inputs.forEach(function (input) {
+    input.addEventListener('input', function () {
+      let raw = input.value.replace(/\D/g, '');
+      if (raw.startsWith('380')) {raw = raw.slice(2);}
+      else if (raw.startsWith('38')) {raw = raw.slice(2);}
+      raw = raw.slice(0, 10);
+      if (!raw.length) { input.value = ''; return; }
+
+      let r = '+38(';
+      for (let i = 0; i < raw.length; i++) {
+        if (i === 3) {r += ') ';}
+        if (i === 6) {r += '-';}
+        if (i === 8) {r += '-';}
+        r += raw[i];
+      }
+      input.value = r;
+    });
+
+    input.addEventListener('keydown', function (e) {
+      if (e.ctrlKey || e.metaKey) {return;}
+      const nav = ['Backspace','Delete','Tab','Enter','ArrowLeft','ArrowRight','Home','End'];
+      if (nav.indexOf(e.key) !== -1) {return;}
+      if (e.key >= '0' && e.key <= '9') {
+        const digits = input.value.replace(/\D/g, '');
+        const d = digits.startsWith('38') ? digits.slice(2) : digits;
+        if (d.length >= 10) {e.preventDefault();}
+        return;
+      }
+      e.preventDefault();
+    });
+
+    input.addEventListener('paste', function (e) {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData('text');
+      let raw = text.replace(/\D/g, '');
+      if (raw.startsWith('380')) {raw = raw.slice(2);}
+      else if (raw.startsWith('38')) {raw = raw.slice(2);}
+      if (raw.length === 9 && raw.charAt(0) !== '0') {raw = '0' + raw;}
+      raw = raw.slice(0, 10);
+      let r = '+38(';
+      for (let i = 0; i < raw.length; i++) {
+        if (i === 3) {r += ') ';}
+        if (i === 6) {r += '-';}
+        if (i === 8) {r += '-';}
+        r += raw[i];
+      }
+      input.value = raw.length ? r : '';
+    });
+  });
+})();
+
 /* ─── Form Submit: Infidelity ────────────────────────────────────────── */
 (function initInfidelityForm() {
   var form = document.getElementById('ul-form-infidelity');
