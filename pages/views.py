@@ -388,9 +388,7 @@ def consultation_view(request):
             response = HttpResponse(status=204)
             response['HX-Redirect'] = thank_you_url
             # region agent log
-            import json as _json, time as _time
-            with open('/Users/olegbonislavskyi/Sites/PoligraphNew/.cursor/debug-ed2e40.log', 'a') as _f:
-                _f.write(_json.dumps({'sessionId':'ed2e40','hypothesisId':'H3','location':'views.py:consultation_view','message':'returning HX-Redirect from consultation','data':{'status':204,'hx_redirect':thank_you_url,'hx_request_present':True},'timestamp':int(_time.time()*1000)}) + '\n')
+            logger.info(f'[DEBUG ed2e40] consultation_view: HX-Redirect sent to {thank_you_url}')
             # endregion
             return response
         from django.http import HttpResponseRedirect
@@ -659,17 +657,18 @@ def thank_you_view(request):
     try:
         context = {'title': 'Дякуємо за заявку'}
         # region agent log
-        import json as _json, time as _time
         _hx = request.headers.get('HX-Request', '')
-        _method = request.method
-        _ua = request.META.get('HTTP_USER_AGENT', '')[:80]
-        _accept = request.headers.get('Accept', '')[:80]
         _tpl = 'partials/thank_you_content.html' if _hx else 'thank_you.html'
-        with open('/Users/olegbonislavskyi/Sites/PoligraphNew/.cursor/debug-ed2e40.log', 'a') as _f:
-            _f.write(_json.dumps({'sessionId':'ed2e40','hypothesisId':'H1','location':'views.py:thank_you_view','message':'thank_you_view called','data':{'hx_request':_hx,'method':_method,'template':_tpl,'accept':_accept,'ua':_ua},'timestamp':int(_time.time()*1000)}) + '\n')
+        logger.info(f'[DEBUG ed2e40] thank_you_view: HX-Request={repr(_hx)}, template={_tpl}, method={request.method}')
         # endregion
         if request.headers.get('HX-Request'):
-            return render(request, 'partials/thank_you_content.html', context)
+            # H4 fix: якщо HTMX надіслав HX-Request до цієї сторінки,
+            # замість partial — повертаємо HX-Redirect щоб браузер зробив
+            # повне завантаження сторінки без HX-Request
+            logger.info('[DEBUG ed2e40] thank_you_view: HX-Request detected, forcing full page via HX-Redirect')
+            response = HttpResponse(status=204)
+            response['HX-Redirect'] = reverse('pages:thank_you')
+            return response
         return render(request, 'thank_you.html', context)
     except Exception as e:
         logger.error(f'Error in thank_you_view: {e}')
