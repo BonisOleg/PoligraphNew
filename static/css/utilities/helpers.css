@@ -1,0 +1,34 @@
+/* Утилітарні класи
+ * BEM методологія не застосовується — це атомарні хелпери
+ *
+ * ПРАВИЛА:
+ * - НЕ використовувати !important
+ * - НЕ дублювати правила з normalize.css
+ * - Використовувати CSS variables з base.css
+ */
+
+/* Візуально прихований, але доступний для screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Honeypot — прихований від людей, але видимий ботам (no display:none) */
+.u-honeypot {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}

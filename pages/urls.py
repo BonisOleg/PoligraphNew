@@ -13,6 +13,7 @@ urlpatterns = [
     path('about/', views.about_view, name='about'),
     path('contacts/', views.contacts_view, name='contacts'),
     path('consultation/', views.consultation_view, name='consultation'),
+    path('thank-you/', views.thank_you_view, name='thank_you'),
     # Unified landing (standalone, no cross-links with main site)
     path('poslugy/', views.unified_landing_view, name='unified_landing'),
     path('perevirka-na-zradu/', views.redirect_infidelity_landing, name='infidelity_landing'),

@@ -1,0 +1,22 @@
+{% load static %}
+<div class="page__container">
+    <div class="page__thank-you">
+        <div class="page__thank-you-icon" aria-hidden="true">✓</div>
+        <h1 class="page__thank-you-title">Дякуємо за заявку!</h1>
+        <p class="page__thank-you-text">
+            Ваше звернення отримано. Ми зв'яжемося з вами найближчим часом у зручний для вас спосіб.
+        </p>
+        <p class="page__thank-you-contact">
+            Якщо потрібна термінова консультація — телефонуйте:
+            <a href="tel:+380675243354" class="page__thank-you-phone">+38 (067) 524-33-54</a>
+        </p>
+        <a href="{% url 'pages:index' %}"
+           class="page__thank-you-btn"
+           hx-get="{% url 'pages:index' %}"
+           hx-target="#main"
+           hx-swap="innerHTML"
+           hx-push-url="true">
+            На головну
+        </a>
+    </div>
+</div>

@@ -5,8 +5,8 @@ Views для сторінок сайту.
 
 import logging
 import traceback
-import json
 from django.shortcuts import render
+from django.urls import reverse
 from django.http import HttpResponse, HttpResponseServerError, JsonResponse
 from django.utils import timezone
 from .forms import ConsultationForm, CTAContactForm, InfidelityCheckForm, CorporateServicesForm
@@ -52,12 +52,13 @@ def index_view(request):
 
             if form.is_valid():
                 if form.cleaned_data.get('honeypot'):
-                    success_html = '''
-                <div class="cta__form-success">
-                    <strong>Дякуємо!</strong> Ваша заявка прийнята. Ми зв'яжемося з вами найближчим часом.
-                </div>
-                '''
-                    return HttpResponse(success_html, status=200)
+                    thank_you_url = reverse('pages:thank_you')
+                    if request.headers.get('HX-Request'):
+                        response = HttpResponse(status=204)
+                        response['HX-Redirect'] = thank_you_url
+                        return response
+                    from django.http import HttpResponseRedirect
+                    return HttpResponseRedirect(thank_you_url)
 
                 name = form.cleaned_data['name']
                 phone = form.cleaned_data['phone']
@@ -87,13 +88,14 @@ def index_view(request):
                 else:
                     logger.warning(f'Не вдалося відправити CTA форму в Telegram: {name}, {phone}, {email}')
                 
-                # Повертаємо успішне повідомлення (незалежно від результату Telegram)
-                success_html = '''
-                <div class="cta__form-success">
-                    <strong>Дякуємо!</strong> Ваша заявка прийнята. Ми зв'яжемося з вами найближчим часом.
-                </div>
-                '''
-                return HttpResponse(success_html, status=200)
+                # Повертаємо redirect на thank-you (HTMX або звичайний)
+                thank_you_url = reverse('pages:thank_you')
+                if request.headers.get('HX-Request'):
+                    response = HttpResponse(status=204)
+                    response['HX-Redirect'] = thank_you_url
+                    return response
+                from django.http import HttpResponseRedirect
+                return HttpResponseRedirect(thank_you_url)
             else:
                 # Повертаємо помилки валідації
                 errors_html = '<div class="cta__form-errors">'
@@ -346,15 +348,16 @@ def consultation_view(request):
         return HttpResponse('Method not allowed', status=405)
 
     form = ConsultationForm(request.POST)
-    success_html = '''
-    <div class="footer__form-success">
-        <strong>Дякуємо!</strong> Ваша заявка прийнята. Ми зв'яжемося з вами найближчим часом.
-    </div>
-    '''
 
     if form.is_valid():
         if form.cleaned_data.get('honeypot'):
-            return HttpResponse(success_html, status=200)
+            thank_you_url = reverse('pages:thank_you')
+            if request.headers.get('HX-Request'):
+                response = HttpResponse(status=204)
+                response['HX-Redirect'] = thank_you_url
+                return response
+            from django.http import HttpResponseRedirect
+            return HttpResponseRedirect(thank_you_url)
 
         name = form.cleaned_data['name']
         contact = form.cleaned_data['contact']
@@ -380,7 +383,13 @@ def consultation_view(request):
         else:
             logger.warning(f'Не вдалося відправити консультацію в Telegram: {name}, {contact}')
 
-        return HttpResponse(success_html, status=200)
+        thank_you_url = reverse('pages:thank_you')
+        if request.headers.get('HX-Request'):
+            response = HttpResponse(status=204)
+            response['HX-Redirect'] = thank_you_url
+            return response
+        from django.http import HttpResponseRedirect
+        return HttpResponseRedirect(thank_you_url)
     else:
         errors_html = '<div class="footer__form-errors">'
         for field, errors in form.errors.items():
@@ -626,6 +635,19 @@ def unified_landing_view(request):
         return render(request, 'unified_landing.html', context)
     except Exception as e:
         logger.error(f'Error in unified_landing_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
+
+
+def thank_you_view(request):
+    """Thank You сторінка для основного сайту після відправки CTA або консультаційної форми."""
+    try:
+        context = {'title': 'Дякуємо за заявку'}
+        if request.headers.get('HX-Request'):
+            return render(request, 'partials/thank_you_content.html', context)
+        return render(request, 'thank_you.html', context)
+    except Exception as e:
+        logger.error(f'Error in thank_you_view: {e}')
         logger.error(traceback.format_exc())
         return HttpResponseServerError(f'Server error: {str(e)}')
 
