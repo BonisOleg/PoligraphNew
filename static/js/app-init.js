@@ -160,6 +160,16 @@
    */
   function initHTMXListeners() {
 
+    // region agent log - H2/H3: відстежуємо HTMX події для thank-you навігації
+    document.body.addEventListener('htmx:beforeRequest', function(ev) {
+      fetch('http://127.0.0.1:7789/ingest/44b22170-24a7-4cc4-b5a2-7be0a17d669b',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ed2e40'},body:JSON.stringify({sessionId:'ed2e40',hypothesisId:'H3',location:'app-init.js:htmx:beforeRequest',message:'HTMX request starting',data:{path:ev.detail.pathInfo&&ev.detail.pathInfo.requestPath,target:ev.detail.target&&ev.detail.target.id,verb:ev.detail.requestConfig&&ev.detail.requestConfig.verb},timestamp:Date.now()})}).catch(function(){});
+    });
+    document.body.addEventListener('htmx:afterOnLoad', function(ev) {
+      var hdrs = ev.detail.xhr ? {status:ev.detail.xhr.status,hxRedirect:ev.detail.xhr.getResponseHeader('HX-Redirect'),hxLocation:ev.detail.xhr.getResponseHeader('HX-Location')} : {};
+      fetch('http://127.0.0.1:7789/ingest/44b22170-24a7-4cc4-b5a2-7be0a17d669b',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ed2e40'},body:JSON.stringify({sessionId:'ed2e40',hypothesisId:'H2',location:'app-init.js:htmx:afterOnLoad',message:'HTMX response received',data:hdrs,timestamp:Date.now()})}).catch(function(){});
+    });
+    // endregion
+
     // ПЕРЕД заміною контенту - виконуємо всі cleanup операції в правильному порядку
     document.body.addEventListener('htmx:beforeSwap', (event) => {
       // Перевіряємо що swap відбувається для main контенту

@@ -387,6 +387,11 @@ def consultation_view(request):
         if request.headers.get('HX-Request'):
             response = HttpResponse(status=204)
             response['HX-Redirect'] = thank_you_url
+            # region agent log
+            import json as _json, time as _time
+            with open('/Users/olegbonislavskyi/Sites/PoligraphNew/.cursor/debug-ed2e40.log', 'a') as _f:
+                _f.write(_json.dumps({'sessionId':'ed2e40','hypothesisId':'H3','location':'views.py:consultation_view','message':'returning HX-Redirect from consultation','data':{'status':204,'hx_redirect':thank_you_url,'hx_request_present':True},'timestamp':int(_time.time()*1000)}) + '\n')
+            # endregion
             return response
         from django.http import HttpResponseRedirect
         return HttpResponseRedirect(thank_you_url)
@@ -653,6 +658,16 @@ def thank_you_view(request):
     """Thank You сторінка для основного сайту після відправки CTA або консультаційної форми."""
     try:
         context = {'title': 'Дякуємо за заявку'}
+        # region agent log
+        import json as _json, time as _time
+        _hx = request.headers.get('HX-Request', '')
+        _method = request.method
+        _ua = request.META.get('HTTP_USER_AGENT', '')[:80]
+        _accept = request.headers.get('Accept', '')[:80]
+        _tpl = 'partials/thank_you_content.html' if _hx else 'thank_you.html'
+        with open('/Users/olegbonislavskyi/Sites/PoligraphNew/.cursor/debug-ed2e40.log', 'a') as _f:
+            _f.write(_json.dumps({'sessionId':'ed2e40','hypothesisId':'H1','location':'views.py:thank_you_view','message':'thank_you_view called','data':{'hx_request':_hx,'method':_method,'template':_tpl,'accept':_accept,'ua':_ua},'timestamp':int(_time.time()*1000)}) + '\n')
+        # endregion
         if request.headers.get('HX-Request'):
             return render(request, 'partials/thank_you_content.html', context)
         return render(request, 'thank_you.html', context)
