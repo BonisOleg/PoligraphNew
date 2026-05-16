@@ -162,10 +162,10 @@
 
     // region agent log - H4: відстежуємо чи HTMX робить swap після HX-Redirect
     document.body.addEventListener('htmx:afterOnLoad', function(ev) {
-      var xhr = ev.detail.xhr;
+      const xhr = ev.detail.xhr;
       if (!xhr) return;
-      var hxRedirect = xhr.getResponseHeader('HX-Redirect');
-      var status = xhr.status;
+      const hxRedirect = xhr.getResponseHeader('HX-Redirect');
+      const status = xhr.status;
       if (hxRedirect || status === 204) {
         fetch('http://127.0.0.1:7789/ingest/44b22170-24a7-4cc4-b5a2-7be0a17d669b',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ed2e40'},body:JSON.stringify({sessionId:'ed2e40',hypothesisId:'H4',location:'app-init.js:afterOnLoad',message:'Response with HX-Redirect or 204',data:{status:status,hxRedirect:hxRedirect,target:ev.detail.target&&ev.detail.target.id,currentURL:window.location.href},timestamp:Date.now()})}).catch(function(){});
       }
