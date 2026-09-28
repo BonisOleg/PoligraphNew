@@ -5,7 +5,7 @@
         
         <div class="contacts__content-grid">
             <!-- Ліва колонка: Контактна інформація -->
-            <div class="contacts__info-column">
+            <div class="contacts__info-column reveal" data-i="0">
                 <div class="contacts__info">
                     <div class="contacts__info-item">
                         <span class="contacts__info-label">Телефон/Viber:</span>
@@ -37,7 +37,7 @@
             </div>
             
             <!-- Права колонка: Сертифікати -->
-            <div class="contacts__certs-column">
+            <div class="contacts__certs-column reveal" data-i="1">
                 {% if certificates %}
                 <div class="contacts__certificates">
                     <h2 class="contacts__certificates-title">Сертифікати та ліцензії</h2>
@@ -69,7 +69,7 @@
             </iframe>
         </div>
         
-        <div class="contacts__map-info">
+        <div class="contacts__map-info reveal" data-reveal-hold>
             <h2 class="contacts__map-title">Як нас знайти</h2>
             
             <div class="contacts__map-details">

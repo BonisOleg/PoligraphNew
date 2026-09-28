@@ -82,7 +82,7 @@
 
                     <div class="corporate-hero__stats">
                         <div class="corporate-hero__stat">
-                            <div class="corporate-hero__stat-number">150+</div>
+                            <div class="corporate-hero__stat-number">1000+</div>
                             <div class="corporate-hero__stat-label">Успішних перевірок</div>
                         </div>
                         <div class="corporate-hero__stat">
@@ -126,7 +126,7 @@
                                 </div>
                                 <div>
                                     <h3 class="corporate-about__credential-title">Освіта та кваліфікація</h3>
-                                    <p class="corporate-about__credential-text">Юрист-магістр з відзнакою, магістр з публічного управління</p>
+                                    <p class="corporate-about__credential-text">Юрист-магістр з відзнакою, магістр з публічного управління та адміністрування</p>
                                 </div>
                             </div>
 
@@ -151,7 +151,7 @@
                                 </div>
                                 <div>
                                     <h3 class="corporate-about__credential-title">Досвід</h3>
-                                    <p class="corporate-about__credential-text">2 роки досвіду, 150+ успішних перевірок</p>
+                                    <p class="corporate-about__credential-text">2 роки досвіду, 1000+ перевірок</p>
                                 </div>
                             </div>
 
@@ -267,7 +267,7 @@
                         <button type="submit" class="corporate-form__submit" id="ad-submit-corporate">Відправити заявку</button>
                     </form>
 
-                    <div id="success-message" class="corporate-form__success" style="display: none;">
+                    <div id="success-message" class="corporate-form__success" hidden>
                         <div class="corporate-form__success-icon">✓</div>
                         <h3 class="corporate-form__success-title">Дякуємо!</h3>
                         <p class="corporate-form__success-text">Ваша заявка успішно відправлена. Ми зв'яжемося з вами найближчим часом.</p>
@@ -279,7 +279,7 @@
         </section>
 
         <!-- Notification Toast -->
-        <div id="copy-notification" class="corporate-notification" style="display: none;">
+        <div id="copy-notification" class="corporate-notification" hidden>
             <svg fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
             </svg>
@@ -291,7 +291,7 @@
             <div class="corporate-footer__container">
                 <div class="corporate-footer__brand">Керезвас Юліана Георгіївна</div>
                 <p class="corporate-footer__text">Національна асоціація поліграфологів України</p>
-                <p class="corporate-footer__copyright">© 2024 Всі права захищені</p>
+                <p class="corporate-footer__copyright">© {% now "Y" %} Всі права захищені</p>
             </div>
         </footer>
     </div>

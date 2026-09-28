@@ -32,3 +32,23 @@
   pointer-events: none;
   z-index: -1;
 }
+
+/* Skip-to-content: прихований, з'являється при фокусі з клавіатури */
+.skip-link {
+  position: absolute;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  z-index: var(--z-index-tooltip);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-4rem);
+  transition: transform var(--transition-fast);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}

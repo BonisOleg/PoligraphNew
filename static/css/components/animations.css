@@ -1,0 +1,101 @@
+/* Luxury motion — scroll-reveal + tokens (luxury_motion_skill)
+ * Compositor-only: transform / opacity
+ */
+
+/* ============================================================================ */
+
+/* REVEAL                                                                       */
+
+/* ============================================================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity var(--motion-reveal) var(--ease-reveal),
+    transform var(--motion-reveal) var(--ease-reveal);
+  transition-delay: calc(var(--reveal-i, 0) * var(--motion-stagger));
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal--fade {
+  transform: none;
+}
+
+.reveal--fade.is-visible {
+  transform: none;
+}
+
+.reveal[data-i="0"] { --reveal-i: 0; }
+.reveal[data-i="1"] { --reveal-i: 1; }
+.reveal[data-i="2"] { --reveal-i: 2; }
+.reveal[data-i="3"] { --reveal-i: 3; }
+
+/* ============================================================================ */
+
+/* HERO Ken Burns (після вспливання)                                            */
+
+/* ============================================================================ */
+
+@keyframes hero-ken {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: scale(1.045) translate3d(-1.2%, 0.8%, 0);
+  }
+}
+
+.hero__media--visible .hero__image {
+  animation: hero-ken 22s var(--ease-drift) 2s infinite alternate;
+}
+
+/* ============================================================================ */
+
+/* WHY-US overlay title drift-in                                                */
+
+/* ============================================================================ */
+
+@media (width >= 1025px) {
+  .why-us__overlay-title.reveal:not(.is-visible) {
+    transform: translate3d(-50%, calc(-50% + 20px), 0);
+  }
+
+  .why-us__overlay-title.reveal.is-visible {
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ============================================================================ */
+
+/* ACCESSIBILITY                                                                */
+
+/* ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: opacity var(--motion-soft) linear;
+    transform: none;
+    transition-delay: 0ms;
+  }
+
+  .reveal.is-visible {
+    transform: none;
+  }
+
+  .hero__media--visible .hero__image {
+    animation: none;
+  }
+
+  @media (width >= 1025px) {
+    .why-us__overlay-title.reveal:not(.is-visible),
+    .why-us__overlay-title.reveal.is-visible {
+      transform: translate(-50%, -50%);
+    }
+  }
+}

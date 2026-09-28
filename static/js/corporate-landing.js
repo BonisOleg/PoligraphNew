@@ -170,7 +170,7 @@ function showMessage(message, type = 'error') {
 function hideForm() {
     const form = document.getElementById('corporate-form');
     if (form) {
-        form.style.display = 'none';
+        form.hidden = true;
     }
 }
 
@@ -180,7 +180,7 @@ function hideForm() {
 function showSuccessMessage() {
     const successElement = document.getElementById('success-message');
     if (successElement) {
-        successElement.style.display = 'block';
+        successElement.hidden = false;
     }
 }
 
@@ -218,10 +218,10 @@ function showNotification(message) {
     
     notification.appendChild(icon);
     notification.appendChild(text);
-    notification.style.display = 'flex';
+    notification.hidden = false;
 
     setTimeout(() => {
-        notification.style.display = 'none';
+        notification.hidden = true;
     }, 3000);
 }
 

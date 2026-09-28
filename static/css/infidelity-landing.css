@@ -741,6 +741,10 @@ body {
     gap: 24px;
 }
 
+.infidelity-form[hidden] {
+    display: none;
+}
+
 .infidelity-form__messages {
     min-height: 24px;
 }

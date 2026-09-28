@@ -1,10 +1,11 @@
 {% load static %}
 <section class="about-accordions">
+    <h1 class="sr-only">Послуги та поліграфолог — ціни, досвід, обладнання</h1>
     
     <!-- БЛОК 1: Ціни на послуги -->
     <article class="accordion" id="service-0" data-accordion="services" aria-expanded="false">
         <div class="accordion__header" role="button" tabindex="0" aria-label="Розгорнути секцію послуг">
-            <h1 class="accordion__title">ЦІНИ НА ПОСЛУГИ</h1>
+            <h2 class="accordion__title">ЦІНИ НА ПОСЛУГИ</h2>
             <p class="accordion__subtitle">Професійні перевірки у Львові</p>
         </div>
         
@@ -21,12 +22,12 @@
             
             <!-- Послуги -->
             <div class="accordion__services">
-                <h2 class="accordion__section-title">Наші послуги</h2>
+                <h3 class="accordion__section-title">Наші послуги</h3>
                 <p class="accordion__section-description">Спеціалізуємося на перевірках у Львові: професійний поліграфолог, перевірка на детекторі брехні та корпоративні послуги для бізнесу.</p>
                 <div class="accordion__services-grid">
                     {% for service in services_list %}
                     <article class="service-card{% if forloop.counter0|divisibleby:2 %} service-card--dark{% endif %}">
-                        <h3 class="service-card__title">{{ service.title }}</h3>
+                        <h4 class="service-card__title">{{ service.title }}</h4>
                         <p class="service-card__price">{{ service.price }}</p>
                         {% if service.discount %}
                         <p class="service-card__discount">{{ service.discount }}</p>
@@ -44,11 +45,11 @@
             
             <!-- Переваги -->
             <div class="accordion__advantages">
-                <h2 class="accordion__section-title">Чому обирають нас?</h2>
+                <h3 class="accordion__section-title">Чому обирають нас?</h3>
                 <div class="accordion__advantages-grid">
                     {% for advantage in services_advantages %}
                     <div class="advantage-card">
-                        <h3 class="advantage-card__title">{{ advantage.title }}</h3>
+                        <h4 class="advantage-card__title">{{ advantage.title }}</h4>
                         <p class="advantage-card__text">{{ advantage.text }}</p>
                     </div>
                     {% endfor %}
@@ -60,7 +61,7 @@
     <!-- БЛОК 2: Досвідчений член НАП України -->
     <article class="accordion" id="service-1" data-accordion="about" aria-expanded="false">
         <div class="accordion__header" role="button" tabindex="0" aria-label="Розгорнути секцію про поліграфолога">
-            <h1 class="accordion__title">ДОСВІДЧЕНИЙ ЧЛЕН НАП УКРАЇНИ</h1>
+            <h2 class="accordion__title">ДОСВІДЧЕНИЙ ЧЛЕН НАП УКРАЇНИ</h2>
             <p class="accordion__subtitle">{{ polygraphologist.name }}</p>
         </div>
         
@@ -69,7 +70,7 @@
             <div class="accordion__hero">
                 <img src="{% static 'img/main.png' %}" alt="Поліграфолог" class="accordion__hero-image">
                 <p class="accordion__hero-label">Знайомтесь</p>
-                <h2 class="accordion__hero-name">{{ polygraphologist.name }}</h2>
+                <h3 class="accordion__hero-name">{{ polygraphologist.name }}</h3>
                 <p class="accordion__hero-description">{{ polygraphologist.description }}</p>
             </div>
             
@@ -85,12 +86,12 @@
             
             <!-- Освіта -->
             <div class="accordion__education">
-                <h2 class="accordion__section-title">Освіта та сертифікати</h2>
+                <h3 class="accordion__section-title">Освіта та сертифікати</h3>
                 <div class="accordion__education-list">
                     {% for edu in education %}
                     <article class="education-item">
                         <span class="education-item__year">{{ edu.year }}</span>
-                        <h3 class="education-item__institution">{{ edu.institution }}</h3>
+                        <h4 class="education-item__institution">{{ edu.institution }}</h4>
                         <p class="education-item__program">{{ edu.program }}</p>
                         <p class="education-item__degree">{{ edu.degree }}</p>
                     </article>
@@ -100,12 +101,12 @@
             
             <!-- Процес -->
             <div class="accordion__process">
-                <h2 class="accordion__section-title">Як проходить перевірка</h2>
+                <h3 class="accordion__section-title">Як проходить перевірка</h3>
                 <div class="accordion__process-list">
                     {% for step in process_steps %}
                     <article class="process-step">
                         <span class="process-step__number">{{ step.number }}</span>
-                        <h3 class="process-step__title">{{ step.title }}</h3>
+                        <h4 class="process-step__title">{{ step.title }}</h4>
                         <p class="process-step__description">{{ step.description }}</p>
                     </article>
                     {% endfor %}
@@ -114,11 +115,11 @@
             
             <!-- Принципи -->
             <div class="accordion__principles">
-                <h2 class="accordion__section-title">Принципи роботи</h2>
+                <h3 class="accordion__section-title">Принципи роботи</h3>
                 <div class="accordion__principles-grid">
                     {% for principle in principles %}
                     <div class="principle-card">
-                        <h3 class="principle-card__title">{{ principle.title }}</h3>
+                        <h4 class="principle-card__title">{{ principle.title }}</h4>
                         <p class="principle-card__description">{{ principle.description }}</p>
                     </div>
                     {% endfor %}
@@ -130,7 +131,7 @@
     <!-- БЛОК 3: Професійне обладнання -->
     <article class="accordion" id="service-2" data-accordion="equipment" aria-expanded="false">
         <div class="accordion__header" role="button" tabindex="0" aria-label="Розгорнути секцію про обладнання">
-            <h1 class="accordion__title">ПРОФЕСІЙНЕ ОБЛАДНАННЯ</h1>
+            <h2 class="accordion__title">ПРОФЕСІЙНЕ ОБЛАДНАННЯ</h2>
             <p class="accordion__subtitle">{{ equipment_hero.title }}</p>
         </div>
         
@@ -138,7 +139,7 @@
             <!-- Hero -->
             <div class="accordion__hero">
                 <span class="accordion__hero-badge">{{ equipment_hero.badge }}</span>
-                <h2 class="accordion__hero-name">{{ equipment_hero.title }}</h2>
+                <h3 class="accordion__hero-name">{{ equipment_hero.title }}</h3>
                 <p class="accordion__hero-subtitle">{{ equipment_hero.subtitle }}</p>
                 <p class="accordion__hero-description">{{ equipment_hero.description }}</p>
             </div>
@@ -155,11 +156,11 @@
             
             <!-- Порівняння -->
             <div class="accordion__comparison">
-                <h2 class="accordion__section-title">РУБІКОН vs Інші поліграфи</h2>
+                <h3 class="accordion__section-title">РУБІКОН vs Інші поліграфи</h3>
                 <div class="accordion__comparison-grid">
                     {% for item in equipment_comparison %}
                     <article class="comparison-card{% if forloop.counter0|divisibleby:2 %} comparison-card--dark{% endif %}">
-                        <h3 class="comparison-card__characteristic">{{ item.characteristic }}</h3>
+                        <h4 class="comparison-card__characteristic">{{ item.characteristic }}</h4>
                         <p class="comparison-card__rubicon">{{ item.rubicon }}</p>
                         <p class="comparison-card__others">{{ item.others }}</p>
                     </article>
@@ -169,11 +170,11 @@
             
             <!-- Сертифікація -->
             <div class="accordion__certification">
-                <h2 class="accordion__section-title">Сертифікація та стандарти</h2>
+                <h3 class="accordion__section-title">Сертифікація та стандарти</h3>
                 <div class="accordion__certification-grid">
                     {% for cert in equipment_certification %}
                     <div class="certification-card">
-                        <h3 class="certification-card__title">{{ cert.title }}</h3>
+                        <h4 class="certification-card__title">{{ cert.title }}</h4>
                         <p class="certification-card__description">{{ cert.description }}</p>
                     </div>
                     {% endfor %}

@@ -1,13 +1,13 @@
-/* Why-us секція - 3 зображення з hover-ефектом
- * 
- * Desktop: Pure CSS hover (70% / 15% / 15%)
- * Зображення: фіксований розмір (70% висоти), положення з анімацією
- * Tablet/Mobile: Статичні блоки без ефектів
- * 
+/* Why-us секція - 3 ілюстрації з м'яким hover (GPU-only)
+ *
+ * Desktop: рівні колонки; hover = scale + opacity контенту + dim сусідів
+ * Tablet/Mobile: статичні блоки без hover-motion
+ *
  * ПРАВИЛА:
  * - НЕ використовувати !important
  * - НЕ дублювати правила з normalize.css
  * - Використовувати CSS variables з base.css
+ * - Анімувати лише transform/opacity (Emil / review_animations)
  */
 
 /* ============================================================================ */
@@ -17,6 +17,10 @@
 /* ============================================================================ */
 
 .why-us {
+  --why-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --why-duration-in: 0.28s;
+  --why-duration-out: 0.18s;
+
   position: relative;
   background-color: #010101;
 }
@@ -47,23 +51,20 @@
 /* ============================================================================ */
 
 .why-us__image {
-  /* Фіксований розмір */
   height: 70%;
   width: auto;
-
-  /* Заповнення */
   object-fit: cover;
   object-position: center;
   display: block;
-
-  /* Позиціонування */
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
-
-  /* Анімація */
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-50%) scale(1);
+  transform-origin: center bottom;
+  transition:
+    transform var(--why-duration-out) var(--why-ease-out),
+    opacity var(--why-duration-out) var(--why-ease-out);
+  will-change: transform, opacity;
 }
 
 /* ============================================================================ */
@@ -79,7 +80,7 @@
 
 /* ============================================================================ */
 
-/* КОНТЕНТ В БЛОКАХ (показується при hover на розтягнутий блок)                */
+/* КОНТЕНТ В БЛОКАХ                                                             */
 
 /* ============================================================================ */
 
@@ -88,34 +89,34 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 2rem;
+  padding: 1.5rem 1.25rem;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 70%, transparent 100%);
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate3d(0, 12px, 0);
+  transition:
+    opacity var(--why-duration-out) var(--why-ease-out),
+    transform var(--why-duration-out) var(--why-ease-out);
   pointer-events: none;
   z-index: 5;
-
-  /* Нижче overlay (z-index: 10), але вище зображення */
 }
 
 .why-us__slide-title {
   font-family: var(--font-family-display);
-  font-size: 1.5rem;
+  font-size: clamp(0.95rem, 1.15vw, 1.25rem);
   font-weight: 700;
   color: #ffffff;
-  margin: 0 0 1rem;
+  margin: 0 0 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.02em;
+  line-height: 1.25;
 }
 
 .why-us__slide-description {
   font-family: var(--font-family-base);
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.9);
-  margin: 0 0 1.5rem;
+  margin: 0 0 1rem;
 }
 
 .why-us__slide-button {
@@ -125,11 +126,10 @@
 
 /* ============================================================================ */
 
-/* DESKTOP (>1024px): Pure CSS Hover - 70% / 15% / 15%                        */
+/* DESKTOP (>1024px): рівні колонки + м'який hover                            */
 
 /* ============================================================================ */
 
-/* Заголовок прихований на desktop (overlay показується) */
 .why-us__title {
   display: none;
 }
@@ -138,12 +138,12 @@
   .why-us__slider {
     display: flex;
     min-height: 90vh;
+    gap: 0;
   }
 
   .why-us__slide {
-    flex: 1 0 0;
+    flex: 1 1 0;
     min-width: 0;
-    transition: flex 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .why-us__image-label {
@@ -158,56 +158,11 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     z-index: 4;
-
-    /* Вище зображення, але нижче overlay та контенту */
     opacity: 1;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity var(--why-duration-out) var(--why-ease-out);
     pointer-events: none;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
     line-height: 1.2;
-  }
-
-  /* При hover на slider - звужуємо всі картки */
-  .why-us__slider:hover .why-us__slide {
-    flex: 0.43;
-
-    /* ~15% кожна (0.43 + 0.43 + 2.14 = 3) */
-  }
-
-  /* При hover на конкретну - розширюємо до 70% (більша специфічність) */
-  .why-us__slider:hover .why-us__slide:hover {
-    flex: 2.14;
-
-    /* ~70% (2.14 / 3 = 0.713) */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  }
-
-  /* Зображення в hover-картці - переміщується ліворуч */
-  .why-us__slider:hover .why-us__slide:hover .why-us__image {
-    left: 50px;
-    transform: translateX(0);
-  }
-
-  /* Зображення в інших картках - залишається по центру */
-  .why-us__slider:hover .why-us__slide:not(:hover) .why-us__image {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  /* Контент з'являється на всіх картках при їх розтягуванні */
-
-  /* Затримка 0.3s */
-  .why-us__slider:hover .why-us__slide:hover .why-us__slide-content {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.3s,
-      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
-  }
-
-  /* Написи зникають при hover на slider */
-  .why-us__slider:hover .why-us__image-label {
-    opacity: 0;
   }
 
   .why-us__overlay {
@@ -219,10 +174,7 @@
     height: 28%;
     background-color: #010101;
     z-index: 10;
-
-    /* Достатньо для перекриття карток (вони relative, не мають z-index) */
-
-    /* pointer-events за замовчуванням (auto) - блокує hover на картках під overlay */
+    pointer-events: none;
   }
 
   .why-us__overlay-title {
@@ -238,6 +190,48 @@
     text-transform: uppercase;
     font-family: var(--font-family-hero);
   }
+
+  /* Hover лише на точних pointer (не touch) — GPU: transform/opacity */
+  @media (hover: hover) and (pointer: fine) {
+    .why-us__slider:hover .why-us__slide:not(:hover) .why-us__image {
+      opacity: 0.45;
+      transform: translateX(-50%) scale(0.97);
+    }
+
+    .why-us__slide:hover .why-us__image {
+      opacity: 1;
+      transform: translateX(-50%) scale(1.04);
+      transition-duration: var(--why-duration-in);
+    }
+
+    .why-us__slide:hover .why-us__slide-content {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      pointer-events: auto;
+      transition-duration: var(--why-duration-in);
+    }
+
+    .why-us__slide:hover .why-us__image-label {
+      opacity: 0;
+      transition-duration: var(--why-duration-in);
+    }
+  }
+
+  /* Клавіатура: focus-within = той самий стан, що hover */
+  .why-us__slide:focus-within .why-us__image {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.04);
+  }
+
+  .why-us__slide:focus-within .why-us__slide-content {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    pointer-events: auto;
+  }
+
+  .why-us__slide:focus-within .why-us__image-label {
+    opacity: 0;
+  }
 }
 
 /* ============================================================================ */
@@ -252,7 +246,6 @@
     padding: var(--spacing-xl) 0;
   }
 
-  /* Заголовок видимий на mobile/tablet */
   .why-us__title {
     display: block;
     text-align: center;
@@ -294,9 +287,9 @@
     left: auto;
     transform: none;
     transition: none;
+    will-change: auto;
   }
 
-  /* Показати контент одразу без hover */
   .why-us__slide-content {
     display: block;
     position: relative;
@@ -307,6 +300,14 @@
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.95) 100%);
     border-radius: var(--border-radius);
     padding: var(--spacing-md);
+  }
+
+  .why-us__slide-title {
+    font-size: 1.5rem;
+  }
+
+  .why-us__slide-description {
+    font-size: 1rem;
   }
 
   .why-us__overlay {
@@ -320,7 +321,7 @@
 
 /* ============================================================================ */
 
-/* МАЛІ ЕКРАНИ (≤480px): Оптимізація padding та розмірів тексту                */
+/* МАЛІ ЕКРАНИ (≤480px)                                                         */
 
 /* ============================================================================ */
 
@@ -346,5 +347,43 @@
 
   .why-us__slide-description {
     font-size: 0.9rem;
+  }
+}
+
+/* ============================================================================ */
+
+/* ACCESSIBILITY                                                                */
+
+/* ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .why-us__image,
+  .why-us__slide-content,
+  .why-us__image-label {
+    transition: none;
+    will-change: auto;
+  }
+
+  .why-us__image {
+    transform: translateX(-50%);
+  }
+
+  @media (width >= 1025px) {
+    .why-us__slide:hover .why-us__image,
+    .why-us__slide:focus-within .why-us__image {
+      transform: translateX(-50%);
+      opacity: 1;
+    }
+
+    .why-us__slider:hover .why-us__slide:not(:hover) .why-us__image {
+      transform: translateX(-50%);
+      opacity: 0.55;
+    }
+
+    .why-us__slide:hover .why-us__slide-content,
+    .why-us__slide:focus-within .why-us__slide-content {
+      transform: none;
+      opacity: 1;
+    }
   }
 }

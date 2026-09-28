@@ -34,9 +34,9 @@
     <!-- ═══════════════════════════════════════════════════════════════ -->
     <!-- TOPBAR                                                          -->
     <!-- ═══════════════════════════════════════════════════════════════ -->
-    <div class="ul-topbar">
+    <div class="ul-topbar" id="top">
         <div class="ul-topbar__inner">
-            <span class="ul-topbar__label">🔥 АКЦІЯ:</span>
+            <span class="ul-topbar__label">АКЦІЯ:</span>
             <span class="ul-topbar__old">5000 грн</span>
             <span class="ul-topbar__new">2500 грн</span>
             <span class="ul-topbar__label">— промокод</span>
@@ -49,7 +49,7 @@
     <!-- ═══════════════════════════════════════════════════════════════ -->
     <nav class="ul-nav" role="navigation" aria-label="Навігація">
         <div class="ul-nav__inner">
-            <a href="#" class="ul-nav__brand">
+            <a href="#top" class="ul-nav__brand">
                 <div class="ul-nav__logo">
                     <svg class="ul-nav__logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -163,7 +163,7 @@
                 <!-- Left: Form -->
                 <div class="ul-form-section ul-form-section--gold ul-animate">
                     <div class="ul-form-section__glow ul-form-section__glow--gold" aria-hidden="true"></div>
-                    <span class="ul-form-section__icon" aria-hidden="true">🏢</span>
+                    <svg class="ul-form-section__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M9 21V7a2 2 0 012-2h2a2 2 0 012 2v14M9 21H5a2 2 0 01-2-2V9a2 2 0 012-2h2m10 14h4a2 2 0 002-2V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16M9 9h.01M9 13h.01M9 17h.01M15 9h.01M15 13h.01" /></svg>
                     <h3 class="ul-form-section__title">Замовити перевірку</h3>
                     <p class="ul-form-section__sub">Відповімо протягом 15 хвилин у робочий час</p>
 
@@ -188,24 +188,25 @@
                             <input type="tel" id="corp-phone" name="phone" required class="ul-form__input" placeholder="+38 (096) 123-45-67" inputmode="tel" autocomplete="tel">
                         </div>
                         <input type="text" name="honeypot" class="ul-form__honeypot" tabindex="-1" autocomplete="off">
-                        <button type="submit" class="ul-btn ul-btn--gold" style="width:100%;justify-content:center;border-radius:10px;">
-                            📋 Відправити заявку
+                        <button type="submit" class="ul-btn ul-btn--primary ul-btn--block">
+                            <svg class="ul-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                            Відправити заявку
                         </button>
                     </form>
 
-                    <div id="ul-success-corporate" class="ul-form__success" style="display:none;" role="status">
+                    <div id="ul-success-corporate" class="ul-form__success" hidden role="status">
                         <div class="ul-form__success-icon" aria-hidden="true">✓</div>
                         <h3 class="ul-form__success-title">Дякуємо!</h3>
                         <p class="ul-form__success-text">Ваша заявка успішно відправлена. Зв'яжемося найближчим часом.</p>
                     </div>
 
-                    <p class="ul-form__consent">🔒 Ваші дані в безпеці. Повна конфіденційність гарантована.</p>
+                    <p class="ul-form__consent">Ваші дані в безпеці. Повна конфіденційність гарантована.</p>
                 </div>
 
                 <!-- Right: Content -->
                 <div>
                     <div class="ul-corporate__header">
-                        <span class="ul-section-label ul-section-label--gold ul-animate">🏢 ДЛЯ БІЗНЕСУ</span>
+                        <span class="ul-section-label ul-section-label--gold ul-animate">ДЛЯ БІЗНЕСУ</span>
                         <h2 class="ul-section-title ul-animate ul-animate--delay-1">Корпоративні послуги</h2>
                         <p class="ul-section-sub ul-animate ul-animate--delay-2">Професійна перевірка персоналу, скринінг при прийомі на роботу та розслідування корпоративних порушень.</p>
                     </div>
@@ -315,7 +316,7 @@
                         </div>
                         <div>
                             <p class="ul-specialist__cred-title">Освіта</p>
-                            <p class="ul-specialist__cred-text">Юрист-магістр з відзнакою, магістр публічного управління</p>
+                            <p class="ul-specialist__cred-text">Юрист-магістр з відзнакою, магістр з публічного управління та адміністрування</p>
                         </div>
                     </div>
                     <div class="ul-specialist__cred ul-animate ul-animate--delay-2">
@@ -348,7 +349,7 @@
                         </div>
                         <div>
                             <p class="ul-specialist__cred-title">Досвід</p>
-                            <p class="ul-specialist__cred-text">2 роки практики, 150+ успішних перевірок</p>
+                            <p class="ul-specialist__cred-text">2 роки практики, 1000+ перевірок</p>
                         </div>
                     </div>
                 </div>
@@ -373,36 +374,36 @@
                 <!-- Left: Content -->
                 <div>
                     <div class="ul-infidelity__header">
-                        <span class="ul-section-label ul-section-label--red ul-animate">💔 ПРИВАТНА ПОСЛУГА</span>
+                        <span class="ul-section-label ul-section-label--red ul-animate">ПРИВАТНА ПОСЛУГА</span>
                         <h2 class="ul-section-title ul-animate ul-animate--delay-1">Перевірка на зраду</h2>
                         <p class="ul-section-sub ul-animate ul-animate--delay-2">Підозри не дають спокою? Поліграф допоможе розставити всі крапки. Конфіденційно, професійно, чесно.</p>
                     </div>
 
                     <div class="ul-triggers">
                         <div class="ul-trigger-card ul-animate ul-animate--delay-1">
-                            <span class="ul-trigger-card__emoji" aria-hidden="true">😔</span>
+                            <svg class="ul-trigger-card__emoji" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10h.01M15 10h.01M9.5 16s1-1.5 2.5-1.5 2.5 1.5 2.5 1.5M12 3C7.03 3 3 6.58 3 11c0 2.39 1.19 4.53 3.08 6.02L5 21l4.5-1.5c.8.16 1.63.25 2.5.25 4.97 0 9-3.58 9-8s-4.03-8.75-9-8.75z" /></svg>
                             <h3 class="ul-trigger-card__title">Постійні підозри</h3>
                             <p class="ul-trigger-card__text">Відчуваєте, що вас обманюють, але немає доказів</p>
                         </div>
                         <div class="ul-trigger-card ul-animate ul-animate--delay-2">
-                            <span class="ul-trigger-card__emoji" aria-hidden="true">📱</span>
+                            <svg class="ul-trigger-card__emoji" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2zM3 3l18 18" /></svg>
                             <h3 class="ul-trigger-card__title">Приховування</h3>
                             <p class="ul-trigger-card__text">Партнер ховає телефон, змінює паролі</p>
                         </div>
                         <div class="ul-trigger-card ul-animate ul-animate--delay-3">
-                            <span class="ul-trigger-card__emoji" aria-hidden="true">🕒</span>
+                            <svg class="ul-trigger-card__emoji" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             <h3 class="ul-trigger-card__title">Зміна поведінки</h3>
                             <p class="ul-trigger-card__text">Часті затримки, нові звички, холодність</p>
                         </div>
                         <div class="ul-trigger-card ul-animate ul-animate--delay-4">
-                            <span class="ul-trigger-card__emoji" aria-hidden="true">💬</span>
+                            <svg class="ul-trigger-card__emoji" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
                             <h3 class="ul-trigger-card__title">Заперечення</h3>
                             <p class="ul-trigger-card__text">Відмовляється відповідати на прямі питання</p>
                         </div>
                     </div>
 
                     <div class="ul-warning ul-animate">
-                        <span class="ul-warning__emoji" aria-hidden="true">⚠️</span>
+                        <svg class="ul-warning__emoji" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3.75m0 3.75h.008M10.29 3.86L1.82 18a1.5 1.5 0 001.29 2.25h17.78a1.5 1.5 0 001.29-2.25L13.71 3.86a1.5 1.5 0 00-2.42 0z" /></svg>
                         <div>
                             <p class="ul-warning__title">Не живіть з підозрами</p>
                             <p class="ul-warning__text">Невизначеність гірша за правду. Перевірка на поліграфі — це шанс розставити всі крапки над "і" і прийняти правильне рішення про майбутнє стосунків.</p>
@@ -413,7 +414,7 @@
                 <!-- Right: Form -->
                 <div class="ul-form-section ul-form-section--red ul-animate ul-animate--delay-1">
                     <div class="ul-form-section__glow ul-form-section__glow--red" aria-hidden="true"></div>
-                    <span class="ul-form-section__icon" aria-hidden="true">💬</span>
+                    <svg class="ul-form-section__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
                     <h3 class="ul-form-section__title">Готові дізнатись правду?</h3>
                     <p class="ul-form-section__sub">Залиште заявку — зв'яжусь протягом 30 хвилин</p>
 
@@ -428,18 +429,19 @@
                             <input type="tel" id="inf-phone" name="phone" required class="ul-form__input" placeholder="+38 (096) 123-45-67" inputmode="tel" autocomplete="tel">
                         </div>
                         <input type="text" name="honeypot" class="ul-form__honeypot" tabindex="-1" autocomplete="off">
-                        <button type="submit" class="ul-btn ul-btn--primary" style="width:100%;justify-content:center;border-radius:10px;">
-                            💔 Дізнатись правду зараз
+                        <button type="submit" class="ul-btn ul-btn--primary ul-btn--block">
+                            <svg class="ul-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21C12 21 4 14.5 4 9a4.5 4.5 0 018-2.7A4.5 4.5 0 0120 9c0 5.5-8 12-8 12z" /></svg>
+                            Дізнатись правду зараз
                         </button>
                     </form>
 
-                    <div id="ul-success-infidelity" class="ul-form__success" style="display:none;" role="status">
+                    <div id="ul-success-infidelity" class="ul-form__success" hidden role="status">
                         <div class="ul-form__success-icon" aria-hidden="true">✓</div>
                         <h3 class="ul-form__success-title">Заявку отримано!</h3>
                         <p class="ul-form__success-text">Зв'яжусь з вами найближчим часом</p>
                     </div>
 
-                    <p class="ul-form__consent">🔒 Натискаючи кнопку, ви погоджуєтесь з обробкою персональних даних</p>
+                    <p class="ul-form__consent">Натискаючи кнопку, ви погоджуєтесь з обробкою персональних даних</p>
                 </div>
             </div>
         </div>
@@ -465,7 +467,7 @@
                 <a href="mailto:ulianakerezvas@gmail.com" class="ul-footer__link">ulianakerezvas@gmail.com</a>
             </nav>
         </div>
-        <p class="ul-footer__copy">© 2025 Поліграф Львів. Всі права захищено. Національна асоціація поліграфологів України.</p>
+        <p class="ul-footer__copy">© {% now "Y" %} Поліграф Львів. Всі права захищено. Національна асоціація поліграфологів України.</p>
     </footer>
 
     <!-- ═══════════════════════════════════════════════════════════════ -->

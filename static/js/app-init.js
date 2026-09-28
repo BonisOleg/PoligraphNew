@@ -20,7 +20,8 @@
     header: null,
     accordion: null,
     footerAccordion: null,
-    phoneMask: null
+    phoneMask: null,
+    scrollReveal: null
   };
 
   // ============================================================================
@@ -50,6 +51,11 @@
     // Маска телефону для всіх tel-інпутів
     if (window.PhoneMaskModule) {
       moduleRegistry.phoneMask = window.PhoneMaskModule.init();
+    }
+
+    // Luxury scroll-reveal
+    if (window.ScrollRevealModule) {
+      moduleRegistry.scrollReveal = window.ScrollRevealModule.init();
     }
 
     console.log('[AppInit] Modules initialized:', Object.keys(moduleRegistry).filter(k => moduleRegistry[k]));

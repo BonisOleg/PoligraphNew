@@ -17,13 +17,13 @@
 /* ============================================================================ */
 
 :root {
-  /* Кольори */
-  --color-primary: #007bff;
+  /* Кольори: єдиний акцент (приглушений червоний, з мотиву EKG-пов'язки Феміди) */
+  --color-primary: #a8293f;
+  --color-primary-hover: #7d1e2f;
   --color-secondary: #6c757d;
   --color-success: #28a745;
   --color-danger: #dc3545;
-  --color-warning: #ffc107;
-  --color-info: #17a2b8;
+  --color-info: var(--color-primary-hover);
   --color-text: #212529;
   --color-text-muted: #6c757d;
   --color-bg: #ffffff;
@@ -77,14 +77,24 @@
   /* Header використовує fixed layer */
   --z-index-header: var(--z-index-fixed);
 
-  /* Transition timings (додавлення для більш швидких анімацій) */
+  /* Transition timings (UI-мікро — emil) */
   --transition-fast: 0.15s;
   --transition-base: 0.3s;
   --transition-slow: 0.7s;
 
-  /* Header розміри */
-  --header-capsule-mobile-open-width: 90vw; /* Ширина меню на мобільному при відкритті (100vw - 10%) */
-  --header-capsule-desktop-open-width: 30vw; /* Ширина меню на десктопі при відкритті */
+  /* Luxury motion (marketing / scroll-reveal) */
+  --motion-drift: 2500ms;
+  --motion-slide: 1500ms;
+  --motion-reveal: 1000ms;
+  --motion-soft: 500ms;
+  --motion-stagger: 180ms;
+  --ease-drift: ease;
+  --ease-reveal: ease-out;
+
+  /* Header розміри (A+B: компактна капсула під контент) */
+  --header-capsule-size: 88px;
+  --header-capsule-mobile-open-width: 88vw;
+  --header-capsule-desktop-open-width: 28rem; /* запас під 3 пункти UA + падінги капсули */
 }
 
 /* ============================================================================ */

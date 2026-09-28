@@ -165,7 +165,7 @@ function showMessage(message, type = 'error') {
 function hideForm() {
     const form = document.getElementById('infidelity-form');
     if (form) {
-        form.style.display = 'none';
+        form.hidden = true;
     }
 }
 
@@ -175,7 +175,7 @@ function hideForm() {
 function showSuccessMessage() {
     const successElement = document.getElementById('form-success');
     if (successElement) {
-        successElement.style.display = 'block';
+        successElement.hidden = false;
     }
 }
 

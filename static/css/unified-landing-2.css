@@ -62,9 +62,11 @@
 }
 
 .ul-trigger-card__emoji {
-  font-size: 32px;
+  width: 28px;
+  height: 28px;
   display: block;
   margin-bottom: 12px;
+  color: var(--ul-accent-red-light);
 }
 
 .ul-trigger-card__title {
@@ -94,7 +96,7 @@
   margin-bottom: 48px;
 }
 
-.ul-warning__emoji { font-size: 24px; flex-shrink: 0; }
+.ul-warning__emoji { width: 22px; height: 22px; flex-shrink: 0; color: var(--ul-accent-red-light); }
 
 .ul-warning__title {
   font-size: 15px;
@@ -302,9 +304,13 @@
 .ul-form-section__glow--gold { background: var(--ul-accent-gold); }
 
 .ul-form-section__icon {
-  font-size: 32px;
+  width: 32px;
+  height: 32px;
   margin-bottom: 12px;
   display: block;
+  color: var(--ul-text);
+  position: relative;
+  z-index: 1;
 }
 
 .ul-form-section__title {

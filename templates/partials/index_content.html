@@ -1,27 +1,44 @@
 {% load static %}
 <section class="hero" data-hero-section>
-    <div class="hero__video-wrapper">
-        <video class="hero__video" autoplay muted playsinline preload="auto"
-            disablePictureInPicture disableRemotePlayback aria-hidden="true">
-            <source src="{% static 'video/95934818-94b0-4a8f-878c-f8c6b45af65a.mp4' %}" type="video/mp4">
-            Ваш браузер не підтримує відео.
-        </video>
+    <div class="hero__media" aria-hidden="true">
+        <div class="hero__media-plane">
+            <img class="hero__image"
+                 src="{% static 'img/hero-poster.jpg' %}"
+                 alt=""
+                 width="1280"
+                 height="1280"
+                 decoding="async"
+                 fetchpriority="high">
+        </div>
+        <div class="hero__veil"></div>
     </div>
-    <div class="hero__text-container">
-        <p class="hero__text hero__text--center" aria-hidden="true">
-            ПОГЛЯНЬТЕ
-        </p>
-        <p class="hero__text hero__text--center-bottom" aria-hidden="true">
-            <span class="hero__text-line">ПРАВДІ</span>
-            <span class="hero__text-line">У ВІЧІ</span>
-        </p>
+
+    <div class="hero__content">
+        <p class="hero__eyebrow">POLYGRAPH LVIV</p>
+        <h1 class="hero__title">
+            <span class="hero__title-line">Погляньте</span>
+            <span class="hero__title-line">правді у вічі</span>
+        </h1>
+        <p class="hero__lead">Поліграф у Львові · конфіденційно · точність до&nbsp;98%</p>
+        <div class="hero__actions">
+            <a href="#consultation" class="hero__cta hero__cta--primary">Залишити заявку</a>
+            <a href="{% url 'pages:about' %}"
+               class="hero__cta hero__cta--secondary"
+               hx-get="{% url 'pages:about' %}"
+               hx-target="#main"
+               hx-swap="innerHTML"
+               hx-push-url="true">Послуги</a>
+        </div>
     </div>
 </section>
 
 <section class="why-us">
-    <h2 class="why-us__title">ЧОМУ МИ?</h2>
+    <h2 class="why-us__title reveal" data-i="0">ЧОМУ МИ?</h2>
+    <div class="why-us__overlay">
+        <h2 class="why-us__overlay-title reveal" data-i="0">ЧОМУ МИ?</h2>
+    </div>
     <div class="why-us__slider">
-        <div class="why-us__slide" data-slide-index="0">
+        <div class="why-us__slide reveal" data-slide-index="0" data-i="0">
             <img src="{% static 'img/spec.png' %}" alt="Спеціалізація" class="why-us__image">
             <span class="why-us__image-label">ОСВІТЧЕНІСТЬ</span>
             <div class="why-us__slide-content">
@@ -29,8 +46,8 @@
                 </h3>
                 <p class="why-us__slide-description">
                     Керівниця представництва НАПУ у Львівській області. Юрист-магістр з відзнакою та магістр з
-                    публічного управління.
-                    Понад 150+ успішних перевірок з точністю 98%. Сучасне обладнання та науковий підхід до кожної
+                    публічного управління та адміністрування.
+                    Понад 1000+ перевірок з точністю 98%. Сучасне обладнання та науковий підхід до кожної
                     справи.
                 </p>
                 <a href="{% url 'pages:about' %}#service-1" class="why-us__slide-button service-card__button"
@@ -39,7 +56,7 @@
                 </a>
             </div>
         </div>
-        <div class="why-us__slide" data-slide-index="1">
+        <div class="why-us__slide reveal" data-slide-index="1" data-i="1">
             <img src="{% static 'img/price.png' %}" alt="Ціни" class="why-us__image">
             <span class="why-us__image-label">ЦІНИ</span>
             <div class="why-us__slide-content">
@@ -55,7 +72,7 @@
                 </a>
             </div>
         </div>
-        <div class="why-us__slide" data-slide-index="2">
+        <div class="why-us__slide reveal" data-slide-index="2" data-i="2">
             <img src="{% static 'img/poli.png' %}" alt="Поліграф" class="why-us__image">
             <span class="why-us__image-label">ОБЛАДНАННЯ</span>
             <div class="why-us__slide-content">
@@ -73,68 +90,91 @@
             </div>
         </div>
     </div>
-    <div class="why-us__overlay">
-        <h2 class="why-us__overlay-title">ЧОМУ МИ?</h2>
-    </div>
 </section>
 
-<section class="cta">
-    <div class="cta__wrapper">
-        <h2 class="cta__header">
-            Консультація <span class="cta__price-old">500 грн</span>
-            <span class="cta__price-new">0 грн</span>
-            <span class="cta__subtitle">Залишайте заявку</span>
-        </h2>
-        <div class="cta__form-section">
-            <div class="cta__form-container">
-                <div class="cta__container">
-                    <form class="cta__form" method="post" action="{% url 'pages:index' %}" hx-post="{% url 'pages:index' %}"
-                        hx-target="#cta-form-result" hx-swap="innerHTML">
-                        {% csrf_token %}
-                        <div class="cta__form-honeypot" aria-hidden="true">
-                            <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
-                        </div>
-                        <div class="cta__form-group">
-                            <label class="cta__form-label" for="cta-name">
-                                Ім'я
-                            </label>
-                            <input class="cta__form-input" type="text" id="cta-name" name="name" required aria-required="true"
-                                aria-label="Введіть ваше ім'я">
-                        </div>
-                        <div class="cta__form-group">
-                            <label class="cta__form-label" for="cta-phone">
-                                Телефон
-                            </label>
-                            <input class="cta__form-input" type="tel" id="cta-phone" name="phone"
-                                inputmode="tel" autocomplete="tel"
-                                placeholder="+38 (096) 123-45-67"
-                                required aria-required="true"
-                                aria-label="Введіть ваш телефон у форматі +38(0XX) XXX-XX-XX">
-                        </div>
-                        <div class="cta__form-group">
-                            <label class="cta__form-label" for="cta-email">
-                                Email
-                            </label>
-                            <input class="cta__form-input" type="email" id="cta-email" name="email" autocomplete="email" required aria-required="true"
-                                aria-label="Введіть ваш email">
-                        </div>
-                        <div class="cta__form-group">
-                            <label class="cta__form-label" for="cta-message">
-                                Повідомлення
-                            </label>
-                            <textarea class="cta__form-textarea" id="cta-message" name="message" rows="4"
-                                aria-label="Введіть ваше повідомлення"></textarea>
-                        </div>
-                        <button class="cta__form-submit" type="submit" aria-label="Відправити заявку">
-                            Відправити
-                        </button>
-                        <div class="cta__form-result" id="cta-form-result" aria-live="polite"></div>
-                    </form>
+<section class="cta" id="consultation">
+    <div class="cta__shell">
+        <div class="cta__inner">
+            <header class="cta__intro reveal" data-reveal-hold>
+                <p class="cta__eyebrow">Безкоштовна консультація</p>
+                <h2 class="cta__title">Залиште заявку</h2>
+                <p class="cta__lead">Коротко опишіть запит — відповімо конфіденційно протягом дня.</p>
+            </header>
+
+            <form class="cta__form reveal"
+                  data-reveal-hold
+                  data-reveal-delay="220"
+                  method="post"
+                  action="{% url 'pages:index' %}"
+                  hx-post="{% url 'pages:index' %}"
+                  hx-target="#cta-form-result"
+                  hx-swap="innerHTML">
+                {% csrf_token %}
+                <div class="cta__form-honeypot" aria-hidden="true">
+                    <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
                 </div>
-            </div>
+
+                <div class="cta__form-group">
+                    <label class="cta__form-label" for="cta-name">Ім'я</label>
+                    <input class="cta__form-input"
+                           type="text"
+                           id="cta-name"
+                           name="name"
+                           required
+                           aria-required="true"
+                           autocomplete="name">
+                </div>
+
+                <div class="cta__form-group">
+                    <label class="cta__form-label" for="cta-phone">Телефон</label>
+                    <input class="cta__form-input"
+                           type="tel"
+                           id="cta-phone"
+                           name="phone"
+                           inputmode="tel"
+                           autocomplete="tel"
+                           placeholder="+38 (096) 123-45-67"
+                           required
+                           aria-required="true">
+                </div>
+
+                <div class="cta__form-group">
+                    <label class="cta__form-label" for="cta-email">Email</label>
+                    <input class="cta__form-input"
+                           type="email"
+                           id="cta-email"
+                           name="email"
+                           autocomplete="email"
+                           required
+                           aria-required="true">
+                </div>
+
+                <div class="cta__form-group">
+                    <label class="cta__form-label" for="cta-message">Повідомлення</label>
+                    <textarea class="cta__form-textarea"
+                              id="cta-message"
+                              name="message"
+                              rows="4"></textarea>
+                </div>
+
+                <button class="cta__form-submit" type="submit">
+                    Відправити заявку
+                </button>
+
+                <p class="cta__trust">Відповідь протягом дня · конфіденційно</p>
+
+                <div class="cta__form-result" id="cta-form-result" aria-live="polite"></div>
+            </form>
         </div>
-        <div class="cta__image-wrapper">
-            <img src="{% static 'img/about.png' %}" alt="Про нас" class="cta__image">
-        </div>
+
+        <aside class="cta__portrait reveal reveal--fade" aria-hidden="true" data-i="1">
+            <img class="cta__portrait-img"
+                 src="{% static 'img/about.png' %}"
+                 alt=""
+                 width="640"
+                 height="800"
+                 decoding="async"
+                 loading="lazy">
+        </aside>
     </div>
 </section>

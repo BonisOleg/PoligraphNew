@@ -1,310 +1,382 @@
-/* CTA (Call to Action) форма
- * BEM методологія: .cta, .cta__container, .cta__form, тощо
- * 
- * ПРАВИЛА:
- * - НЕ використовувати !important
- * - НЕ дублювати правила з normalize.css
- * - Використовувати CSS variables з base.css
+/* CTA form-first: форма + портрет у колонці-кадрі (не floating cutout)
+ * BEM · RULE-01 · без !important
  */
 
+/* ============================================================================ */
+
+/* SHELL                                                                        */
+
+/* ============================================================================ */
+
 .cta {
-  padding: 0 var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+  position: relative;
+  scroll-margin-top: 6rem;
   background-color: var(--color-bg-dark);
   color: var(--color-text-light);
-  position: relative;
-}
-
-.cta__wrapper {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: var(--spacing-xl);
-  padding: var(--spacing-lg) var(--spacing-lg);
-}
-
-.cta__form-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-lg);
-  flex: 0 0 auto;
-  justify-content: flex-end;
-}
-
-.cta__header {
-  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-  text-align: center;
-  color: #FFFFFF;
-  text-transform: uppercase;
-  font-family: var(--font-family-display);
-  font-weight: 700;
-  line-height: 1.5;
-  margin: 0;
-  width: 100%;
-  max-width: 267px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-  flex: 0 0 auto;
-}
-
-.cta__price-old {
-  text-decoration: line-through;
-  opacity: 0.7;
-}
-
-.cta__price-new {
-  font-size: 1.2em;
-  color: #FFFFFF;
-}
-
-.cta__subtitle {
-  font-size: 0.85em;
-  font-weight: 600;
-  margin-top: var(--spacing-xs);
-}
-
-.cta__form-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.cta__container {
-  max-width: 227px;
-  width: 227px;
-  height: 227px;
-  aspect-ratio: 1;
-  padding: 1.13rem 1rem;
-  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
-  border: 2px solid #FFFFFF;
-  border-radius: 11px;
-  box-shadow: 0 3px 16px rgba(255, 255, 255, 0.2), inset 0 0 40px rgba(255, 255, 255, 0.05), 0 0 13px rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-  position: relative;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
 
+.cta__shell {
+  position: relative;
+  isolation: isolate;
+  min-height: min(100vh, 52rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:
+    calc(var(--spacing-xxl) + var(--safe-area-top))
+    var(--spacing-md)
+    calc(var(--spacing-xxl) + var(--safe-area-bottom));
+  box-sizing: border-box;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+/* ============================================================================ */
+
+/* PORTRAIT (колонка-кадр справа, не floating cutout)                           */
+
+/* ============================================================================ */
+
+.cta__portrait {
+  display: none;
+}
+
+.cta__portrait-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 18%;
+}
+
+/* ============================================================================ */
+
+/* INNER: intro + form                                                          */
+
+/* ============================================================================ */
+
+.cta__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 32rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.cta__intro {
+  margin: 0 0 var(--spacing-xl);
+  text-align: center;
+}
+
+.cta__eyebrow {
+  margin: 0 0 var(--spacing-sm);
+  font-family: var(--font-family-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.cta__title {
+  margin: 0 0 var(--spacing-sm);
+  font-family: var(--font-family-display);
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+}
+
+.cta__lead {
+  margin: 0 auto;
+  max-width: 28rem;
+  font-family: var(--font-family-base);
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* ============================================================================ */
+
+/* FORM                                                                         */
+
+/* ============================================================================ */
+
 .cta__form {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing-md) / 1.5);
-  height: 100%;
-  overflow-y: auto;
+  gap: var(--spacing-md);
 }
 
 .cta__form-group {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing-xs) / 1.5);
+  gap: 0.4rem;
 }
 
 .cta__form-label {
-  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
-  color: #FFFFFF;
-  font-weight: 500;
+  font-family: var(--font-family-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .cta__form-input,
 .cta__form-textarea {
-  padding: calc(var(--spacing-sm) / 1.5) calc(var(--spacing-md) / 1.5);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: var(--border-radius);
-  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 0.75rem;
   font-family: var(--font-family-base);
-  color: #FFFFFF;
-  background-color: rgba(255, 255, 255, 0.1);
-  transition: opacity var(--transition-speed);
+  font-size: 1rem; /* iOS: без авто-zoom на focus */
+  line-height: 1.4;
+  color: var(--color-text-light);
+  background-color: rgba(255, 255, 255, 0.06);
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.cta__form-input::placeholder,
+.cta__form-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .cta__form-input:focus,
 .cta__form-textarea:focus {
   outline: none;
-  border-color: #FFFFFF;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.09);
+}
+
+.cta__form-input:focus-visible,
+.cta__form-textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .cta__form-textarea {
+  min-height: 7rem;
   resize: vertical;
-  min-height: 67px;
 }
 
 .cta__form-submit {
-  padding: 0.67rem 1.33rem;
-  background-color: #FFFFFF;
-  color: #000000;
-  border: 2px solid #FFFFFF;
-  border-radius: 5px;
-  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  min-height: 52px;
+  margin-top: var(--spacing-xs);
+  padding: 0.85rem 1.5rem;
+  border: 2px solid var(--color-text-light);
+  border-radius: 999px;
+  background-color: var(--color-text-light);
+  color: var(--color-bg-dark);
   font-family: var(--font-family-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
   cursor: pointer;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  margin-top: calc(var(--spacing-sm) / 1.5);
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-.cta__form-submit:hover {
-  background-color: #000000;
-  color: #FFFFFF;
-  box-shadow: 0 5px 16px rgba(255, 255, 255, 0.4);
+.cta__form-submit:hover,
+.cta__form-submit:focus-visible {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+.cta__form-submit:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
 }
 
 .cta__form-submit:active {
   transform: scale(0.98);
 }
 
-.cta__form-result {
-  margin-top: calc(var(--spacing-md) / 1.5);
-  padding: calc(var(--spacing-sm) / 1.5);
-  border-radius: var(--border-radius);
+.cta__trust {
+  margin: 0;
   text-align: center;
-  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  font-family: var(--font-family-base);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.cta__form-result:empty {
+  display: none;
+}
+
+.cta__form-result {
+  margin: 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
 }
 
 .cta__form-result[data-status="success"] {
-  background-color: var(--color-success);
-  color: var(--color-bg);
+  background-color: rgba(40, 167, 69, 0.2);
+  color: #9be7b0;
 }
 
 .cta__form-result[data-status="error"] {
-  background-color: var(--color-danger);
-  color: var(--color-bg);
+  background-color: rgba(220, 53, 69, 0.2);
+  color: #f5a3ad;
 }
 
-.cta__image-wrapper {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: var(--spacing-lg);
-}
-
-.cta__image {
-  width: 70%;
-  height: 70%;
-  object-fit: contain;
-  object-position: center;
-  max-width: 420px;
-}
-
-/* Desktop: заголовок → форма → фото (горизонтально) */
-@media (width >= 768px) {
-  .cta__wrapper {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cta__header {
-    flex: 0 0 auto;
-    margin-bottom: 0;
-  }
-
-  .cta__form-section {
-    flex: 0 0 auto;
-    justify-content: center;
-  }
-
-  .cta__image-wrapper {
-    flex: 0 0 auto;
-    align-items: center;
-  }
-
-  .cta__container {
-    max-width: 400px;
-    width: 400px;
-    height: auto;
-    min-height: 400px;
-    aspect-ratio: auto;
-    padding: var(--spacing-lg);
-  }
-
-  .cta__form {
-    height: auto;
-    overflow-y: visible;
-  }
-}
-
-/* Honeypot: прихований пастки для ботів */
+/* Honeypot */
 .cta__form-honeypot {
-  position: fixed;
-  top: -9999px;
-  left: -9999px;
+  position: absolute;
   width: 1px;
   height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
   opacity: 0;
   pointer-events: none;
-  z-index: -1;
 }
 
-/* Mobile: зображення→заголовок→форма */
-@media (width <= 767px) {
-  .cta {
-    min-height: auto;
-    padding: 0;
-  }
+/* ============================================================================ */
 
-  .cta__wrapper {
-    flex-direction: column;
+/* DESKTOP                                                                      */
+
+/* ============================================================================ */
+
+@media (width >= 768px) {
+  .cta__shell {
+    display: grid;
+    grid-template-columns: minmax(0, 32rem) minmax(14rem, 1fr);
     align-items: stretch;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    justify-content: stretch;
+    padding-left: clamp(2rem, 6vw, 5rem);
+    padding-right: 0;
+    padding-top: calc(var(--spacing-xxl) + var(--safe-area-top));
+    padding-bottom: 0;
+    min-height: min(100vh, 48rem);
+  }
+
+  .cta__inner {
+    margin: 0;
+    max-width: 32rem;
+    align-self: center;
+    padding-bottom: calc(var(--spacing-xxl) + var(--safe-area-bottom));
+  }
+
+  .cta__intro {
+    text-align: left;
+  }
+
+  .cta__lead {
+    margin-left: 0;
+  }
+
+  .cta__trust {
+    text-align: left;
+  }
+
+  .cta__portrait {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    min-height: 100%;
+    /* М’який перехід у форму зліва — без dim всього обличчя */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 100%);
+  }
+
+  .cta__portrait::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, var(--color-bg-dark) 0%, transparent 18%),
+      linear-gradient(0deg, var(--color-bg-dark) 0%, transparent 22%);
+  }
+
+  .cta__portrait-img {
+    filter: brightness(1.06) contrast(1.04);
+  }
+}
+
+@media (width >= 1100px) {
+  .cta__shell {
+    grid-template-columns: minmax(0, 34rem) minmax(20rem, 1.05fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+  }
+}
+
+/* ============================================================================ */
+
+/* MOBILE                                                                       */
+
+/* ============================================================================ */
+
+@media (width <= 767px) {
+  .cta__shell {
     min-height: auto;
-    padding: 0;
-    gap: 0;
+    max-width: none;
+    padding:
+      calc(var(--spacing-xl) + var(--safe-area-top))
+      var(--spacing-md)
+      calc(var(--spacing-xl) + var(--safe-area-bottom));
   }
 
-  /* ПОРЯДОК 1: Зображення зверху */
-  .cta__image-wrapper {
-    order: 1;
-    width: 100%;
-    padding: 0;
-    min-height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .cta__intro {
+    margin-bottom: var(--spacing-lg);
   }
 
-  .cta__image {
-    width: 70%;
-    height: 70%;
-    max-width: 420px;
-    max-height: none;
-    object-fit: contain;
+  .cta__portrait {
+    display: none;
+  }
+}
+
+/* ============================================================================ */
+
+/* iOS Safari                                                                   */
+
+/* ============================================================================ */
+
+@supports (-webkit-touch-callout: none) {
+  .cta__form-input,
+  .cta__form-textarea {
+    font-size: 16px;
+  }
+}
+
+/* ============================================================================ */
+
+/* ACCESSIBILITY                                                                */
+
+/* ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .cta__form-submit {
+    transition: none;
   }
 
-  /* ПОРЯДОК 2: Заголовок */
-  .cta__header {
-    order: 2;
-    width: 100%;
-    max-width: 100%;
-    padding: var(--spacing-md) var(--spacing-md) 0 var(--spacing-md);
-    box-sizing: border-box;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .cta__form-section {
-    order: 3;
-    width: 100%;
-    max-width: 100%;
-    padding: 0 var(--spacing-md);
-    box-sizing: border-box;
-  }
-
-  /* ПОРЯДОК 3: Форма */
-  .cta__form-container {
-    width: 100%;
-    padding: 0 0 var(--spacing-md) 0;
-  }
-
-  .cta__container {
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    aspect-ratio: auto;
-    box-sizing: border-box;
+  .cta__form-submit:active {
+    transform: none;
   }
 }
