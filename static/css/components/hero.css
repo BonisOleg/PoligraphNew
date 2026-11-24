@@ -8,7 +8,6 @@
 
 
 .hero {
-  --hero-display: "Benzin-Bold", "Benzin", var(--pg-font);
 
   position: relative;
   isolation: isolate;
@@ -92,7 +91,7 @@
   margin: 0;
   width: 100%;
   color: var(--pg-color-on-accent);
-  font-family: var(--hero-display);
+  font-family: var(--pg-font-display);
   font-size: 100px;
   font-weight: 400;
   letter-spacing: 0;

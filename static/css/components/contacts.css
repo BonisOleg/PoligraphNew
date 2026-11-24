@@ -6,7 +6,6 @@
 }
 
 .contacts {
-  --contacts-display: "Benzin Bold", "Benzin", var(--font-family-display), sans-serif;
   --contacts-line: rgba(255, 255, 255, 0.18);
   --contacts-card: #1a1a1a;
   box-sizing: border-box;
@@ -32,7 +31,7 @@
   margin: 0;
   width: 100%;
   color: var(--pg-color-on-accent);
-  font-family: var(--contacts-display);
+  font-family: var(--pg-font-display);
   font-size: clamp(38px, 6.94vw, 100px);
   font-weight: 700;
   line-height: 0.9;
@@ -109,7 +108,7 @@
   margin: 0;
   max-width: 414px;
   color: var(--pg-color-on-accent);
-  font-family: var(--contacts-display);
+  font-family: var(--pg-font-display);
   font-size: clamp(38px, 3.06vw, 44px);
   font-weight: 700;
   line-height: 1.05;
@@ -271,7 +270,7 @@ a.contacts__value:focus-visible {
 .contacts__find-title {
   margin: 0;
   color: var(--pg-color-on-accent);
-  font-family: var(--contacts-display);
+  font-family: var(--pg-font-display);
   font-size: clamp(38px, 3.47vw, 50px);
   font-weight: 700;
   line-height: 0.9;

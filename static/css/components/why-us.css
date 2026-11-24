@@ -1,7 +1,6 @@
 /* Homepage «Чому ми?» — Figma 1:206 / mobile 1:324–1:348. Tokens: --pg-* */
 
 .why-us  {
-  --why-display: "Benzin-Bold", "Benzin", var(--pg-font);
 
   box-sizing: border-box;
   width: 100%;
@@ -14,7 +13,7 @@
 .why-us__title  {
   margin: 0 0 60px;
   color: var(--pg-color-on-accent);
-  font-family: var(--why-display);
+  font-family: var(--pg-font-display);
   font-size: 50px;
   font-weight: 400;
   letter-spacing: 0;
@@ -96,7 +95,7 @@
 .why-us__num  {
   margin: 0;
   color: var(--pg-color-accent);
-  font-family: var(--why-display);
+  font-family: var(--pg-font-display);
   font-size: 44px;
   font-weight: 400;
   letter-spacing: -0.03em;

@@ -2,7 +2,6 @@
 
 /* Shared Figma page primitives (chunk 3). Tokens: --pg-* from base.css */
 .pg-page {
-  --pg-font-display: "Benzin", "Benzin Bold", "Oswald", sans-serif;
   --pg-section-gap: 120px;
 
   position: relative;

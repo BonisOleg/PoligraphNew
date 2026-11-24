@@ -6,7 +6,6 @@
 }
 
 .equip {
-  --equip-display: "Benzin Bold", "Benzin", var(--font-family-display), sans-serif;
   --equip-line: rgba(255, 255, 255, 0.18);
   box-sizing: border-box;
   width: 100%;
@@ -61,7 +60,7 @@
 .equip__stat-value,
 .equip__card-value,
 .equip__cert-index {
-  font-family: var(--equip-display);
+  font-family: var(--pg-font-display);
   font-weight: 700;
 }
 
