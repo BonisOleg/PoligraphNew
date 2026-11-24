@@ -136,13 +136,9 @@
 /* ============================================================================ */
 
 
-@font-face {
-  font-family: 'Benzin';
-  src: url('../fonts/Benzin-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* Benzin-Bold.woff2 is not in the repo yet; browsers fall back to Oswald
+   from --pg-font-display. Do not add a url() here until the font file is committed,
+   or CompressedManifestStaticFilesStorage will fail collectstatic. */
 
 @font-face {
   font-family: 'Electronica Display Stencil';
