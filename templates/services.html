@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - PolygraphNew{% endblock %}
+
+{% block content %}
+<main class="main main--services" id="main">
+    <section class="about-accordions">
+        {% include 'partials/services_content.html' %}
+    </section>
+</main>
+{% endblock %}

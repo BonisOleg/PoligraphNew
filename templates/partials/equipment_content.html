@@ -1,0 +1,54 @@
+    <!-- БЛОК 3: Професійне обладнання -->
+    <article class="accordion" id="service-2" data-accordion="equipment" aria-expanded="true">
+        <div class="accordion__header" role="button" tabindex="0" aria-label="Розгорнути секцію про обладнання">
+            <h2 class="accordion__title">ПРОФЕСІЙНЕ ОБЛАДНАННЯ</h2>
+            <p class="accordion__subtitle">{{ equipment_hero.title }}</p>
+        </div>
+        
+        <div class="accordion__content">
+            <!-- Hero -->
+            <div class="accordion__hero">
+                <span class="accordion__hero-badge">{{ equipment_hero.badge }}</span>
+                <h3 class="accordion__hero-name">{{ equipment_hero.title }}</h3>
+                <p class="accordion__hero-subtitle">{{ equipment_hero.subtitle }}</p>
+                <p class="accordion__hero-description">{{ equipment_hero.description }}</p>
+            </div>
+            
+            <!-- Статистика -->
+            <div class="accordion__stats">
+                {% for stat in equipment_stats %}
+                <div class="accordion__stat-item">
+                    <span class="accordion__stat-number">{{ stat.number }}</span>
+                    <span class="accordion__stat-label">{{ stat.label }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Порівняння -->
+            <div class="accordion__comparison">
+                <h3 class="accordion__section-title">РУБІКОН vs Інші поліграфи</h3>
+                <div class="accordion__comparison-grid">
+                    {% for item in equipment_comparison %}
+                    <article class="comparison-card{% if forloop.counter0|divisibleby:2 %} comparison-card--dark{% endif %}">
+                        <h4 class="comparison-card__characteristic">{{ item.characteristic }}</h4>
+                        <p class="comparison-card__rubicon">{{ item.rubicon }}</p>
+                        <p class="comparison-card__others">{{ item.others }}</p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Сертифікація -->
+            <div class="accordion__certification">
+                <h3 class="accordion__section-title">Сертифікація та стандарти</h3>
+                <div class="accordion__certification-grid">
+                    {% for cert in equipment_certification %}
+                    <div class="certification-card">
+                        <h4 class="certification-card__title">{{ cert.title }}</h4>
+                        <p class="certification-card__description">{{ cert.description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </article>

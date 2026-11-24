@@ -10,7 +10,10 @@ app_name = 'pages'
 urlpatterns = [
     # Main site
     path('', views.index_view, name='index'),
-    path('about/', views.about_view, name='about'),
+    path('poslugy-ta-tsiny/', views.services_view, name='services'),
+    path('chlen-nap/', views.nap_view, name='nap'),
+    path('obladnannia/', views.equipment_view, name='equipment'),
+    path('about/', views.about_redirect, name='about'),
     path('contacts/', views.contacts_view, name='contacts'),
     path('consultation/', views.consultation_view, name='consultation'),
     path('thank-you/', views.thank_you_view, name='thank_you'),
@@ -29,7 +32,3 @@ urlpatterns = [
     path('robots.txt', views.robots_txt, name='robots'),
     path('sw.js', views.sw_js, name='sw'),
 ]
-
-
-
-

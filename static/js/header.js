@@ -1,223 +1,105 @@
 /**
- * Header menu controller - капсула що розтягується
- * - CSS containment для iOS Safari перформансу
- * - GPU-прискорена анімація (width + opacity)
- * - Accessibility-compliant (WCAG 2.1 AA)
- * - HTMX-ready з правильним lifecycle
- * - iOS/Android оптимізована
+ * Header menu — Figma shell (desktop nav, mobile burger).
+ * Public API kept for app-init.js: HeaderModule.init() → { destroy, close, open }
  */
 
 window.HeaderModule = (function() {
   'use strict';
 
-  // ============================================================================
-  // STATE
-  // ============================================================================
+  const MQ = '(max-width: 1099px)';
 
-  let capsule = null;
+  let header = null;
   let toggleButton = null;
   let nav = null;
   let listeners = [];
-  let closeTimeout = null;
 
-  // ============================================================================
-  // FUNCTIONS
-  // ============================================================================
-
-  /**
-   * Відкриває меню/капсулу з анімацією
-   * 1. Капсула розтягується (0.7s - width анімація)
-   * 2. MENU → X (0.3s - opacity)
-   * 3. Посилання з'являються (затримка 0.7s, потім opacity 0→1 за 0.3s)
-   */
-  function openMenu() {
-    if (!capsule || !toggleButton || !nav) { return; }
-    
-    // Очищаємо timeout якщо є
-    if (closeTimeout) {
-      clearTimeout(closeTimeout);
-      closeTimeout = null;
-    }
-    
-    // КРОК 1: Розтягуємо капсулу (width 120px → 30vw/100vw)
-    capsule.setAttribute('data-open', 'true');
-    
-    // КРОК 2: ARIA для accessibility
-    toggleButton.setAttribute('aria-expanded', 'true');
-    toggleButton.setAttribute('aria-label', 'Закрити меню');
-    nav.removeAttribute('hidden');
-    
-    // КРОК 3: Focus на перший link після анімації капсули + появи контенту
-    const firstLink = nav.querySelector('.header__nav-link');
-    if (firstLink) {
-      // 700ms (анімація розтягування) + 300ms (opacity появи) = 1000ms
-      setTimeout(() => {
-        firstLink.focus();
-      }, 1000);
-    }
+  function isMobile() {
+    return window.matchMedia(MQ).matches;
   }
 
-  /**
-   * Закриває меню/капсулу з анімацією
-   * 1. X → MENU (0.3s - opacity)
-   * 2. Посилання зникають (0.3s - opacity)
-   * 3. Капсула стискується (0.7s - width анімація)
-   * @param {Object} [options]
-   * @param {boolean} [options.returnFocus=true] — повернути фокус на toggle кнопку
-   */
-  function closeMenu(options) {
-    if (!capsule || !toggleButton || !nav) { return; }
-    
-    // КРОК 1: Стискаємо капсулу (width 30vw/100vw → 120px)
-    capsule.setAttribute('data-open', 'false');
-    
-    // КРОК 2: ARIA
-    toggleButton.setAttribute('aria-expanded', 'false');
-    toggleButton.setAttribute('aria-label', 'Відкрити меню');
-    
-    // КРОК 3: Hidden атрибут після анімації стискання (700ms)
-    closeTimeout = setTimeout(() => {
-      nav.setAttribute('hidden', '');
-    }, 700);
-    
-    if (!options || options.returnFocus !== false) {
-      toggleButton.focus();
-    }
+  function addListener(el, event, fn) {
+    el.addEventListener(event, fn);
+    listeners.push({ el: el, event: event, fn: fn });
   }
 
-  /**
-   * Toggle меню
-   */
-  function toggleMenu() {
-    if (!capsule) { return; }
-    
-    const isOpen = capsule.getAttribute('data-open') === 'true';
-    if (isOpen) {
-      closeMenu();
+  function setOpen(open) {
+    if (!header || !toggleButton || !nav) { return; }
+
+    if (!isMobile()) {
+      open = false;
+    }
+
+    header.classList.toggle('is-open', open);
+    toggleButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggleButton.setAttribute('aria-label', open ? 'Закрити меню' : 'Відкрити меню');
+
+    if (isMobile()) {
+      if (open) {
+        nav.removeAttribute('hidden');
+      } else {
+        nav.setAttribute('hidden', '');
+      }
     } else {
-      openMenu();
+      nav.removeAttribute('hidden');
     }
   }
 
-  /**
-   * Ініціалізація модуля
-   */
-  function init() {
-    capsule = document.querySelector('.header__capsule');
-    toggleButton = capsule ? capsule.querySelector('.header__toggle') : null;
-    nav = capsule ? capsule.querySelector('.header__nav') : null;
+  function openMenu() { setOpen(true); }
+  function closeMenu() { setOpen(false); }
 
-    if (!capsule || !toggleButton || !nav) {
-      console.log('[Header] Required elements not found');
-      return null;
-    }
+  function onToggle(event) {
+    event.preventDefault();
+    const open = header && header.classList.contains('is-open');
+    setOpen(!open);
+  }
 
-    // ========================================================================
-    // EVENT HANDLERS
-    // ========================================================================
-
-    // Toggle handler (натискання на кнопку)
-    const handleToggle = function(e) {
-      e.stopPropagation();
-      toggleMenu();
-    };
-
-    // Close на outside click (клік поза капсулою)
-    const handleDocumentClick = function(e) {
-      if (!capsule) { return; }
-      
-      const isOpen = capsule.getAttribute('data-open') === 'true';
-      if (!isOpen) { return; }
-      
-      // Не закриваємо якщо клік всередині капсули
-      if (capsule.contains(e.target)) { return; }
-      
-      // Не закриваємо якщо клік на HTMX посилання (вони самі закриють меню)
-      const clickedLink = e.target.closest('a[hx-get], a[hx-post]');
-      if (clickedLink) { return; }
-      
-      // Закриваємо меню без повернення фокусу на toggle,
-      // щоб не красти фокус з елемента, по якому клікнули
-      closeMenu({ returnFocus: false });
-    };
-
-    // Close на Escape (клавіша Escape)
-    const handleEscape = function(e) {
-      if (e.key !== 'Escape' && e.key !== 'Esc') { return; }
-      
-      const isOpen = capsule && capsule.getAttribute('data-open') === 'true';
-      if (!isOpen) { return; }
-      
+  function onKeydown(event) {
+    if (event.key === 'Escape') {
       closeMenu();
-    };
-
-    // Close на link click (натискання на посилання у меню)
-    const navLinks = nav.querySelectorAll('.header__nav-link');
-    const handleLinkClick = function(_e) {
-      // Затримка 50ms щоб HTMX встиг спрацювати перед закриттям
-      setTimeout(() => {
-        closeMenu();
-      }, 50);
-    };
-
-    // ========================================================================
-    // ADD LISTENERS
-    // ========================================================================
-
-    // Додаємо listeners та зберігаємо для cleanup
-    const addListener = function(el, event, fn) {
-      el.addEventListener(event, fn);
-      listeners.push({ el: el, event: event, fn: fn });
-    };
-
-    addListener(toggleButton, 'click', handleToggle);
-    addListener(document, 'click', handleDocumentClick);
-    addListener(document, 'keydown', handleEscape);
-
-    navLinks.forEach((link) => {
-      addListener(link, 'click', handleLinkClick);
-    });
-
-    console.log('[Header] Module initialized');
-
-    return {
-      destroy: destroy,
-      close: closeMenu,
-      open: openMenu
-    };
+    }
   }
 
-  /**
-   * Cleanup (для HTMX afterSwap або при видаленні компонента)
-   * Видаляє всі event listeners та очищує таймери
-   */
-  function destroy() {
-    console.log('[Header] Destroying module');
+  function onResize() {
+    setOpen(false);
+  }
 
-    // Очищаємо таймер якщо є
-    if (closeTimeout) {
-      clearTimeout(closeTimeout);
-      closeTimeout = null;
+  function onNavClick(event) {
+    const link = event.target.closest('.header__nav-link');
+    if (link) {
+      closeMenu();
+    }
+  }
+
+  function init() {
+    destroy();
+
+    header = document.querySelector('.header');
+    toggleButton = document.querySelector('.header__toggle');
+    nav = document.getElementById('main-navigation');
+
+    if (!header || !toggleButton || !nav) {
+      return { destroy: destroy, close: closeMenu, open: openMenu };
     }
 
-    // Видаляємо всі listeners
-    listeners.forEach((listener) => {
+    addListener(toggleButton, 'click', onToggle);
+    addListener(document, 'keydown', onKeydown);
+    addListener(window, 'resize', onResize);
+    addListener(nav, 'click', onNavClick);
+
+    setOpen(false);
+
+    return { destroy: destroy, close: closeMenu, open: openMenu };
+  }
+
+  function destroy() {
+    listeners.forEach(function(listener) {
       listener.el.removeEventListener(listener.event, listener.fn);
     });
-
-    // Очищаємо масив та змінні
     listeners = [];
-    capsule = null;
+    header = null;
     toggleButton = null;
     nav = null;
   }
 
-  // ============================================================================
-  // PUBLIC API
-  // ============================================================================
-
-  return {
-    init: init
-  };
-
+  return { init: init };
 })();

@@ -5,7 +5,7 @@ Views для сторінок сайту.
 
 import logging
 import traceback
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseServerError, JsonResponse
 from django.utils import timezone
@@ -117,13 +117,10 @@ def index_view(request):
         return HttpResponseServerError(f'Server error: {str(e)}')
 
 
-def about_view(request):
-    """Сторінка про нас з 3 акордеон-блоками: Послуги, Поліграфолог, Обладнання"""
-    try:
-        context = {
-        'title': 'Про нас',
-        
-        # БЛОК 1: Послуги
+def _services_context():
+    """Контекст сторінки «Послуги та ціни» (колишній блок 1 about_view)."""
+    return {
+        'title': 'Послуги та ціни',
         'services_stats': [
             {'number': '1000+', 'label': 'перевірок'},
             {'number': '98%', 'label': 'точність результатів'},
@@ -175,8 +172,13 @@ def about_view(request):
             {'title': 'Висока точність', 'text': '98% точність результатів'},
             {'title': 'Виїзд до клієнта', 'text': 'Перевірки в зручному для вас місці'},
         ],
-        
-        # БЛОК 2: Поліграфолог
+    }
+
+
+def _nap_context():
+    """Контекст сторінки «Член НАП» (колишній блок 2 about_view)."""
+    return {
+        'title': 'Член НАП',
         'polygraphologist': {
             'name': 'Керезвас Юліана Георгіївна',
             'description': 'Керівниця представництва Національної асоціації поліграфологів України у Львівській області. Юрист-магістр з відзнакою, магістр з публічного управління та адміністрування.',
@@ -249,8 +251,13 @@ def about_view(request):
                 'description': 'Використовую лише перевірені методики та сучасне обладнання.',
             },
         ],
-        
-        # БЛОК 3: Обладнання
+    }
+
+
+def _equipment_context():
+    """Контекст сторінки «Обладнання» (колишній блок 3 about_view)."""
+    return {
+        'title': 'Обладнання',
         'equipment_hero': {
             'badge': 'Офіційний дилер в Україні',
             'title': 'Поліграф РУБІКОН',
@@ -287,16 +294,62 @@ def about_view(request):
             },
         ],
     }
-    
-        # Перевірка HTMX запиту
-        if request.headers.get('HX-Request'):
-            return render(request, 'partials/about_content.html', context)
-        
-        return render(request, 'about.html', context)
+
+
+def _render_main_or_partial(request, template_name, partial_name, context):
+    if request.headers.get('HX-Request'):
+        return render(request, partial_name, context)
+    return render(request, template_name, context)
+
+
+def services_view(request):
+    """Сторінка «Послуги та ціни»."""
+    try:
+        return _render_main_or_partial(
+            request,
+            'services.html',
+            'partials/services_content.html',
+            _services_context(),
+        )
     except Exception as e:
-        logger.error(f'Error in about_view: {e}')
+        logger.error(f'Error in services_view: {e}')
         logger.error(traceback.format_exc())
         return HttpResponseServerError(f'Server error: {str(e)}')
+
+
+def nap_view(request):
+    """Сторінка «Член НАП»."""
+    try:
+        return _render_main_or_partial(
+            request,
+            'nap.html',
+            'partials/nap_content.html',
+            _nap_context(),
+        )
+    except Exception as e:
+        logger.error(f'Error in nap_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
+
+
+def equipment_view(request):
+    """Сторінка «Обладнання»."""
+    try:
+        return _render_main_or_partial(
+            request,
+            'equipment.html',
+            'partials/equipment_content.html',
+            _equipment_context(),
+        )
+    except Exception as e:
+        logger.error(f'Error in equipment_view: {e}')
+        logger.error(traceback.format_exc())
+        return HttpResponseServerError(f'Server error: {str(e)}')
+
+
+def about_redirect(request):
+    """Старий /about/ — 301 на сторінку послуг."""
+    return redirect('pages:services', permanent=True)
 
 
 def contacts_view(request):

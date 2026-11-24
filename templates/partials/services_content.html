@@ -1,0 +1,55 @@
+    <!-- БЛОК 1: Ціни на послуги -->
+    <article class="accordion" id="service-0" data-accordion="services" aria-expanded="true">
+        <div class="accordion__header" role="button" tabindex="0" aria-label="Розгорнути секцію послуг">
+            <h2 class="accordion__title">ЦІНИ НА ПОСЛУГИ</h2>
+            <p class="accordion__subtitle">Професійні перевірки у Львові</p>
+        </div>
+        
+        <div class="accordion__content">
+            <!-- Статистика -->
+            <div class="accordion__stats">
+                {% for stat in services_stats %}
+                <div class="accordion__stat-item">
+                    <span class="accordion__stat-number">{{ stat.number }}</span>
+                    <span class="accordion__stat-label">{{ stat.label }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Послуги -->
+            <div class="accordion__services">
+                <h3 class="accordion__section-title">Наші послуги</h3>
+                <p class="accordion__section-description">Спеціалізуємося на перевірках у Львові: професійний поліграфолог, перевірка на детекторі брехні та корпоративні послуги для бізнесу.</p>
+                <div class="accordion__services-grid">
+                    {% for service in services_list %}
+                    <article class="service-card{% if forloop.counter0|divisibleby:2 %} service-card--dark{% endif %}">
+                        <h4 class="service-card__title">{{ service.title }}</h4>
+                        <p class="service-card__price">{{ service.price }}</p>
+                        {% if service.discount %}
+                        <p class="service-card__discount">{{ service.discount }}</p>
+                        {% endif %}
+                        <ul class="service-card__features">
+                            {% for feature in service.features %}
+                            <li>{{ feature }}</li>
+                            {% endfor %}
+                        </ul>
+                        <a href="{% url 'pages:contacts' %}" class="service-card__button">Замовити послугу →</a>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Переваги -->
+            <div class="accordion__advantages">
+                <h3 class="accordion__section-title">Чому обирають нас?</h3>
+                <div class="accordion__advantages-grid">
+                    {% for advantage in services_advantages %}
+                    <div class="advantage-card">
+                        <h4 class="advantage-card__title">{{ advantage.title }}</h4>
+                        <p class="advantage-card__text">{{ advantage.text }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </article>

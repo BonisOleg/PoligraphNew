@@ -56,7 +56,7 @@
 
     <!-- 1.6 Google Fonts - преміум шрифти з підтримкою кирилиці -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Montserrat:wght@500;600;700&family=Inter:wght@400;500&family=Rubik+Scribble&display=swap&subset=cyrillic"
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Montserrat:wght@500;600;700&family=Inter:wght@400;500;600&family=Rubik+Scribble&display=swap&subset=cyrillic"
         rel="stylesheet">
 
     <!-- 2. CSRF TOKEN (для HTMX форм) -->
@@ -64,46 +64,55 @@
 
     <!-- 3. HTMX (З DEFER, НЕБЛОКУЮЧЕ ЗАВАНТАЖЕННЯ) -->
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"
-        integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"
         defer></script>
 
     {% block extra_head %}{% endblock %}
 </head>
-<body{% if request.resolver_match and request.resolver_match.url_name == 'index' %} class="body--index"{% elif request.resolver_match and request.resolver_match.url_name == 'about' %} class="body--about"{% endif %}>
+<body{% if request.resolver_match and request.resolver_match.url_name %} class="body--{{ request.resolver_match.url_name }}"{% endif %}>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHRVL87G"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <a href="#main" class="skip-link">Перейти до основного контенту</a>
     <header class="header" role="banner">
-        <!-- КАПСУЛА: один контейнер що розтягується -->
-        <div class="header__capsule" data-open="false">
-            <!-- Кнопка: MENU/X toggle -->
-            <button class="header__toggle" type="button" aria-expanded="false" aria-label="Відкрити меню">
-                <span class="header__label" aria-hidden="true">MENU</span>
-                <span class="header__close" aria-hidden="true">✕</span>
-            </button>
+        <div class="header__bar">
+            <a href="{% url 'pages:index' %}" class="header__logo" hx-get="{% url 'pages:index' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">
+                <img class="header__logo-img" src="{% static 'img/Logoabout.png' %}" alt="POLYGRAPH LVIV" width="46" height="47">
+            </a>
 
-            <!-- Навігація: 3 посилання (розтягуються з капсулою) -->
-            <nav class="header__nav" id="main-navigation" aria-label="Головна навігація" hidden>
+            <nav class="header__nav" id="main-navigation" aria-label="Головна навігація">
                 <ul class="header__nav-list" role="list">
                     <li class="header__nav-item">
-                        <a href="{% url 'pages:index' %}" class="header__nav-link" {% if request.resolver_match and request.resolver_match.url_name == 'index' %}aria-current="page"{% endif %} hx-get="{% url 'pages:index' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">
-                            Головна
-                        </a>
+                        <a href="{% url 'pages:index' %}" class="header__nav-link" {% if request.resolver_match and request.resolver_match.url_name == 'index' %}aria-current="page"{% endif %} hx-get="{% url 'pages:index' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Головна</a>
                     </li>
                     <li class="header__nav-item">
-                        <a href="{% url 'pages:about' %}" class="header__nav-link" {% if request.resolver_match and request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %} hx-get="{% url 'pages:about' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">
-                            Послуги
-                        </a>
+                        <a href="{% url 'pages:services' %}" class="header__nav-link" {% if request.resolver_match and request.resolver_match.url_name == 'services' %}aria-current="page"{% endif %} hx-get="{% url 'pages:services' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Послуги та ціни</a>
                     </li>
                     <li class="header__nav-item">
-                        <a href="{% url 'pages:contacts' %}" class="header__nav-link" {% if request.resolver_match and request.resolver_match.url_name == 'contacts' %}aria-current="page"{% endif %} hx-get="{% url 'pages:contacts' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">
-                            Контакти
-                        </a>
+                        <a href="{% url 'pages:nap' %}" class="header__nav-link" {% if request.resolver_match and request.resolver_match.url_name == 'nap' %}aria-current="page"{% endif %} hx-get="{% url 'pages:nap' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Член НАП</a>
+                    </li>
+                    <li class="header__nav-item">
+                        <a href="{% url 'pages:equipment' %}" class="header__nav-link" {% if request.resolver_match and request.resolver_match.url_name == 'equipment' %}aria-current="page"{% endif %} hx-get="{% url 'pages:equipment' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Обладнання</a>
+                    </li>
+                    <li class="header__nav-item">
+                        <a href="{% url 'pages:contacts' %}" class="header__nav-link" {% if request.resolver_match and request.resolver_match.url_name == 'contacts' %}aria-current="page"{% endif %} hx-get="{% url 'pages:contacts' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Контакти</a>
                     </li>
                 </ul>
             </nav>
+
+            <div class="header__tools">
+                <a href="{% url 'pages:index' %}#consultation" class="pg-cta">
+                    <span class="pg-cta__label">Залишити заявку</span>
+                    <span class="pg-cta__icon" aria-hidden="true">
+                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </a>
+                <button class="header__toggle" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Відкрити меню">
+                    <span class="header__toggle-bars" aria-hidden="true"></span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -124,5 +133,4 @@
     <script src="{% static 'js/scroll-reveal.js' %}" defer></script>
     <script src="{% static 'js/app-init.js' %}" defer></script>
     </body>
-
 </html>
