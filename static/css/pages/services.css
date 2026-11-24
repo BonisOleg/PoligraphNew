@@ -1,0 +1,670 @@
+/* Послуги та ціни — Figma OFNpLgOOg6uJePv8J3X6lT frames 1:416 / 1:662 */
+
+/* Shared Figma page primitives (chunk 3). Tokens: --pg-* from base.css */
+.pg-page {
+  --pg-font-display: "Benzin", "Benzin Bold", "Oswald", sans-serif;
+  --pg-section-gap: 120px;
+
+  position: relative;
+  z-index: 1;
+  background: #000;
+  color: var(--pg-color-text);
+  padding: 80px var(--pg-gutter) 120px;
+  overflow: clip;
+}
+
+.pg-page > * {
+  width: 100%;
+  max-width: var(--pg-content-width);
+  margin-inline: auto;
+}
+
+.pg-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid var(--pg-color-accent);
+  border-radius: 200px;
+  font-family: var(--pg-font);
+  font-size: 16px;
+  font-weight: var(--pg-font-weight-semibold);
+  letter-spacing: -0.02em;
+  line-height: normal;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.pg-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pg-hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.pg-hero__title {
+  margin: 0;
+  max-width: 777px;
+  font-family: var(--pg-font-display);
+  font-size: 100px;
+  font-weight: 700;
+  line-height: 0.9;
+  color: #fff;
+  text-transform: none;
+}
+
+.pg-hero__title--nap {
+  max-width: 1255px;
+}
+
+.pg-hero__accent {
+  color: var(--pg-color-accent);
+}
+
+.pg-hero__subtitle {
+  margin: 0;
+  font-family: var(--pg-font);
+  font-size: 18px;
+  font-weight: var(--pg-font-weight-medium);
+  letter-spacing: -0.03em;
+  line-height: normal;
+  color: var(--pg-color-text);
+}
+
+.pg-hero__panel,
+.pg-hero__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.pg-hero__actions {
+  flex-direction: row;
+  justify-content: center;
+  gap: 11px;
+  margin-top: 100px;
+}
+
+.pg-hero__panel {
+  gap: 20px;
+  margin-top: 100px;
+}
+
+.pg-cta--ghost {
+  width: var(--pg-cta-width);
+  min-height: var(--pg-cta-height);
+  justify-content: center;
+  padding: 14px 24px;
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.pg-cta--ghost:hover,
+.pg-cta--ghost:focus-visible {
+  background: #fff;
+  color: var(--pg-color-cta-text);
+}
+
+.pg-stats {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.pg-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex: 1 1 0;
+  min-height: 114px;
+  padding: 20px 17px 19px 20px;
+  border: 1.5px solid #fff;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.pg-stat--featured {
+  background: #fff;
+  border-color: #fff;
+}
+
+.pg-stat__value {
+  font-family: var(--pg-font-display);
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--pg-color-accent);
+}
+
+.pg-stat__label {
+  font-family: var(--pg-font);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: normal;
+  color: var(--pg-color-text);
+}
+
+.pg-stat--featured .pg-stat__label {
+  color: var(--pg-color-muted);
+}
+
+.pg-section-head {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pg-section-head--center {
+  align-items: center;
+  text-align: center;
+  max-width: 562px;
+  margin-inline: auto;
+}
+
+.pg-section-head__title,
+.pg-rows-section > .pg-section-head__title,
+.pg-nap__principles > .pg-section-head__title,
+.pg-nap__education > .pg-section-head__title {
+  margin: 0;
+  font-family: var(--pg-font-display);
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 0.9;
+  color: #fff;
+}
+
+.pg-section-head__title--center {
+  text-align: center;
+}
+
+.pg-section-head__lead {
+  margin: 0;
+  font-family: var(--pg-font);
+  font-size: 18px;
+  font-weight: var(--pg-font-weight-medium);
+  letter-spacing: -0.03em;
+  line-height: normal;
+  color: var(--pg-color-text);
+}
+
+.pg-rows-section {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.pg-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.pg-rows__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 42px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #fff;
+  margin-bottom: 16px;
+}
+
+.pg-rows__item:last-child {
+  margin-bottom: 0;
+}
+
+.pg-rows__left {
+  display: flex;
+  align-items: center;
+  gap: 100px;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.pg-rows__num {
+  flex: 0 0 40px;
+  font-family: var(--pg-font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--pg-color-accent);
+}
+
+.pg-rows__num--mob { display: none; }
+
+.pg-rows__title {
+  font-family: var(--pg-font);
+  font-size: 16px;
+  font-weight: var(--pg-font-weight-semibold);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.pg-rows__text {
+  margin: 0;
+  font-family: var(--pg-font);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: var(--pg-color-text);
+  text-align: right;
+}
+
+@media (width <= 1099px) {
+  .pg-page {
+    padding: 80px var(--pg-gutter-mobile) 80px;
+  }
+
+  .pg-badge {
+    font-size: 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .pg-hero__copy {
+    gap: 17px;
+  }
+
+  .pg-hero__title {
+    font-size: 40px;
+    max-width: none;
+  }
+
+  .pg-hero__title--nap {
+    font-size: 38px;
+    width: 100vw;
+    max-width: 393px;
+  }
+
+  .pg-hero__accent {
+    color: #fff;
+  }
+
+  .pg-hero__subtitle {
+    font-size: 16px;
+    letter-spacing: -0.03em;
+  }
+
+  .pg-hero__panel,
+  .pg-hero__actions {
+    margin-top: 0;
+  }
+
+  .pg-hero__actions {
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 360px;
+    margin-top: 40px;
+  }
+
+  .pg-hero__actions .pg-cta,
+  .pg-hero__actions .pg-cta--ghost,
+  .pg-hero__panel .pg-cta {
+    width: 100%;
+  }
+
+  .pg-stats {
+    flex-direction: column;
+  }
+
+  .pg-stat {
+    min-height: 84px;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .pg-stat__value {
+    font-size: 32px;
+  }
+
+  .pg-section-head__title,
+  .pg-rows-section > .pg-section-head__title,
+  .pg-nap__principles > .pg-section-head__title,
+  .pg-nap__education > .pg-section-head__title {
+    font-size: 40px;
+  }
+
+  .pg-section-head__lead {
+    font-size: 16px;
+  }
+
+  .pg-section-head--center {
+    max-width: none;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .pg-rows-section {
+    gap: 40px;
+  }
+
+  .pg-rows__item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    min-height: 0;
+    margin-bottom: 14px;
+    padding-bottom: 16px;
+  }
+
+  .pg-rows__left {
+    gap: 16px;
+    width: 100%;
+  }
+
+  .pg-rows__num--desk { display: none; }
+  .pg-rows__num--mob { display: block; }
+
+  .pg-rows__title {
+    white-space: normal;
+  }
+
+  .pg-rows__text {
+    text-align: left;
+    width: 100%;
+  }
+}
+
+/* Services page */
+.pg-services__hero {
+  position: relative;
+}
+
+.pg-services__hero-art {
+  display: none;
+}
+
+.pg-services__catalog {
+  margin-top: 120px;
+  scroll-margin-top: 120px;
+}
+
+.pg-services__catalog .pg-section-head {
+  margin-bottom: 60px;
+}
+
+.pg-services__grid-wrap {
+  position: relative;
+  margin-inline: calc(50% - 50vw);
+  width: 100vw;
+  max-width: none;
+  padding: 49px var(--pg-gutter) 0;
+  background:
+    linear-gradient(to bottom, #000 0, transparent 80px),
+    url("../../img/figma/services-cards-bg.png") top center / 1524px auto no-repeat,
+    #000;
+}
+
+.pg-services__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: var(--pg-content-width);
+  margin: 0 auto;
+}
+
+.pg-service-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  min-height: 370px;
+  padding: 20px 17px 20px 20px;
+  border: 1.5px solid #fff;
+  border-radius: 20px;
+  background: #000;
+  scroll-margin-top: 120px;
+}
+
+.pg-service-card--light {
+  background: #fff;
+}
+
+.pg-service-card__title {
+  margin: 0;
+  font-family: var(--pg-font);
+  font-size: 16px;
+  font-weight: var(--pg-font-weight-semibold);
+  letter-spacing: -0.02em;
+  line-height: normal;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.pg-service-card--light .pg-service-card__title {
+  color: #000;
+}
+
+.pg-service-card__price-block {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pg-service-card__price {
+  margin: 0;
+  font-family: var(--pg-font-display);
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--pg-color-accent);
+}
+
+.pg-service-card__discount {
+  margin: 0;
+  font-family: var(--pg-font);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: var(--pg-color-text);
+}
+
+.pg-service-card--light .pg-service-card__discount {
+  color: var(--pg-color-muted);
+}
+
+.pg-service-card__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pg-service-card__features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pg-service-card__features li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--pg-font);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: var(--pg-color-text);
+}
+
+.pg-service-card--light .pg-service-card__features li {
+  color: var(--pg-color-muted);
+}
+
+.pg-service-card__features img {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.pg-service-card__cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--pg-font);
+  font-size: 16px;
+  font-weight: var(--pg-font-weight-semibold);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--pg-color-accent);
+}
+
+.pg-service-card__cta svg {
+  flex: 0 0 20px;
+}
+
+.pg-services .pg-rows-section {
+  margin-top: 120px;
+}
+
+@media (width <= 1099px) {
+  .pg-services__hero {
+    position: relative;
+    width: 100%;
+    max-width: none;
+    min-height: 381px;
+  }
+
+  .pg-services__hero .pg-hero__copy,
+  .pg-services__hero .pg-hero__panel {
+    position: relative;
+    z-index: 1;
+  }
+
+  .pg-services__hero-art {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 111px;
+    z-index: 0;
+    width: 579px;
+    max-width: none;
+    height: auto;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .pg-services__hero .pg-hero__panel {
+    margin-top: 180px;
+    gap: 40px;
+    max-width: 360px;
+  }
+
+  .pg-services__hero .pg-cta {
+    order: 1;
+    width: 100%;
+  }
+
+  .pg-services__hero .pg-stats--hero {
+    order: 2;
+    display: flex;
+    margin-top: 0;
+  }
+
+  .pg-services__catalog {
+    margin-top: 80px;
+  }
+
+  .pg-services__catalog .pg-section-head {
+    margin-bottom: 40px;
+  }
+
+  .pg-services__grid-wrap {
+    margin-inline: calc(50% - 50vw);
+    padding: 0 var(--pg-gutter-mobile);
+    background:
+      url("../../img/figma/services-cards-bg.png") top center / 1012px auto no-repeat,
+      #000;
+  }
+
+  .pg-services__grid {
+    grid-template-columns: 1fr;
+    max-width: 360px;
+    margin-inline: auto;
+  }
+
+  .pg-service-card {
+    min-height: 0;
+    padding: 15.5px;
+  }
+
+  .pg-service-card--m1,
+  .pg-rows__item--m1 {
+    order: 1;
+  }
+
+  .pg-service-card--m2,
+  .pg-rows__item--m2 {
+    order: 2;
+  }
+
+  .pg-service-card--m3,
+  .pg-rows__item--m3 {
+    order: 3;
+  }
+
+  .pg-service-card--m4,
+  .pg-rows__item--m4 {
+    order: 4;
+  }
+
+  .pg-service-card--m5,
+  .pg-rows__item--m5 {
+    order: 5;
+  }
+
+  .pg-service-card--m6,
+  .pg-rows__item--m6 {
+    order: 6;
+  }
+
+  .pg-service-card--light {
+    background: #000;
+  }
+
+  .pg-service-card--light .pg-service-card__title {
+    color: #fff;
+  }
+
+  .pg-service-card--light .pg-service-card__discount,
+  .pg-service-card--light .pg-service-card__features li {
+    color: var(--pg-color-text);
+  }
+
+  .pg-service-card__price {
+    font-size: 36px;
+  }
+
+  .pg-services .pg-rows-section {
+    margin-top: 80px;
+  }
+}

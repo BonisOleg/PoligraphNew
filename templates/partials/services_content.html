@@ -1,55 +1,83 @@
-    <!-- БЛОК 1: Ціни на послуги -->
-    <article class="accordion" id="service-0" data-accordion="services" aria-expanded="true">
-        <div class="accordion__header" role="button" tabindex="0" aria-label="Розгорнути секцію послуг">
-            <h2 class="accordion__title">ЦІНИ НА ПОСЛУГИ</h2>
-            <p class="accordion__subtitle">Професійні перевірки у Львові</p>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/pages/services.css' %}">
+
+<section class="pg-hero pg-services__hero" aria-labelledby="services-hero-title">
+    <div class="pg-hero__copy">
+        <p class="pg-badge">POLYGRAPH LVIV</p>
+        <h1 class="pg-hero__title" id="services-hero-title">ЦІНИ НА ПОСЛУГИ</h1>
+        <p class="pg-hero__subtitle">Професійні перевірки у Львові</p>
+    </div>
+    <img class="pg-services__hero-art" src="{% static 'img/figma/services-hero-mobile.png' %}" alt="" aria-hidden="true">
+    <div class="pg-hero__panel">
+        <div class="pg-stats pg-stats--hero">
+            {% for stat in services_stats %}
+            <div class="pg-stat{% if stat.featured %} pg-stat--featured{% endif %}">
+                <span class="pg-stat__value">{{ stat.number }}</span>
+                <span class="pg-stat__label">{{ stat.label }}</span>
+            </div>
+            {% endfor %}
         </div>
-        
-        <div class="accordion__content">
-            <!-- Статистика -->
-            <div class="accordion__stats">
-                {% for stat in services_stats %}
-                <div class="accordion__stat-item">
-                    <span class="accordion__stat-number">{{ stat.number }}</span>
-                    <span class="accordion__stat-label">{{ stat.label }}</span>
+        <a href="{% url 'pages:index' %}#consultation" class="pg-cta">
+            <span class="pg-cta__label">Залишити заявку</span>
+            <span class="pg-cta__icon" aria-hidden="true">
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>
+        </a>
+    </div>
+</section>
+
+<section class="pg-services__catalog" id="service-0" aria-labelledby="services-catalog-title">
+    <header class="pg-section-head pg-section-head--center">
+        <h2 class="pg-section-head__title" id="services-catalog-title">Наші послуги</h2>
+        <p class="pg-section-head__lead">Спеціалізуємося на перевірках у Львові: професійний поліграфолог, перевірка на детекторі брехні та корпоративні послуги для бізнесу</p>
+    </header>
+    <div class="pg-services__grid-wrap">
+        <div class="pg-services__grid">
+            {% for service in services_list %}
+            <article class="pg-service-card pg-service-card--m{{ service.order_mobile }}{% if service.featured %} pg-service-card--light{% endif %}"{% if service.anchor %} id="{{ service.anchor }}"{% endif %}>
+                <h3 class="pg-service-card__title">{{ service.title }}</h3>
+                <div class="pg-service-card__price-block">
+                    <p class="pg-service-card__price">{{ service.price }}</p>
+                    {% if service.discount %}
+                    <p class="pg-service-card__discount">{{ service.discount }}</p>
+                    {% endif %}
                 </div>
-                {% endfor %}
-            </div>
-            
-            <!-- Послуги -->
-            <div class="accordion__services">
-                <h3 class="accordion__section-title">Наші послуги</h3>
-                <p class="accordion__section-description">Спеціалізуємося на перевірках у Львові: професійний поліграфолог, перевірка на детекторі брехні та корпоративні послуги для бізнесу.</p>
-                <div class="accordion__services-grid">
-                    {% for service in services_list %}
-                    <article class="service-card{% if forloop.counter0|divisibleby:2 %} service-card--dark{% endif %}">
-                        <h4 class="service-card__title">{{ service.title }}</h4>
-                        <p class="service-card__price">{{ service.price }}</p>
-                        {% if service.discount %}
-                        <p class="service-card__discount">{{ service.discount }}</p>
-                        {% endif %}
-                        <ul class="service-card__features">
-                            {% for feature in service.features %}
-                            <li>{{ feature }}</li>
-                            {% endfor %}
-                        </ul>
-                        <a href="{% url 'pages:contacts' %}" class="service-card__button">Замовити послугу →</a>
-                    </article>
-                    {% endfor %}
+                <div class="pg-service-card__footer">
+                    <ul class="pg-service-card__features">
+                        {% for feature in service.features %}
+                        <li>
+                            <img src="{% static 'img/icons/check.svg' %}" width="24" height="24" alt="" aria-hidden="true">
+                            <span>{{ feature }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{% url 'pages:index' %}#consultation" class="pg-service-card__cta">
+                        <span>Замовити послугу</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M4 16L16 4M16 4H8M16 4V12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
                 </div>
-            </div>
-            
-            <!-- Переваги -->
-            <div class="accordion__advantages">
-                <h3 class="accordion__section-title">Чому обирають нас?</h3>
-                <div class="accordion__advantages-grid">
-                    {% for advantage in services_advantages %}
-                    <div class="advantage-card">
-                        <h4 class="advantage-card__title">{{ advantage.title }}</h4>
-                        <p class="advantage-card__text">{{ advantage.text }}</p>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
+            </article>
+            {% endfor %}
         </div>
-    </article>
+    </div>
+</section>
+
+<section class="pg-rows-section" aria-labelledby="services-why-title">
+    <h2 class="pg-section-head__title" id="services-why-title">Чому обирають нас?</h2>
+    <ol class="pg-rows">
+        {% for advantage in services_advantages %}
+        <li class="pg-rows__item pg-rows__item--m{{ advantage.order_mobile }}">
+            <div class="pg-rows__left">
+                <span class="pg-rows__num pg-rows__num--desk" aria-hidden="true">{{ advantage.number }}</span>
+                <span class="pg-rows__num pg-rows__num--mob" aria-hidden="true">{{ advantage.number_mobile }}</span>
+                <span class="pg-rows__title">{{ advantage.title }}</span>
+            </div>
+            <p class="pg-rows__text">{{ advantage.text }}</p>
+        </li>
+        {% endfor %}
+    </ol>
+</section>
