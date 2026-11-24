@@ -175,18 +175,19 @@
 
 .equip__compare {
   position: relative;
+  overflow: hidden;
 }
 
 .equip__compare-bg {
   position: absolute;
-  left: 50%;
-  top: -188px;
+  inset: 0;
   z-index: 0;
-  width: 100vw;
-  max-width: none;
-  height: auto;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   pointer-events: none;
-  transform: translateX(-50%);
 }
 
 .equip__compare-inner {
@@ -359,8 +360,12 @@
   }
 
   .equip__compare-bg {
-    top: -9px;
-    width: 1391px;
+    inset: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
   .equip__compare-inner,
