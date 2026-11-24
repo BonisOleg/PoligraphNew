@@ -1,4 +1,4 @@
-/* Footer — Figma shell (OFNpLgOOg6uJePv8J3X6lT, frames 1:177 / 1:299)
+/* Footer — Figma OFNpLgOOg6uJePv8J3X6lT: desktop 1:258 (1356x282), mobile 1:377 (360 wide)
  * Tokens: --pg-* in base.css
  */
 
@@ -10,28 +10,75 @@
 
 .footer__content {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
   width: 100%;
   max-width: calc(var(--pg-content-width) + var(--pg-gutter) * 2);
   margin: 0 auto;
   padding: 0 var(--pg-gutter) 20px;
 }
 
-.footer__grid {
-  display: grid;
-  grid-template-columns: minmax(10rem, 1fr) minmax(12rem, 1fr) minmax(10rem, 0.8fr) minmax(15rem, 1fr);
-  gap: var(--pg-footer-col-gap);
-  align-items: start;
-  padding-bottom: var(--pg-footer-gap);
+.footer__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer__logo {
+  display: block;
+  flex: 0 0 201px;
+  width: 201px;
+  height: 203px;
+  border: 1px solid #000;
+  box-sizing: border-box;
+}
+
+.footer__logo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.footer__cols {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex: 0 1 1048px;
+  width: 1048px;
+  max-width: 100%;
+  min-height: 203px;
+}
+
+.footer__divider {
+  align-self: stretch;
+  flex: 0 0 1px;
+  width: 1px;
+  min-height: 203px;
+  background: var(--pg-color-divider);
+}
+
+.footer__column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.footer__col--cta {
+  width: 240px;
 }
 
 .footer__column-title,
 .footer__brand {
-  margin: 0 0 30px;
+  margin: 0;
   font-family: var(--pg-font);
   font-size: var(--pg-font-size);
   font-weight: var(--pg-font-weight-semibold);
   letter-spacing: var(--pg-letter-spacing);
-  line-height: 1.2;
+  line-height: normal;
   text-transform: uppercase;
   color: var(--pg-color-accent);
 }
@@ -46,6 +93,7 @@
   color: var(--pg-color-on-accent);
 }
 
+.footer__logo:focus-visible,
 .footer__brand:focus-visible,
 .footer__nav-link:focus-visible,
 .footer__contact-link:focus-visible,
@@ -56,13 +104,25 @@
 }
 
 .footer__nav-list,
-.footer__contacts,
 .footer__legal-list {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.footer__nav-list li,
+.footer__legal-list li {
+  display: block;
+  line-height: normal;
+}
+
+.footer__nav-list,
+.footer__contacts,
+.footer__legal-list,
+.footer__cta-body {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 14px;
 }
 
@@ -73,11 +133,16 @@
   font-size: var(--pg-font-size);
   font-weight: var(--pg-font-weight-semibold);
   letter-spacing: var(--pg-letter-spacing);
-  line-height: 1.2;
+  line-height: normal;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--pg-color-text);
   transition: color var(--transition-fast);
+}
+
+.footer__contact-link--email {
+  text-decoration: underline;
+  text-underline-position: from-font;
 }
 
 .footer__nav-link:hover,
@@ -89,21 +154,27 @@
   color: var(--pg-color-on-accent);
 }
 
-.footer__contact-item--hours,
+.footer__hours,
 .footer__cta-lead {
   margin: 0;
   font-family: var(--pg-font);
   font-size: var(--pg-font-size);
   font-weight: var(--pg-font-weight-medium);
   letter-spacing: var(--pg-letter-spacing);
-  line-height: 1.2;
+  line-height: normal;
   color: var(--pg-color-muted);
-  text-transform: none;
+}
+
+.footer__hours {
+  text-transform: lowercase;
 }
 
 .footer__cta-lead {
-  margin: 0 0 28px;
-  max-width: 240px;
+  width: 240px;
+}
+
+.footer__cta {
+  width: 240px;
 }
 
 .footer__bar {
@@ -123,7 +194,7 @@
   font-size: var(--pg-font-size);
   font-weight: var(--pg-font-weight-medium);
   letter-spacing: var(--pg-letter-spacing);
-  line-height: 1.2;
+  line-height: normal;
   color: var(--pg-color-muted);
   text-decoration: none;
 }
@@ -133,37 +204,88 @@
   color: var(--pg-color-text);
 }
 
+/* Tablet: keep desktop structure, let columns wrap under the logo */
+@media (min-width: 1100px) and (max-width: 1399px) {
+  .footer__cols {
+    flex: 1 1 auto;
+    width: auto;
+    gap: 24px;
+  }
+}
+
+/* Mobile — Figma 1:377: everything centered, blocks separated by 1px lines */
 @media (max-width: 1099px) {
   .footer__content {
-    padding: 0 var(--pg-gutter-mobile) 24px;
+    gap: 0;
+    padding: 0 var(--pg-gutter-mobile) 20px;
   }
 
-  .footer__grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
+  .footer__top {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 
-  .footer__column-title,
-  .footer__brand {
-    margin-bottom: 20px;
+  .footer__logo {
+    flex: none;
+    width: 84px;
+    height: 85px;
   }
 
-  /* Figma mobile order: consultation, documents, then the rest, then bar */
-  .footer__col--cta { order: 1; }
-  .footer__col--legal { order: 2; }
-  .footer__col--brand { order: 3; }
-  .footer__col--contacts { order: 4; }
+  .footer__cols {
+    flex: none;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 20px;
+    width: 100%;
+    max-width: 360px;
+    min-height: 0;
+    margin: 0 auto;
+  }
 
-  .footer__cta-lead {
-    max-width: none;
+  .footer__divider {
+    display: none;
+  }
+
+  .footer__column {
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding-top: 20px;
+    border-top: 1px solid var(--pg-color-divider);
+    text-align: center;
+  }
+
+  .footer__col--contacts { order: 1; }
+  .footer__col--brand { order: 2; }
+  .footer__col--cta { order: 3; gap: 30px; }
+  .footer__col--legal { order: 4; }
+
+  .footer__nav-list,
+  .footer__contacts,
+  .footer__legal-list {
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer__cta-body {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .footer__cta-lead,
+  .footer__cta {
+    width: 100%;
   }
 
   .footer__bar {
     flex-direction: column;
     justify-content: center;
-    text-align: center;
     gap: 8px;
-    order: 5;
-    margin-top: 10px;
+    width: 100%;
+    max-width: 359px;
+    margin: 20px auto 0;
+    text-align: center;
   }
 }

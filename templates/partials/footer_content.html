@@ -1,69 +1,65 @@
 {% load static %}
+{# Footer — Figma OFNpLgOOg6uJePv8J3X6lT: desktop 1:258, mobile 1:377 #}
 <div class="footer__content">
-    <div class="footer__grid">
-        <div class="footer__column footer__col--brand">
-            <a href="{% url 'pages:index' %}" class="footer__brand" hx-get="{% url 'pages:index' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">POLYGRAPH LVIV</a>
-            <nav class="footer__nav" aria-label="Навігація по сайту">
-                <ul class="footer__nav-list">
-                    <li class="footer__nav-item">
-                        <a href="{% url 'pages:index' %}" class="footer__nav-link" hx-get="{% url 'pages:index' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Головна</a>
-                    </li>
-                    <li class="footer__nav-item">
-                        <a href="{% url 'pages:services' %}" class="footer__nav-link" hx-get="{% url 'pages:services' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Послуги та ціни</a>
-                    </li>
-                    <li class="footer__nav-item">
-                        <a href="{% url 'pages:nap' %}" class="footer__nav-link" hx-get="{% url 'pages:nap' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Член НАП</a>
-                    </li>
-                    <li class="footer__nav-item">
-                        <a href="{% url 'pages:equipment' %}" class="footer__nav-link" hx-get="{% url 'pages:equipment' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Обладнання</a>
-                    </li>
-                    <li class="footer__nav-item">
-                        <a href="{% url 'pages:contacts' %}" class="footer__nav-link" hx-get="{% url 'pages:contacts' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Контакти</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+    <div class="footer__top">
+        <a href="{% url 'pages:index' %}" class="footer__logo" aria-label="POLYGRAPH LVIV — на головну" hx-get="{% url 'pages:index' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">
+            <img class="footer__logo-img" src="{% static 'img/figma/footer-logo.png' %}" width="201" height="203" alt="POLYGRAPH LVIV" loading="lazy" decoding="async">
+        </a>
 
-        <div class="footer__column footer__col--contacts">
-            <h3 class="footer__column-title">Контакти</h3>
-            <div class="footer__contacts">
-                <p class="footer__contact-item">
-                    <a href="tel:+380675243354" class="footer__contact-link">+38 (067) 524-33-54</a>
-                </p>
-                <p class="footer__contact-item">
-                    <a href="mailto:ulianakerezvas@gmail.com" class="footer__contact-link">ulianakerezvas@gmail.com</a>
-                </p>
-                <p class="footer__contact-item footer__contact-item--hours">
-                    Пн–Пт: 9:00–18:00<br>
-                    Сб: 10:00–15:00
-                </p>
+        <div class="footer__cols">
+            <div class="footer__column footer__col--brand">
+                <a href="{% url 'pages:index' %}" class="footer__brand" hx-get="{% url 'pages:index' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">POLYGRAPH LVIV</a>
+                <nav class="footer__nav" aria-label="Навігація по сайту">
+                    <ul class="footer__nav-list">
+                        <li><a href="{% url 'pages:index' %}" class="footer__nav-link" hx-get="{% url 'pages:index' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Головна</a></li>
+                        <li><a href="{% url 'pages:services' %}" class="footer__nav-link" hx-get="{% url 'pages:services' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Послуги</a></li>
+                        <li><a href="{% url 'pages:contacts' %}" class="footer__nav-link" hx-get="{% url 'pages:contacts' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">Контакти</a></li>
+                    </ul>
+                </nav>
             </div>
-        </div>
 
-        <div class="footer__column footer__col--legal">
-            <h3 class="footer__column-title">Документи</h3>
-            <nav class="footer__legal" aria-label="Правова інформація">
-                <ul class="footer__legal-list">
-                    <li><a href="{% url 'pages:legal' 'public-offer' %}" class="footer__legal-link">Оферта</a></li>
-                    <li><a href="{% url 'pages:legal' 'privacy-policy' %}" class="footer__legal-link">Конфіденційність</a></li>
-                    <li><a href="{% url 'pages:legal' 'cookie-policy' %}" class="footer__legal-link">Cookies</a></li>
-                    <li><a href="{% url 'pages:legal' 'consent-pd' %}" class="footer__legal-link">Згода на ПД</a></li>
-                    <li><a href="{% url 'pages:legal' 'disclaimer' %}" class="footer__legal-link">Disclaimer</a></li>
-                </ul>
-            </nav>
-        </div>
+            <span class="footer__divider" aria-hidden="true"></span>
 
-        <div class="footer__column footer__col--cta footer__cta-column">
-            <h3 class="footer__column-title">Консультація</h3>
-            <p class="footer__cta-lead">Коротко опишіть запит — відповімо конфіденційно</p>
-            <a href="{% url 'pages:index' %}#consultation" class="pg-cta footer__cta">
-                <span class="pg-cta__label">Залишити заявку</span>
-                <span class="pg-cta__icon" aria-hidden="true">
-                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-            </a>
+            <div class="footer__column footer__col--contacts">
+                <h3 class="footer__column-title">Контакти</h3>
+                <div class="footer__contacts">
+                    <a href="tel:+380675243354" class="footer__contact-link">+38 (067) 524-33-54</a>
+                    <a href="mailto:ulianakerezvas@gmail.com" class="footer__contact-link footer__contact-link--email">ulianakerezvas@gmail.com</a>
+                    <p class="footer__hours">Пн–Пт: 9:00–18:00<br>Сб: 10:00–15:00</p>
+                </div>
+            </div>
+
+            <span class="footer__divider" aria-hidden="true"></span>
+
+            <div class="footer__column footer__col--legal">
+                <h3 class="footer__column-title">Документи</h3>
+                <nav class="footer__legal" aria-label="Правова інформація">
+                    <ul class="footer__legal-list">
+                        <li><a href="{% url 'pages:legal' 'public-offer' %}" class="footer__legal-link">Оферта</a></li>
+                        <li><a href="{% url 'pages:legal' 'privacy-policy' %}" class="footer__legal-link">Конфіденційність</a></li>
+                        <li><a href="{% url 'pages:legal' 'cookie-policy' %}" class="footer__legal-link">Cookies</a></li>
+                        <li><a href="{% url 'pages:legal' 'consent-pd' %}" class="footer__legal-link">Згода на ПД</a></li>
+                        <li><a href="{% url 'pages:legal' 'disclaimer' %}" class="footer__legal-link">Disclaimer</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <span class="footer__divider" aria-hidden="true"></span>
+
+            <div class="footer__column footer__col--cta">
+                <h3 class="footer__column-title">Консультація</h3>
+                <div class="footer__cta-body">
+                    <p class="footer__cta-lead">Коротко опишіть запит — відповімо конфіденційно</p>
+                    <a href="{% url 'pages:index' %}#consultation" class="pg-cta footer__cta">
+                        <span class="pg-cta__label">Залишити заявку</span>
+                        <span class="pg-cta__icon" aria-hidden="true">
+                            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

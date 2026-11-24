@@ -160,6 +160,7 @@ main {
 }
 
 body {
+  margin: 0; /* Figma frames are edge-to-edge; UA default 8px shifted every block */
   overscroll-behavior-x: none;
   overflow-x: hidden;
   font-family: var(--font-family-base);

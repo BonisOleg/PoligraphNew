@@ -401,7 +401,7 @@
 }
 
 .pg-services__catalog .pg-section-head {
-  margin-bottom: 60px;
+  margin-bottom: 11px; /* Figma 1:416: title block ends 11px above bg 1:455, cards start 60px below */
 }
 
 .pg-services__grid-wrap {
@@ -411,7 +411,6 @@
   max-width: none;
   padding: 49px var(--pg-gutter) 0;
   background:
-    linear-gradient(to bottom, #000 0, transparent 80px),
     url("../../img/figma/services-cards-bg.png") top center / 1524px auto no-repeat,
     #000;
 }
@@ -434,7 +433,7 @@
   padding: 20px 17px 20px 20px;
   border: 1.5px solid #fff;
   border-radius: 20px;
-  background: #000;
+  background: transparent;
   scroll-margin-top: 120px;
 }
 
@@ -539,6 +538,11 @@
 
 .pg-service-card__cta svg {
   flex: 0 0 20px;
+  color: #fff;
+}
+
+.pg-service-card--light .pg-service-card__cta svg {
+  color: var(--pg-color-accent);
 }
 
 .pg-services .pg-rows-section {
@@ -594,12 +598,15 @@
   }
 
   .pg-services__catalog .pg-section-head {
-    margin-bottom: 40px;
+    align-items: center;
+    max-width: 360px;
+    margin-bottom: 18px; /* Figma 1:697: 46px title→cards, bg 1:696 starts 28px above cards */
+    text-align: center;
   }
 
   .pg-services__grid-wrap {
     margin-inline: calc(50% - 50vw);
-    padding: 0 var(--pg-gutter-mobile);
+    padding: 28px var(--pg-gutter-mobile) 0;
     background:
       url("../../img/figma/services-cards-bg.png") top center / 1012px auto no-repeat,
       #000;
@@ -607,13 +614,16 @@
 
   .pg-services__grid {
     grid-template-columns: 1fr;
+    gap: 18px;
     max-width: 360px;
     margin-inline: auto;
   }
 
   .pg-service-card {
+    justify-content: flex-start;
+    gap: 30px;
     min-height: 0;
-    padding: 15.5px;
+    padding: 14px;
   }
 
   .pg-service-card--m1,
@@ -647,7 +657,11 @@
   }
 
   .pg-service-card--light {
-    background: #000;
+    background: transparent;
+  }
+
+  .pg-service-card--light .pg-service-card__cta svg {
+    color: #fff;
   }
 
   .pg-service-card--light .pg-service-card__title {
@@ -660,7 +674,11 @@
   }
 
   .pg-service-card__price {
-    font-size: 36px;
+    font-size: 30px;
+  }
+
+  .pg-service-card__cta {
+    color: #fff; /* Figma 1:697: CTA label + arrow are white on mobile */
   }
 
   .pg-services .pg-rows-section {
