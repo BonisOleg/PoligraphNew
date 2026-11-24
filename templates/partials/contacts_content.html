@@ -1,110 +1,153 @@
-<!-- Верхній блок - Контактна інформація -->
-<section class="contacts__top">
-    <div class="contacts__container">
-        <h1 class="contacts__title">{{ title }}</h1>
-        
-        <div class="contacts__content-grid">
-            <!-- Ліва колонка: Контактна інформація -->
-            <div class="contacts__info-column reveal" data-i="0">
-                <div class="contacts__info">
-                    <div class="contacts__info-item">
-                        <span class="contacts__info-label">Телефон/Viber:</span>
-                        <a href="tel:{{ contacts.phone }}" class="contacts__info-value">{{ contacts.phone }}</a>
-                    </div>
-                    
-                    <div class="contacts__info-item">
-                        <span class="contacts__info-label">WhatsApp:</span>
-                        <a href="https://wa.me/380675243354" 
-                           class="contacts__info-value"
-                           target="_blank"
-                           rel="noopener noreferrer">{{ contacts.whatsapp }}</a>
-                    </div>
-                    
-                    <div class="contacts__info-item">
-                        <span class="contacts__info-label">Email:</span>
-                        <a href="mailto:{{ contacts.email }}" class="contacts__info-value">{{ contacts.email }}</a>
-                    </div>
-                    
-                    <div class="contacts__info-item">
-                        <span class="contacts__info-label">Адреса:</span>
-                        <span class="contacts__info-value">{{ contacts.address }}</span>
-                    </div>
-                    
-                    <div class="contacts__info-item">
-                        <span class="contacts__info-value">{{ contacts.travel }}</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Права колонка: Сертифікати -->
-            <div class="contacts__certs-column reveal" data-i="1">
-                {% if certificates %}
-                <div class="contacts__certificates">
-                    <h2 class="contacts__certificates-title">Сертифікати та ліцензії</h2>
-                    <ul class="contacts__certificates-list">
-                        {% for certificate in certificates %}
-                        <li class="contacts__certificates-item">{{ certificate }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</section>
+{% load static %}
 
-<!-- Нижній блок - Google карта (sticky overlay) -->
-<section class="contacts__bottom">
-    <div class="contacts__map-wrapper">
-        <div class="contacts__map-container">
-            <iframe 
-                class="contacts__map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.1234567890123!2d{{ map.lng }}!3d{{ map.lat }}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add7c09109a57%3A0x4223c517012378e2!2z0JvRjNCy0ZbQsiwg0JvRjNCy0ZbQstGB0YzQutCwINC-0LHQu9Cw0YHRgtGM!5e0!3m2!1suk!2sua!4v1234567890123!5m2!1suk!2sua"
-                width="100%"
-                height="100%"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                aria-label="Карта з локацією {{ map.address }}">
-            </iframe>
+<article class="contacts">
+    <section class="contacts__hero">
+        <h1 class="contacts__title">Контакти</h1>
+        <div class="contacts__actions">
+                    <a href="{% url 'pages:index' %}#consultation" class="pg-cta">
+                        <span class="pg-cta__label">Залишити заявку</span>
+                        <span class="pg-cta__icon" aria-hidden="true">
+                            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="{% url 'pages:services' %}" class="pg-cta pg-cta--ghost">Послуги</a>
         </div>
-        
-        <div class="contacts__map-info reveal" data-reveal-hold>
-            <h2 class="contacts__map-title">Як нас знайти</h2>
-            
-            <div class="contacts__map-details">
-                <div class="contacts__map-detail">
-                    <span class="contacts__map-label">Адреса:</span>
-                    <span class="contacts__map-value">{{ contacts.address }}</span>
-                </div>
-                
-                <div class="contacts__map-detail">
-                    <span class="contacts__map-label">Телефон:</span>
-                    <a href="tel:{{ contacts.phone }}" class="contacts__map-value contacts__map-link">
-                        {{ contacts.phone }}
-                    </a>
-                </div>
-                
-                <div class="contacts__map-detail">
-                    <span class="contacts__map-label">Email:</span>
-                    <a href="mailto:{{ contacts.email }}" class="contacts__map-value contacts__map-link">
-                        {{ contacts.email }}
-                    </a>
-                </div>
-                
-                <div class="contacts__map-detail">
-                    <span class="contacts__map-label">Години роботи:</span>
-                    <span class="contacts__map-value">{{ contacts.working_hours }}</span>
+    </section>
+
+    <section class="contacts__grid">
+        <div class="contacts__certs">
+            <h2 class="contacts__certs-title">Сертифікати та ліцензії</h2>
+            {% if certificates %}
+            <ul class="contacts__certs-list">
+                {% for certificate in certificates %}
+                <li class="contacts__certs-item">
+                    <span class="contacts__icon contacts__icon--check" aria-hidden="true">
+                        <img src="{% static 'img/pg/icon-check.svg' %}" alt="" width="21.5" height="21.5">
+                    </span>
+                    <span class="contacts__certs-text">{{ certificate }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class="contacts__info">
+            <div class="contacts__row">
+                <span class="contacts__icon" aria-hidden="true">
+                    <img src="{% static 'img/pg/icon-viber.png' %}" alt="" width="20" height="21">
+                </span>
+                <div class="contacts__texts">
+                    <p class="contacts__label">Телефон/Viber:</p>
+                    <a class="contacts__value" href="tel:{{ contacts.phone_tel }}">{{ contacts.phone }}</a>
                 </div>
             </div>
-            
-            <a href="https://www.google.com/maps/search/?api=1&query={{ map.lat }},{{ map.lng }}" 
-               class="contacts__map-open"
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label="Відкрити карту в Google Maps">
-                Відкрити в Google Maps
-            </a>
+
+            <div class="contacts__row">
+                <span class="contacts__icon" aria-hidden="true">
+                    <img src="{% static 'img/pg/icon-whatsapp.svg' %}" alt="" width="20" height="20">
+                </span>
+                <div class="contacts__texts">
+                    <p class="contacts__label">WhatsApp:</p>
+                    <a class="contacts__value" href="{{ contacts.whatsapp_url }}" target="_blank" rel="noopener noreferrer">{{ contacts.whatsapp }}</a>
+                </div>
+            </div>
+
+            <div class="contacts__row">
+                <span class="contacts__icon" aria-hidden="true">
+                    <img src="{% static 'img/pg/icon-google.svg' %}" alt="" width="20" height="20">
+                </span>
+                <div class="contacts__texts">
+                    <p class="contacts__label">Email:</p>
+                    <a class="contacts__value" href="mailto:{{ contacts.email }}">{{ contacts.email }}</a>
+                </div>
+            </div>
+
+            <div class="contacts__row">
+                <span class="contacts__icon" aria-hidden="true">
+                    <img src="{% static 'img/pg/icon-location.svg' %}" alt="" width="14.5834" height="18.7546">
+                </span>
+                <div class="contacts__texts">
+                    <p class="contacts__label">Адреса:</p>
+                    <p class="contacts__value">{{ contacts.address }}</p>
+                </div>
+            </div>
+
+            <div class="contacts__row contacts__row--last">
+                <span class="contacts__icon" aria-hidden="true">
+                    <img src="{% static 'img/pg/icon-globe.svg' %}" alt="" width="16.6667" height="16.6667">
+                </span>
+                <p class="contacts__label contacts__label--solo">{{ contacts.travel }}</p>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <section class="contacts__find" aria-labelledby="contacts-find-title">
+        <div class="contacts__map">
+            <img src="{% static 'img/pg/contacts-map.png' %}" alt="Карта: {{ map.address }}" width="668" height="668">
+        </div>
+        <div class="contacts__find-body">
+            <div class="contacts__find-head">
+                <p class="contacts__badge">Локація</p>
+                <h2 class="contacts__find-title" id="contacts-find-title">Як нас знайти?</h2>
+            </div>
+            <div class="contacts__find-footer">
+                <div class="contacts__info">
+                    <div class="contacts__row">
+                        <span class="contacts__icon" aria-hidden="true">
+                            <img src="{% static 'img/pg/icon-location.svg' %}" alt="" width="14.5834" height="18.7546">
+                        </span>
+                        <div class="contacts__texts">
+                            <p class="contacts__label">Адреса:</p>
+                            <p class="contacts__value">{{ contacts.address }}</p>
+                        </div>
+                    </div>
+
+                    <div class="contacts__row">
+                        <span class="contacts__icon" aria-hidden="true">
+                            <img src="{% static 'img/pg/icon-phone.svg' %}" alt="" width="16.2326" height="16.2326">
+                        </span>
+                        <div class="contacts__texts">
+                            <p class="contacts__label">Номер телефону</p>
+                            <a class="contacts__value" href="tel:{{ contacts.phone_tel }}">{{ contacts.phone }}</a>
+                        </div>
+                    </div>
+
+                    <div class="contacts__row">
+                        <span class="contacts__icon" aria-hidden="true">
+                            <img src="{% static 'img/pg/icon-google.svg' %}" alt="" width="20" height="20">
+                        </span>
+                        <div class="contacts__texts">
+                            <p class="contacts__label">Email:</p>
+                            <a class="contacts__value" href="mailto:{{ contacts.email }}">{{ contacts.email }}</a>
+                        </div>
+                    </div>
+
+                    <div class="contacts__row contacts__row--last">
+                        <span class="contacts__icon" aria-hidden="true">
+                            <img src="{% static 'img/pg/icon-calendar.svg' %}" alt="" width="16.25" height="17.9167">
+                        </span>
+                        <div class="contacts__texts">
+                            <p class="contacts__label">Години роботи:</p>
+                            <p class="contacts__value">{{ contacts.working_hours }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="{{ map.url }}"
+                   class="pg-cta pg-cta--wide"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="Відкрити в Google Maps">
+                    <span class="pg-cta__label">Відкрити goole maps</span>
+                    <span class="pg-cta__icon" aria-hidden="true">
+                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+</article>
