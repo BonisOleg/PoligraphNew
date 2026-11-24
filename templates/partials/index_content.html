@@ -1,109 +1,143 @@
 {% load static %}
 <section class="hero" data-hero-section>
     <div class="hero__media" aria-hidden="true">
-        <div class="hero__media-plane">
-            <img class="hero__image"
-                 src="{% static 'img/hero-poster.jpg' %}"
-                 alt=""
-                 width="1280"
-                 height="1280"
-                 decoding="async"
-                 fetchpriority="high">
-        </div>
-        <div class="hero__veil"></div>
+        <img class="hero__image"
+             src="{% static 'img/home-hero.png' %}"
+             alt=""
+             width="1440"
+             height="555"
+             decoding="async"
+             fetchpriority="high">
     </div>
 
     <div class="hero__content">
         <p class="hero__eyebrow">POLYGRAPH LVIV</p>
-        <h1 class="hero__title">
-            <span class="hero__title-line">Погляньте</span>
-            <span class="hero__title-line">правді у вічі</span>
-        </h1>
-        <p class="hero__lead">Поліграф у Львові · конфіденційно · точність до&nbsp;98%</p>
-        <div class="hero__actions">
-            <a href="#consultation" class="hero__cta hero__cta--primary">Залишити заявку</a>
-            <a href="{% url 'pages:about' %}"
-               class="hero__cta hero__cta--secondary"
-               hx-get="{% url 'pages:about' %}"
-               hx-target="#main"
-               hx-swap="innerHTML"
-               hx-push-url="true">Послуги</a>
+        <div class="hero__main">
+            <div class="hero__copy">
+                <h1 class="hero__title">
+                    <span class="hero__title-line">ПОГЛЯНЬТЕ</span>
+                    <span class="hero__title-line"><span class="hero__title-accent">ПРАВДІ</span> У ВІЧІ</span>
+                </h1>
+                <p class="hero__lead">Поліграф у Львові · конфіденційно · точність до&nbsp;98%</p>
+            </div>
+            <div class="hero__actions">
+                <a href="#consultation" class="pg-cta">
+                    <span class="pg-cta__label">Залишити заявку</span>
+                    <span class="pg-cta__icon" aria-hidden="true">
+                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </a>
+                <a href="{% url 'pages:services' %}"
+                   class="pg-cta pg-cta--ghost"
+                   hx-get="{% url 'pages:services' %}"
+                   hx-target="#main"
+                   hx-swap="innerHTML"
+                   hx-push-url="true">
+                    <span class="pg-cta__label">Послуги</span>
+                </a>
+            </div>
         </div>
     </div>
 </section>
 
 <section class="why-us">
-    <h2 class="why-us__title reveal" data-i="0">ЧОМУ МИ?</h2>
-    <div class="why-us__overlay">
-        <h2 class="why-us__overlay-title reveal" data-i="0">ЧОМУ МИ?</h2>
-    </div>
-    <div class="why-us__slider">
-        <div class="why-us__slide reveal" data-slide-index="0" data-i="0">
-            <img src="{% static 'img/spec.png' %}" alt="Спеціалізація" class="why-us__image">
-            <span class="why-us__image-label">ОСВІТЧЕНІСТЬ</span>
-            <div class="why-us__slide-content">
-                <h3 class="why-us__slide-title">Дипломований представник Національної Асоціації Поліграфологів України
-                </h3>
-                <p class="why-us__slide-description">
-                    Керівниця представництва НАПУ у Львівській області. Юрист-магістр з відзнакою та магістр з
-                    публічного управління та адміністрування.
-                    Понад 1000+ перевірок з точністю 98%. Сучасне обладнання та науковий підхід до кожної
-                    справи.
-                </p>
-                <a href="{% url 'pages:about' %}#service-1" class="why-us__slide-button service-card__button"
-                    hx-get="{% url 'pages:about' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">
-                    Детальніше →
+    <h2 class="why-us__title">Чому ми?</h2>
+    <div class="why-us__grid">
+        <article class="why-us__card why-us__card--dark why-us__card--1">
+            <p class="why-us__num">01/</p>
+            <div class="why-us__body">
+                <h3 class="why-us__card-title">Дипломований представник Національної Асоціації Поліграфологів України</h3>
+                <p class="why-us__text">Керівниця представництва НАПУ у Львівській області. Юрист-магістр з відзнакою та магістр з публічного управління та адміністрування. Понад 1000+ перевірок з точністю 98%. Сучасне обладнання та науковий підхід до кожної справи.</p>
+                <a href="{% url 'pages:nap' %}#service-1"
+                   class="why-us__more"
+                   hx-get="{% url 'pages:nap' %}"
+                   hx-target="#main"
+                   hx-swap="innerHTML"
+                   hx-push-url="true">
+                    <span>Детальніше</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M5 15L15 5M15 5H7.5M15 5V12.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </a>
             </div>
-        </div>
-        <div class="why-us__slide reveal" data-slide-index="1" data-i="1">
-            <img src="{% static 'img/price.png' %}" alt="Ціни" class="why-us__image">
-            <span class="why-us__image-label">ЦІНИ</span>
-            <div class="why-us__slide-content">
-                <h3 class="why-us__slide-title">Кращі ціни для корпоративних перевірок</h3>
-                <p class="why-us__slide-description">
-                    Спеціальні умови для бізнесу: знижки при регулярній співпраці та масових перевірках персоналу.
-                    Гнучкі тарифи від 2500 грн для скринінгу при працевлаштуванні. Індивідуальний підхід до кожного
-                    клієнта.
-                </p>
-                <a href="{% url 'pages:about' %}#service-0" class="why-us__slide-button service-card__button"
-                    hx-get="{% url 'pages:about' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">
-                    Детальніше →
+        </article>
+
+        <img class="why-us__figure why-us__figure--2"
+             src="{% static 'img/home-why-02.png' %}"
+             alt=""
+             width="221"
+             height="320"
+             decoding="async"
+             loading="lazy">
+
+        <article class="why-us__card why-us__card--dark why-us__card--3">
+            <p class="why-us__num">03/</p>
+            <div class="why-us__body">
+                <h3 class="why-us__card-title">Професійний поліграф РУБІКОН</h3>
+                <p class="why-us__text">Офіційний дилер поліграфів РУБІКОН в Україні. Сучасне обладнання з точністю 95-98%, 7 каналів моніторингу та гарантією до 3 років. Відповідає стандартам Американської Асоціації Поліграфологів та сертифіковано в Україні</p>
+                <a href="{% url 'pages:equipment' %}#service-2"
+                   class="why-us__more"
+                   hx-get="{% url 'pages:equipment' %}"
+                   hx-target="#main"
+                   hx-swap="innerHTML"
+                   hx-push-url="true">
+                    <span>Детальніше</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M5 15L15 5M15 5H7.5M15 5V12.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </a>
             </div>
-        </div>
-        <div class="why-us__slide reveal" data-slide-index="2" data-i="2">
-            <img src="{% static 'img/poli.png' %}" alt="Поліграф" class="why-us__image">
-            <span class="why-us__image-label">ОБЛАДНАННЯ</span>
-            <div class="why-us__slide-content">
-                <h3 class="why-us__slide-title">Професійний поліграф РУБІКОН</h3>
-                <p class="why-us__slide-description">
-                    Офіційний дилер поліграфів РУБІКОН в Україні. Сучасне обладнання з точністю 95-98%, 7 каналів
-                    моніторингу
-                    та гарантією до 3 років. Відповідає стандартам Американської Асоціації Поліграфологів та
-                    сертифіковано в Україні.
-                </p>
-                <a href="{% url 'pages:about' %}#service-2" class="why-us__slide-button service-card__button"
-                    hx-get="{% url 'pages:about' %}" hx-target="#main" hx-swap="innerHTML" hx-push-url="true">
-                    Детальніше →
+        </article>
+
+        <img class="why-us__figure why-us__figure--1"
+             src="{% static 'img/home-why-01.png' %}"
+             alt=""
+             width="303"
+             height="320"
+             decoding="async"
+             loading="lazy">
+
+        <article class="why-us__card why-us__card--light why-us__card--2">
+            <p class="why-us__num">02/</p>
+            <div class="why-us__body">
+                <h3 class="why-us__card-title">Кращі ціни для корпоративних перевірок</h3>
+                <p class="why-us__text">Спеціальні умови для бізнесу: знижки при регулярній співпраці та масових перевірках персоналу. Гнучкі тарифи від 2500 грн для скринінгу при працевлаштуванні. Індивідуальний підхід до кожного клієнта</p>
+                <a href="{% url 'pages:services' %}#service-0"
+                   class="why-us__more"
+                   hx-get="{% url 'pages:services' %}"
+                   hx-target="#main"
+                   hx-swap="innerHTML"
+                   hx-push-url="true">
+                    <span>Детальніше</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M5 15L15 5M15 5H7.5M15 5V12.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </a>
             </div>
-        </div>
+        </article>
+
+        <img class="why-us__figure why-us__figure--3"
+             src="{% static 'img/home-why-03.png' %}"
+             alt=""
+             width="194"
+             height="320"
+             decoding="async"
+             loading="lazy">
     </div>
 </section>
 
 <section class="cta" id="consultation">
     <div class="cta__shell">
-        <div class="cta__inner">
-            <header class="cta__intro reveal" data-reveal-hold>
+        <div class="cta__main">
+            <header class="cta__intro">
                 <p class="cta__eyebrow">Безкоштовна консультація</p>
                 <h2 class="cta__title">Залиште заявку</h2>
-                <p class="cta__lead">Коротко опишіть запит — відповімо конфіденційно протягом дня.</p>
+                <p class="cta__lead">Коротко опишіть запит — відповімо конфіденційно протягом дня</p>
             </header>
 
-            <form class="cta__form reveal"
-                  data-reveal-hold
-                  data-reveal-delay="220"
+            <form class="cta__form"
                   method="post"
                   action="{% url 'pages:index' %}"
                   hx-post="{% url 'pages:index' %}"
@@ -111,68 +145,75 @@
                   hx-swap="innerHTML">
                 {% csrf_token %}
                 <div class="cta__form-honeypot" aria-hidden="true">
-                    <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
+                    <label for="cta-honeypot">Не заповнюйте</label>
+                    <input type="text" id="cta-honeypot" name="honeypot" tabindex="-1" autocomplete="off">
                 </div>
 
-                <div class="cta__form-group">
-                    <label class="cta__form-label" for="cta-name">Ім'я</label>
-                    <input class="cta__form-input"
+                <div class="cta__field">
+                    <label class="cta__label" for="cta-name">Ім’я</label>
+                    <input class="cta__input"
                            type="text"
                            id="cta-name"
                            name="name"
+                           placeholder="Ім’я"
                            required
                            aria-required="true"
                            autocomplete="name">
                 </div>
 
-                <div class="cta__form-group">
-                    <label class="cta__form-label" for="cta-phone">Телефон</label>
-                    <input class="cta__form-input"
+                <div class="cta__field">
+                    <label class="cta__label" for="cta-phone">Номер телефону</label>
+                    <input class="cta__input"
                            type="tel"
                            id="cta-phone"
                            name="phone"
                            inputmode="tel"
                            autocomplete="tel"
-                           placeholder="+38 (096) 123-45-67"
+                           placeholder="Номер телефону"
                            required
                            aria-required="true">
                 </div>
 
-                <div class="cta__form-group">
-                    <label class="cta__form-label" for="cta-email">Email</label>
-                    <input class="cta__form-input"
+                <div class="cta__field">
+                    <label class="cta__label" for="cta-email">Email</label>
+                    <input class="cta__input"
                            type="email"
                            id="cta-email"
                            name="email"
+                           placeholder="Email"
                            autocomplete="email"
                            required
                            aria-required="true">
                 </div>
 
-                <div class="cta__form-group">
-                    <label class="cta__form-label" for="cta-message">Повідомлення</label>
-                    <textarea class="cta__form-textarea"
+                <div class="cta__field cta__field--message">
+                    <label class="cta__label" for="cta-message">Повідомлення</label>
+                    <textarea class="cta__textarea"
                               id="cta-message"
                               name="message"
-                              rows="4"></textarea>
+                              placeholder="Повідомлення"
+                              rows="6"></textarea>
                 </div>
 
-                <button class="cta__form-submit" type="submit">
-                    Відправити заявку
+                <button class="pg-cta cta__submit" type="submit">
+                    <span class="pg-cta__label">Залишити заявку</span>
+                    <span class="pg-cta__icon" aria-hidden="true">
+                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
                 </button>
-
-                <p class="cta__trust">Відповідь протягом дня · конфіденційно</p>
 
                 <div class="cta__form-result" id="cta-form-result" aria-live="polite"></div>
             </form>
         </div>
 
-        <aside class="cta__portrait reveal reveal--fade" aria-hidden="true" data-i="1">
+        <aside class="cta__portrait" aria-hidden="true">
             <img class="cta__portrait-img"
-                 src="{% static 'img/about.png' %}"
+                 src="{% static 'img/home-cta-portrait.png' %}"
                  alt=""
-                 width="640"
-                 height="800"
+                 width="595"
+                 height="854"
                  decoding="async"
                  loading="lazy">
         </aside>

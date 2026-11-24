@@ -1,247 +1,98 @@
-/* CTA form-first: форма + портрет у колонці-кадрі (не floating cutout)
- * BEM · RULE-01 · без !important
- */
-
-/* ============================================================================ */
-
-/* SHELL                                                                        */
-
-/* ============================================================================ */
+/* Homepage form «Залиште заявку» — Figma 1:240 / mobile 1:359. Tokens: --pg-* */
 
 .cta {
-  position: relative;
-  scroll-margin-top: 6rem;
-  background-color: var(--color-bg-dark);
-  color: var(--color-text-light);
-  overflow: hidden;
+  --cta-display: "Benzin-Bold", "Benzin", var(--pg-font);
+  --cta-field-bg: #292929;
+  --cta-field-border: #434343;
+  --cta-form-bg: #1a1a1a;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: calc(var(--pg-content-width) + var(--pg-gutter) * 2);
+  margin: 90px auto 0;
+  padding-inline: var(--pg-gutter);
+  color: var(--pg-color-on-accent);
+  scroll-margin-top: calc(var(--pg-header-offset) * 2 + var(--pg-header-height) + 16px);
 }
 
 .cta__shell {
   position: relative;
-  isolation: isolate;
-  min-height: min(100vh, 52rem);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding:
-    calc(var(--spacing-xxl) + var(--safe-area-top))
-    var(--spacing-md)
-    calc(var(--spacing-xxl) + var(--safe-area-bottom));
-  box-sizing: border-box;
-  max-width: 72rem;
-  margin: 0 auto;
-}
-
-/* ============================================================================ */
-
-/* PORTRAIT (колонка-кадр справа, не floating cutout)                           */
-
-/* ============================================================================ */
-
-.cta__portrait {
-  display: none;
-}
-
-.cta__portrait-img {
-  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 18%;
+  max-width: 1325px;
+  min-height: 854px;
 }
 
-/* ============================================================================ */
-
-/* INNER: intro + form                                                          */
-
-/* ============================================================================ */
-
-.cta__inner {
+.cta__main {
   position: relative;
   z-index: 1;
-  width: 100%;
-  max-width: 32rem;
-  margin: 0 auto;
   box-sizing: border-box;
+  width: 63.4%;
+  max-width: 840px;
+  padding-top: 190px;
 }
 
 .cta__intro {
-  margin: 0 0 var(--spacing-xl);
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 562px;
+  margin-bottom: 60px;
 }
 
 .cta__eyebrow {
-  margin: 0 0 var(--spacing-sm);
-  font-family: var(--font-family-display);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-primary);
-}
-
-.cta__title {
-  margin: 0 0 var(--spacing-sm);
-  font-family: var(--font-family-display);
-  font-size: clamp(1.75rem, 4vw, 2.35rem);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--color-text-light);
-}
-
-.cta__lead {
-  margin: 0 auto;
-  max-width: 28rem;
-  font-family: var(--font-family-base);
-  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-/* ============================================================================ */
-
-/* FORM                                                                         */
-
-/* ============================================================================ */
-
-.cta__form {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.cta__form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.cta__form-label {
-  font-family: var(--font-family-display);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.cta__form-input,
-.cta__form-textarea {
   box-sizing: border-box;
-  width: 100%;
-  min-height: 48px;
-  padding: 0.85rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 0.75rem;
-  font-family: var(--font-family-base);
-  font-size: 1rem; /* iOS: без авто-zoom на focus */
-  line-height: 1.4;
-  color: var(--color-text-light);
-  background-color: rgba(255, 255, 255, 0.06);
-  transition:
-    border-color var(--transition-fast),
-    background-color var(--transition-fast),
-    transform var(--transition-fast);
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.cta__form-input::placeholder,
-.cta__form-textarea::placeholder {
-  color: rgba(255, 255, 255, 0.4);
-}
-
-.cta__form-input:focus,
-.cta__form-textarea:focus {
-  outline: none;
-  border-color: rgba(255, 255, 255, 0.75);
-  background-color: rgba(255, 255, 255, 0.09);
-}
-
-.cta__form-input:focus-visible,
-.cta__form-textarea:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-.cta__form-textarea {
-  min-height: 7rem;
-  resize: vertical;
-}
-
-.cta__form-submit {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  align-self: stretch;
-  min-height: 52px;
-  margin-top: var(--spacing-xs);
-  padding: 0.85rem 1.5rem;
-  border: 2px solid var(--color-text-light);
-  border-radius: 999px;
-  background-color: var(--color-text-light);
-  color: var(--color-bg-dark);
-  font-family: var(--font-family-display);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid var(--pg-color-accent);
+  border-radius: 200px;
+  color: var(--pg-color-on-accent);
+  font-family: var(--pg-font);
+  font-size: var(--pg-font-size);
+  font-weight: var(--pg-font-weight-semibold);
+  letter-spacing: var(--pg-letter-spacing);
+  line-height: 1.2;
   text-transform: uppercase;
-  cursor: pointer;
-  transition: transform var(--transition-fast), opacity var(--transition-fast);
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }
 
-.cta__form-submit:hover,
-.cta__form-submit:focus-visible {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-text-light);
-}
-
-.cta__form-submit:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 3px;
-}
-
-.cta__form-submit:active {
-  transform: scale(0.98);
-}
-
-.cta__trust {
+.cta__title {
   margin: 0;
-  text-align: center;
-  font-family: var(--font-family-base);
-  font-size: 0.8rem;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  color: var(--pg-color-on-accent);
+  font-family: var(--cta-display);
+  font-size: 50px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.9;
+  text-align: left;
+  text-transform: uppercase;
 }
 
-.cta__form-result:empty {
-  display: none;
-}
-
-.cta__form-result {
+.cta__lead {
   margin: 0;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: 0.75rem;
-  text-align: center;
-  font-size: 0.9rem;
+  color: var(--pg-color-text);
+  font-family: var(--pg-font);
+  font-size: 18px;
+  font-weight: var(--pg-font-weight-medium);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
 }
 
-.cta__form-result[data-status="success"] {
-  background-color: rgba(40, 167, 69, 0.2);
-  color: #9be7b0;
+.cta__form {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  background: var(--cta-form-bg);
 }
 
-.cta__form-result[data-status="error"] {
-  background-color: rgba(220, 53, 69, 0.2);
-  color: #f5a3ad;
-}
-
-/* Honeypot */
 .cta__form-honeypot {
   position: absolute;
   width: 1px;
@@ -252,131 +103,193 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-  opacity: 0;
+}
+
+.cta__field {
+  position: relative;
+  width: 100%;
+}
+
+.cta__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cta__input,
+.cta__textarea {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin: 0;
+  border: 1.5px solid var(--cta-field-border);
+  border-radius: 10px;
+  background: var(--cta-field-bg);
+  color: var(--pg-color-on-accent);
+  font-family: var(--pg-font);
+  font-size: 18px;
+  font-weight: var(--pg-font-weight-medium);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  resize: none;
+}
+
+.cta__input {
+  height: 54px;
+  padding: 0 17px 0 24px;
+}
+
+.cta__textarea {
+  height: 202px;
+  padding: 19px 17px 19px 24px;
+}
+
+.cta__input::placeholder,
+.cta__textarea::placeholder {
+  color: var(--pg-color-text);
+  opacity: 1;
+}
+
+.cta__input:focus,
+.cta__textarea:focus {
+  outline: none;
+  border-color: var(--pg-color-accent);
+}
+
+.cta__input:-webkit-autofill,
+.cta__input:-webkit-autofill:hover,
+.cta__input:-webkit-autofill:focus,
+.cta__textarea:-webkit-autofill,
+.cta__textarea:-webkit-autofill:hover,
+.cta__textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--pg-color-on-accent);
+  box-shadow: 0 0 0 1000px var(--cta-field-bg) inset;
+}
+
+.cta__submit {
+  margin-top: 0;
+  align-self: flex-start;
+}
+
+.cta__form-result {
+  min-height: 0;
+}
+
+.cta__form-errors {
+  margin: 0;
+  color: var(--pg-color-accent);
+  font-family: var(--pg-font);
+  font-size: 14px;
+}
+
+.cta__form-errors p {
+  margin: 0 0 4px;
+}
+
+.cta__portrait {
+  position: absolute;
+  top: 0;
+  left: 55.09%;
+  z-index: 2;
+  width: 44.91%;
+  max-width: 595px;
+  height: 100%;
+  min-height: 854px;
   pointer-events: none;
 }
 
-/* ============================================================================ */
+.cta__portrait-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
 
-/* DESKTOP                                                                      */
-
-/* ============================================================================ */
-
-@media (width >= 768px) {
-  .cta__shell {
-    display: grid;
-    grid-template-columns: minmax(0, 32rem) minmax(14rem, 1fr);
-    align-items: stretch;
-    gap: clamp(1.5rem, 4vw, 3.5rem);
-    justify-content: stretch;
-    padding-left: clamp(2rem, 6vw, 5rem);
-    padding-right: 0;
-    padding-top: calc(var(--spacing-xxl) + var(--safe-area-top));
-    padding-bottom: 0;
-    min-height: min(100vh, 48rem);
+@media (width <= 1099px) {
+  .cta {
+    margin-top: 80px;
+    padding-inline: var(--pg-gutter-mobile);
   }
 
-  .cta__inner {
-    margin: 0;
-    max-width: 32rem;
-    align-self: center;
-    padding-bottom: calc(var(--spacing-xxl) + var(--safe-area-bottom));
+  .cta__shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-width: 360px;
+    margin-inline: auto;
+  }
+
+  .cta__main {
+    display: contents;
+    width: 100%;
+    max-width: none;
+    padding-top: 0;
   }
 
   .cta__intro {
-    text-align: left;
+    order: 1;
+    gap: 20px;
+    max-width: none;
+    margin-bottom: 0;
+  }
+
+  .cta__eyebrow {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .cta__title {
+    font-size: 40px;
   }
 
   .cta__lead {
-    margin-left: 0;
-  }
-
-  .cta__trust {
-    text-align: left;
-  }
-
-  .cta__portrait {
-    display: block;
-    position: relative;
-    overflow: hidden;
-    min-height: 100%;
-    /* М’який перехід у форму зліва — без dim всього обличчя */
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 100%);
-    mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 100%);
-  }
-
-  .cta__portrait::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      linear-gradient(90deg, var(--color-bg-dark) 0%, transparent 18%),
-      linear-gradient(0deg, var(--color-bg-dark) 0%, transparent 22%);
-  }
-
-  .cta__portrait-img {
-    filter: brightness(1.06) contrast(1.04);
-  }
-}
-
-@media (width >= 1100px) {
-  .cta__shell {
-    grid-template-columns: minmax(0, 34rem) minmax(20rem, 1.05fr);
-    gap: clamp(2rem, 5vw, 4.5rem);
-  }
-}
-
-/* ============================================================================ */
-
-/* MOBILE                                                                       */
-
-/* ============================================================================ */
-
-@media (width <= 767px) {
-  .cta__shell {
-    min-height: auto;
-    max-width: none;
-    padding:
-      calc(var(--spacing-xl) + var(--safe-area-top))
-      var(--spacing-md)
-      calc(var(--spacing-xl) + var(--safe-area-bottom));
-  }
-
-  .cta__intro {
-    margin-bottom: var(--spacing-lg);
-  }
-
-  .cta__portrait {
-    display: none;
-  }
-}
-
-/* ============================================================================ */
-
-/* iOS Safari                                                                   */
-
-/* ============================================================================ */
-
-@supports (-webkit-touch-callout: none) {
-  .cta__form-input,
-  .cta__form-textarea {
     font-size: 16px;
   }
-}
 
-/* ============================================================================ */
-
-/* ACCESSIBILITY                                                                */
-
-/* ============================================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-  .cta__form-submit {
-    transition: none;
+  .cta__portrait {
+    position: relative;
+    left: auto;
+    top: auto;
+    z-index: 0;
+    order: 2;
+    width: 262px;
+    max-width: 73%;
+    min-height: 0;
+    height: 377px;
+    margin: 40px auto 0;
+    pointer-events: none;
   }
 
-  .cta__form-submit:active {
-    transform: none;
+  .cta__form {
+    position: relative;
+    z-index: 1;
+    order: 3;
+    width: 100%;
+    margin-top: 0;
+    padding: 14px;
+  }
+
+  .cta__input,
+  .cta__textarea {
+    font-size: 16px;
+  }
+
+  .cta__input {
+    padding: 0 17px 0 18px;
+  }
+
+  .cta__textarea {
+    padding: 19px 17px 19px 18px;
+  }
+
+  .cta__submit {
+    width: 100%;
   }
 }
