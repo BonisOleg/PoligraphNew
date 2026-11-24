@@ -3,10 +3,12 @@
 
 {% block title %}{{ title }} - PolygraphNew{% endblock %}
 
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/pages/services.css' %}">
+{% endblock %}
+
 {% block content %}
-<main class="main main--services" id="main">
-    <section class="about-accordions">
-        {% include 'partials/services_content.html' %}
-    </section>
+<main class="main main--services pg-page pg-services" id="main">
+    {% include 'partials/services_content.html' %}
 </main>
 {% endblock %}

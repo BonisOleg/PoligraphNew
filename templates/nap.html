@@ -3,10 +3,12 @@
 
 {% block title %}{{ title }} - PolygraphNew{% endblock %}
 
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/pages/nap.css' %}">
+{% endblock %}
+
 {% block content %}
-<main class="main main--nap" id="main">
-    <section class="about-accordions">
-        {% include 'partials/nap_content.html' %}
-    </section>
+<main class="main main--nap pg-page pg-nap" id="main">
+    {% include 'partials/nap_content.html' %}
 </main>
 {% endblock %}
