@@ -1,54 +1,66 @@
-    <!-- БЛОК 3: Професійне обладнання -->
-    <article class="accordion" id="service-2" data-accordion="equipment" aria-expanded="true">
-        <div class="accordion__header" role="button" tabindex="0" aria-label="Розгорнути секцію про обладнання">
-            <h2 class="accordion__title">ПРОФЕСІЙНЕ ОБЛАДНАННЯ</h2>
-            <p class="accordion__subtitle">{{ equipment_hero.title }}</p>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/pages/equipment.css' %}">
+
+<article class="equip">
+    <section class="equip__hero">
+        <div class="equip__hero-copy">
+            <p class="equip__badge">{{ equipment_hero.badge }}</p>
+            <h1 class="equip__title">Поліграф <span class="equip__title-accent">РУБІКОН</span></h1>
+            <p class="equip__lead">{{ equipment_hero.description }}</p>
         </div>
-        
-        <div class="accordion__content">
-            <!-- Hero -->
-            <div class="accordion__hero">
-                <span class="accordion__hero-badge">{{ equipment_hero.badge }}</span>
-                <h3 class="accordion__hero-name">{{ equipment_hero.title }}</h3>
-                <p class="accordion__hero-subtitle">{{ equipment_hero.subtitle }}</p>
-                <p class="accordion__hero-description">{{ equipment_hero.description }}</p>
-            </div>
-            
-            <!-- Статистика -->
-            <div class="accordion__stats">
+
+        <div class="equip__hero-panel">
+            <div class="equip__stats">
                 {% for stat in equipment_stats %}
-                <div class="accordion__stat-item">
-                    <span class="accordion__stat-number">{{ stat.number }}</span>
-                    <span class="accordion__stat-label">{{ stat.label }}</span>
+                <div class="equip__stat{% if stat.featured %} equip__stat--featured{% endif %}">
+                    <p class="equip__stat-value">{{ stat.number }}</p>
+                    <p class="equip__stat-label">{{ stat.label }}</p>
                 </div>
                 {% endfor %}
             </div>
-            
-            <!-- Порівняння -->
-            <div class="accordion__comparison">
-                <h3 class="accordion__section-title">РУБІКОН vs Інші поліграфи</h3>
-                <div class="accordion__comparison-grid">
-                    {% for item in equipment_comparison %}
-                    <article class="comparison-card{% if forloop.counter0|divisibleby:2 %} comparison-card--dark{% endif %}">
-                        <h4 class="comparison-card__characteristic">{{ item.characteristic }}</h4>
-                        <p class="comparison-card__rubicon">{{ item.rubicon }}</p>
-                        <p class="comparison-card__others">{{ item.others }}</p>
-                    </article>
-                    {% endfor %}
-                </div>
-            </div>
-            
-            <!-- Сертифікація -->
-            <div class="accordion__certification">
-                <h3 class="accordion__section-title">Сертифікація та стандарти</h3>
-                <div class="accordion__certification-grid">
-                    {% for cert in equipment_certification %}
-                    <div class="certification-card">
-                        <h4 class="certification-card__title">{{ cert.title }}</h4>
-                        <p class="certification-card__description">{{ cert.description }}</p>
-                    </div>
-                    {% endfor %}
-                </div>
+
+            <div class="equip__actions">
+                    <a href="{% url 'pages:index' %}#consultation" class="pg-cta">
+                        <span class="pg-cta__label">Залишити заявку</span>
+                        <span class="pg-cta__icon" aria-hidden="true">
+                            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="{% url 'pages:services' %}" class="pg-cta pg-cta--ghost">Послуги</a>
             </div>
         </div>
-    </article>
+    </section>
+
+    <section class="equip__compare" aria-labelledby="equip-compare-title">
+        <img class="equip__compare-bg" src="{% static 'img/pg/equipment-bg.png' %}" alt="" width="1440" height="941">
+        <div class="equip__compare-inner">
+            <h2 class="equip__heading equip__heading--center" id="equip-compare-title">РУБІКОН vs Інші поліграфи</h2>
+            <div class="equip__compare-grid">
+                {% for item in equipment_comparison %}
+                <article class="equip__card equip__card--{{ forloop.counter }}">
+                    <h3 class="equip__card-label">{{ item.characteristic }}</h3>
+                    <p class="equip__card-value">{{ item.rubicon }}</p>
+                    <p class="equip__card-note">Інші: {{ item.others }}</p>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="equip__certs" aria-labelledby="equip-certs-title">
+        <h2 class="equip__heading" id="equip-certs-title">Сертифікація та стандарти</h2>
+        <ol class="equip__cert-list">
+            {% for cert in equipment_certification %}
+            <li class="equip__cert">
+                <div class="equip__cert-row">
+                    <span class="equip__cert-index">{{ cert.index }}</span>
+                    <span class="equip__cert-name">{{ cert.title }}</span>
+                    <p class="equip__cert-desc">{{ cert.description }}</p>
+                </div>
+            </li>
+            {% endfor %}
+        </ol>
+    </section>
+</article>

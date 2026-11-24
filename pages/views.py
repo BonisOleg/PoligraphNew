@@ -336,6 +336,55 @@ def _nap_context():
     }
 
 
+def _equipment_context():
+    """Контекст сторінки «Обладнання» (Figma 1:1254 / 1:1385)."""
+    return {
+        'title': 'Обладнання',
+        'equipment_hero': {
+            'badge': 'Офіційний дилер в Україні',
+            'title': 'Поліграф РУБІКОН',
+            'description': (
+                'Сучасний український поліграф від офіційного дилера з надійними комплектуючими. '
+                'Перевірені технології детекції брехні з точністю 95-98% та повною сертифікацією в Україні'
+            ),
+        },
+        'equipment_stats': [
+            {'number': '95%', 'label': 'Точність', 'featured': False},
+            {'number': '7+', 'label': 'Каналів', 'featured': True},
+            {'number': '3+', 'label': 'Роки гарантії', 'featured': False},
+        ],
+        'equipment_comparison': [
+            {'characteristic': 'Точність', 'rubicon': '95-98%', 'others': '85-92%'},
+            {'characteristic': 'Кількість каналів', 'rubicon': '7', 'others': '4-5'},
+            {'characteristic': 'Швидкість обробки', 'rubicon': 'Реальний час', 'others': '2-5 хв'},
+            {'characteristic': 'Гарантія', 'rubicon': 'До 3 років', 'others': '1 рік'},
+        ],
+        'equipment_certification': [
+            {
+                'index': '01/',
+                'title': 'APA Standards',
+                'description': 'Відповідає стандартам Американської Асоціації Поліграфологів',
+            },
+            {
+                'index': '02/',
+                'title': 'Сертифікат України',
+                'description': 'Офіційно дозволено для використання в Україні',
+            },
+            {
+                'index': '03/',
+                'title': 'ISO 9001',
+                'description': 'Міжнародний стандарт якості виробництва',
+            },
+            {
+                'index': '04/',
+                'title': 'Сертифікований дилер',
+                'description': 'Офіційне дилерство та технічна підтримка в Україні',
+            },
+        ],
+    }
+
+
+
 def _render_main_or_partial(request, template_name, partial_name, context):
     if request.headers.get('HX-Request'):
         return render(request, partial_name, context)
@@ -393,41 +442,37 @@ def about_redirect(request):
 
 
 def contacts_view(request):
-    """Сторінка контактів з контактною інформацією та Google картою (sticky overlay)"""
+    """Сторінка контактів (Figma 1:1508 / 1:1660). POST-форми тут немає — заявка йде на pages:consultation через CTA."""
     try:
         context = {
-        'title': 'Контакти',
-        
-        # Контактна інформація
-        'contacts': {
-            'phone': '+38 (067) 524-33-54',
-            'whatsapp': '+38 (067) 524-33-54',
-            'email': 'ulianakerezvas@gmail.com',
-            'address': 'Львів, вул. Данилишина, 6.',
-            'travel': 'Виїзд до клієнта по всій Україні',
-            'working_hours': 'Пн-Пт: 9:00-18:00, Сб: 10:00-15:00',
-        },
-        
-        # Google карта
-        'map': {
-            'address': 'Львів, вул. Данилишина, 6.',
-            'lat': 49.8468,
-            'lng': 24.0269,
-        },
-        
-        # Сертифікати
-        'certificates': [
-            'Сертифікат поліграфолога міжнародного зразка (APA)',
-            'Ліцензія на проведення поліграфних досліджень',
-            'Сертифікат Rubicon',
-            'Сертифікат підвищення кваліфікації (2024)',
-        ],
-    }
-    
-        # Перевірка HTMX запиту
+            'title': 'Контакти',
+            'contacts': {
+                'phone': '+38 (067) 524-33-54',
+                'phone_tel': '+380675243354',
+                'whatsapp': '+38 (067) 524-33-54',
+                'whatsapp_url': 'https://wa.me/380675243354',
+                'email': 'ulianakerezvas@gmail.com',
+                'address': 'Львів, вул. Данилишина, 6.',
+                'travel': 'Виїзд до клієнта по всій Україні',
+                'working_hours': 'Пн-Пт: 9:00-18:00, Сб: 10:00-15:00',
+            },
+            'map': {
+                'address': 'Львів, вул. Данилишина, 6.',
+                'lat': 49.8468,
+                'lng': 24.0269,
+                'url': 'https://www.google.com/maps/search/?api=1&query=49.8468,24.0269',
+            },
+            'certificates': [
+                'Сертифікат поліграфолога міжнародного зразка (APA)',
+                'Ліцензія на проведення поліграфних досліджень',
+                'Сертифікат Rubicon',
+                'Сертифікат підвищення кваліфікації (2024)',
+            ],
+        }
+
         if request.headers.get('HX-Request'):
             return render(request, 'partials/contacts_content.html', context)
-        
+
         return render(request, 'contacts.html', context)
     except Exception as e:
         logger.error(f'Error in contacts_view: {e}')
