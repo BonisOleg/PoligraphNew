@@ -8,8 +8,10 @@
   box-sizing: border-box;
   width: 100%;
   max-width: calc(var(--pg-content-width) + var(--pg-gutter) * 2);
+  /* Figma 1:177: 120px between the form/portrait block and the footer (was 0 → block sat flush on the footer).
+     Padding, not margin: a margin would collapse out of .main--index and show the #070707 body bg. */
   margin: 90px auto 0;
-  padding-inline: var(--pg-gutter);
+  padding: 0 var(--pg-gutter) 120px;
   color: var(--pg-color-on-accent);
   scroll-margin-top: calc(var(--pg-header-offset) * 2 + var(--pg-header-height) + 16px);
 }
@@ -215,7 +217,7 @@
 @media (width <= 1099px) {
   .cta {
     margin-top: 80px;
-    padding-inline: var(--pg-gutter-mobile);
+    padding: 0 var(--pg-gutter-mobile) 80px; /* Figma 1:299: 80px to the footer */
   }
 
   .cta__shell {
