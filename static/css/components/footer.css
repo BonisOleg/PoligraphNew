@@ -3,7 +3,9 @@
  */
 
 .footer {
-  background: var(--pg-color-bg);
+  position: relative;
+  z-index: 1;
+  background: var(--pg-color-bg); /* #000 — суцільний фон, нічого не просвічує */
   color: var(--pg-color-text);
   font-family: var(--pg-font);
 }

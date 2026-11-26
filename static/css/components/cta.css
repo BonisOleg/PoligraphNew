@@ -25,7 +25,8 @@
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-  width: 63.4%;
+  /* Форма закінчується до фото (portrait left: 55.09%), щоб фото не перекривало інпути */
+  width: calc(55.09% - 40px);
   max-width: 840px;
   padding-top: 190px;
 }
@@ -195,7 +196,7 @@
   position: absolute;
   top: 0;
   left: 55.09%;
-  z-index: 2;
+  z-index: 0;
   width: 44.91%;
   max-width: 595px;
   height: 100%;
